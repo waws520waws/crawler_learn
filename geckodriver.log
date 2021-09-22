@@ -1,0 +1,66 @@
+1631024480994	geckodriver	INFO	Listening on 127.0.0.1:58860
+1631024484053	mozrunner::runner	INFO	Running command: "E:\\Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\jiege\\AppData\\Local\\Temp\\rust_mozprofileYK9itF"
+1631024484831	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\jiege\\AppData\\Local\\Temp\\rust_mozprofileYK9itF\\search.json.mozlz4", (void 0)))
+1631024487691	Marionette	INFO	Listening on port 53821
+1631024487737	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[Child 4448, MediaDecoderStateMachine #1] WARNING: 22a9ed00 Could not set cubeb stream name.: file /builds/worker/checkouts/gecko/dom/media/AudioStream.cpp:367
+1631024571616	Marionette	INFO	Stopped listening on port 53821
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390076,name=PContent::Msg_DestroyBrowsingContextGroup) Closed channel: cannot send/recv
+
+1631024574852	geckodriver	INFO	Listening on 127.0.0.1:64460
+1631024577914	mozrunner::runner	INFO	Running command: "E:\\Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\jiege\\AppData\\Local\\Temp\\rust_mozprofileqo2UcP"
+1631024578597	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\jiege\\AppData\\Local\\Temp\\rust_mozprofileqo2UcP\\search.json.mozlz4", (void 0)))
+1631024581516	Marionette	INFO	Listening on port 64420
+1631024581631	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[Child 4940, MediaDecoderStateMachine #1] WARNING: 19164f00 Could not set cubeb stream name.: file /builds/worker/checkouts/gecko/dom/media/AudioStream.cpp:367
+1631025220647	Marionette	INFO	Stopped listening on port 64420
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+r6d1U"
+1631024924306	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\jiege\\AppData\\Local\\Temp\\rust_mozprofileer6d1U\\search.json.mozlz4", (void 0)))
+1631024927485	Marionette	INFO	Listening on port 65484
+1631024927821	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[Child 13600, MediaDecoderStateMachine #1] WARNING: 19be5a80 Could not set cubeb stream name.: file /builds/worker/checkouts/gecko/dom/media/AudioStream.cpp:367
+[Child 13600, MediaDecoderStateMachine #2] WARNING: 1a9a1d80 Could not set cubeb stream name.: file /builds/worker/checkouts/gecko/dom/media/AudioStream.cpp:367
+[Child 1576, MediaDecoderStateMachine #1] WARNING: 19341280 Could not set cubeb stream name.: file /builds/worker/checkouts/gecko/dom/media/AudioStream.cpp:367
+1631025210695	Marionette	INFO	Stopped listening on port 65484
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390076,name=PContent::Msg_DestroyBrowsingContextGroup) Closed channel: cannot send/recv
+
+1631025224333	geckodriver	INFO	Listening on 127.0.0.1:60359
+1631025227372	mozrunner::runner	INFO	Running command: "E:\\Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\jiege\\AppData\\Local\\Temp\\rust_mozprofileFDVtiG"
+1631025228044	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\jiege\\AppData\\Local\\Temp\\rust_mozprofileFDVtiG\\search.json.mozlz4", (void 0)))
+1631025230737	Marionette	INFO	Listening on port 50677
+1631025231064	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[Child 4616, MediaDecoderStateMachine #1] WARNING: 19335680 Could not set cubeb stream name.: file /builds/worker/checkouts/gecko/dom/media/AudioStream.cpp:367
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript warning: resource://devtools/server/actors/inspector/event-collector.js, line 530: debuggee 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js:3' would run
+JavaScript error: resource://devtools/client/framework/devtools.js, line 757: TypeError: inspector is undefined
+console.warn: "Resource  of root-node was not found."
+JavaScript error: https://rndskittytor.com/400/3111701, line 1: TypeError: can't redefine non-configurable property "initIPP"
+console.warn: "Resource  of root-node was not found."
+JavaScript warning: resource://devtools/client/shared/demangle.js, line 0: Successfully compiled asm.js code (total compilation time 75ms)
+console.error: "Tried to send a 'target-destroyed-form' event on an already destroyed actor 'watcher'"
+console.error: "Exception when calling onAvailable handler" "Connection closed, pending request to server0.conn0.child4/memoryActor6, type attach failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:289:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:46:19\n_onTargetAvailable@resource://devtools/client/memory/panel.js:48:19\n" (new Error("Connection closed, pending request to server0.conn0.child4/memoryActor6, type attach failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:289:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:46:19\n_onTargetAvailable@resource://devtools/client/memory/panel.js:48:19\n", "resource://devtools/shared/protocol/Front.js", 103))
+console.error: "Exception when calling onAvailable handler" "Connection closed, pending request to server0.conn0.child4/performanceActor10, type canCurrentlyRecord failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:289:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:46:19\ncanCurrentlyRecord@resource://devtools/client/performance/performance-controller.js:210:30\n" (new Error("Connection closed, pending request to server0.conn0.child4/performanceActor10, type canCurrentlyRecord failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:289:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:46:19\ncanCurrentlyRecord@resource://devtools/client/performance/performance-controller.js:210:30\n", "resource://devtools/shared/protocol/Front.js", 103))
+JavaScript error: resource://devtools/client/framework/toolbox.js, line 574: TypeError: this.win is null
+JavaScript error: resource://devtools/client/framework/toolbox.js, line 574: TypeError: this.win is null
+JavaScript error: resource://devtools/client/framework/toolbox.js, line 574: TypeError: this.win is null
+1631026340152	Marionette	INFO	Stopped listening on port 50677
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.error: (new Error("SessionFile is closed", "resource:///modules/sessionstore/SessionFile.jsm", 433))
+JavaScript error: https://s1.bunnycdn.ru/assets/fmovies/min/all.js?6136ab80612b1d5c, line 2: NS_ERROR_NOT_INITIALIZED: 
+JavaScript error: , line 0: TypeError: ServiceWorker script at https://fmovies.to/sw.js for scope https://fmovies.to/ encountered an error during installation.
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x590008,name=PHttpChannel::Msg_DeletingChannel) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x590008,name=PHttpChannel::Msg_DeletingChannel) Channel closing: too late to send/recv, messages will be lost
+
