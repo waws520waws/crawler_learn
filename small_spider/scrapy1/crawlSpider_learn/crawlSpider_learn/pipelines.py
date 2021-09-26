@@ -10,4 +10,8 @@ from itemadapter import ItemAdapter
 
 class CrawlspiderLearnPipeline:
     def process_item(self, item, spider):
+        if item.__class__.__name__ == 'DetailItem':
+            print('DetailItem类中的item')
+        else:
+            print('CrawlspiderLearnItem中的item')
         return item

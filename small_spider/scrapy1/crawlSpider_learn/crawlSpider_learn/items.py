@@ -8,5 +8,10 @@ import scrapy
 
 class CrawlspiderLearnItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    title = scrapy.Field()
+
+
+class DetailItem(scrapy.Item):
+    # define the fields for your item here like:
+    pic_title = scrapy.Field()
+    pic_content = scrapy.Field()

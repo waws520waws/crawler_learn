@@ -104,7 +104,7 @@
 
 ### 请求传参（在持久化存储时在不同方法中传递item对象）
 - 【all_page_crawl文件中的示例】
-- 使用场景：列表列和详情页均有需要解析的数据，且不在同一个方法中，在持久化存储时不能提交多次item，所以用到meta属性来传递上一个方法的item对象给下一个方法
+- 使用场景：列表列和详情页均有需要解析的数据（一条数据的各项不在同一个页面中），且不在同一个方法中，在持久化存储时不能提交多次item，所以用到meta属性来传递上一个方法的item对象给下一个方法
 - 【问题】为什么不用全局变量呢？这样就可以不用传参了啊
     - 【答】可能这里是为了演示有这个功能吧
     
@@ -157,9 +157,18 @@
 - 【代码在crawlSpider_learn文件中】
 - CrawlSpider类：Spider的一个子类
 - 全站数据爬取的方式：
-    - 基于Spider：手动请求
-    - 基于CrawlSpider
+    - 基于Spider父类：手动请求（编写request代码）
+    - 基于CrawlSpider父类
 - CrawlSpider类的使用：
     - 在创建爬虫文件时使用如下命令：
         - scrapy genspider -t crawl spiderName www.xxx.com
-    
+    - 编写代码
+        - 可编写多个规则解析器，解析不同链接，不同数据
+    - 提交item：
+        - 因为是继承CrawlSpider父类，所以请求传参不可用（需继承Spider父类）
+        - 可以分别存到两个item中
+            - 方法：在item.py中添加DetailItem类；在爬虫文件中分别提交各类的item
+        - 【问题】如何在管道文件中区分是哪个类的item？
+        - 【答】  if item.__class__.__name__ == 'DetailItem':
+                    print('DetailItem类中的item')
+    - 开启管道 
