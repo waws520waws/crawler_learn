@@ -154,7 +154,7 @@
         - 在spider777爬虫文件下编写爬虫程序
     
 ### 基于CrawlSpider的全站数据爬取
-- 【代码在】
+- 【代码在crawlSpider_learn文件中】
 - CrawlSpider类：Spider的一个子类
 - 全站数据爬取的方式：
     - 基于Spider：手动请求

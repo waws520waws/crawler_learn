@@ -17,7 +17,8 @@ NEWSPIDER_MODULE = 'crawlSpider_learn.spiders'
 #USER_AGENT = 'crawlSpider_learn (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
+LOG_LEVEL = 'ERROR'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
