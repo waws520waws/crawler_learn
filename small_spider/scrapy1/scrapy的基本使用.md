@@ -152,3 +152,14 @@
             - 在process_response()方法中设置拦截响应数据后的处理
             - 在配置文件中开启下载中间件、开启管道
         - 在spider777爬虫文件下编写爬虫程序
+    
+### 基于CrawlSpider的全站数据爬取
+- 【代码在】
+- CrawlSpider类：Spider的一个子类
+- 全站数据爬取的方式：
+    - 基于Spider：手动请求
+    - 基于CrawlSpider
+- CrawlSpider类的使用：
+    - 在创建爬虫文件时使用如下命令：
+        - scrapy genspider -t crawl spiderName www.xxx.com
+    
