@@ -241,3 +241,24 @@
         - 调度器的队列在redis的客户端中（在上面启动的redis客户端后输入以下命令）：
             - `lpush 调度器名称(爬虫文件中添加的redis_key) 起始url`
     - 爬取的数据存储在redis的 spiderName:item 中（在上面的redis客户端中输入命令可查看）
+    
+### 增量式爬虫
+- 【代码在 get_update_data 文件中】
+- 概念：检测网站数据更新的情况，只会爬取网站最新更新出来的数据
+- 例子步骤：
+    - 指定一个起始url
+    - 基于CrawlSpider类获取其他页码链接
+    - 基于Rule(爬虫文件中的)将其他页码链接进行请求
+    - 从每一个页码对应的页面中解析出每一个详情页的url
+    - 【**增量式爬虫核心**】检测电影详情页的url之前有没有请求过
+        - 将爬取过的详情页url存储到redis的set数据结构中
+    - 对详情页的url发起请求，解析出详情页数据
+    - 进行数据的持久化存储(pipelines.py中)
+        ```python
+        from redis import Redis
+        conn = Redis(host='127.0.0.1', port=6379)
+        # 存入redis的一个列表中
+        self.conn.lpush('name_of_list', data)
+        ```
+        
+    
