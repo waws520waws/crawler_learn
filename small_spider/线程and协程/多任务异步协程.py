@@ -3,6 +3,7 @@ import time
 import scrapy
 import requests  # requests模块是非异步模块
 
+# 当遇到io等待，会自动执行在一个任务
 async def request(url):
     print('正在下载：', url)
     # # 在异步协程中如果出现同步模块相关的代码，那么就无法实现异步
