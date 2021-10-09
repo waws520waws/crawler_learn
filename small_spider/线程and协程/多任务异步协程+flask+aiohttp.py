@@ -25,8 +25,13 @@ for url in urls:
     task = asyncio.ensure_future(xc)
     tasks.append(task)
 
+# 生成或获取一个事件循环
 loop = asyncio.get_event_loop()
+# 循环执行任务
 loop.run_until_complete(asyncio.wait(tasks))
+
+# # 上面两句等价于下面的执行语句（但是要注意括号里的对象）
+# asyncio.run( asyncio.wait(tasks) )  # python3.7
 
 print(time.time()-start_time)
 

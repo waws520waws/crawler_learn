@@ -59,8 +59,14 @@ def callback_func(task):
     # result返回的就是任务对象中封装的协程对象对应函数的返回值
     print(task.result())
 
-loop = asyncio.get_event_loop()
 task = asyncio.ensure_future(xc)
 # 将回调函数绑定到任务对象中（参数为任务对象task）
 task.add_done_callback(callback_func)
+
+# 生成或获取一个事件循环
+loop = asyncio.get_event_loop()
+# 循环执行任务
 loop.run_until_complete(task)
+
+# # 上面两句等价于下面的执行语句（但是要注意括号里的对象）
+# asyncio.run(task)  # python3.7
