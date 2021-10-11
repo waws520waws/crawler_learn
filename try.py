@@ -1,16 +1,19 @@
 import asyncio
 
-async def others():
-  print('start......')
-  await asyncio.sleep(2)
-  print('end')
-  return '返回值'
+class AsyncContextManager:
+    def __init__(self):
+        self.conn = conn
+    async def do_something(self):
+      # 异步操作数据库
+        return 666
+    async def __aenter__(self):
+      # 异步连接数据库
+        self.conn = await asyncio.sleep(1)
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        # 异步关闭数据库连接
+        await asyncio.sleep(1)
 
 async def func():
-    print('func()......')
-    response1 = await others()
-    print(response1)
-    response2 = await others()
-    print(response2)
-
-asyncio.run(func())
+    async with AsyncContextManager() as f:
+        result = await f.do_something()
+        print(result)
