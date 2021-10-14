@@ -2,9 +2,15 @@
 参考：https://www.bilibili.com/video/BV1i54y1h75W?p=46
 需求：爬取网易云音乐上的热评
 
-难点：请求参数加密、js逆向
+难点：请求参数加密、js逆向；编码解码
 
 '''
+
+# pip install pycrypto ,若失败，则 pip install pycryptodome
+from Crypto.Cipher import AES
+from base64 import b64encode
+import requests
+import json
 
 ## 1、找到加密数据（通过js逆向找到）
 data = {
@@ -76,15 +82,43 @@ i = "NOLr4ipDZ5A9mMSV"
 #### 2.2.3 加密函数中产生 h.encSecKey 的过程中只有i是随机数，i定值的话，那么返回得到的 h.encSecKey 也是定值
 # 在浏览器中设置断点查看当前i对应的 h.encSecKey
 def get_encSecKey():
-    return '"4b718b4eb0223bcb3d074d7742c505b503a2d60b9c4e4056d3e98078036f07095fc854a536754eaf63fb57b451a39f4bd992d20ac5ab5be0b0eb0e5a7dd7e7b8114c5091dabb427a06292ca686067ec802e09b0ca3fde2edb2ecc179b76a0d16d4ba019f28d0b9881a013b32eb01d7056704b80b1b50d78594a2b529ee632458"'
+    return "4b718b4eb0223bcb3d074d7742c505b503a2d60b9c4e4056d3e98078036f07095fc854a536754eaf63fb57b451a39f4bd992d20ac5ab5be0b0eb0e5a7dd7e7b8114c5091dabb427a06292ca686067ec802e09b0ca3fde2edb2ecc179b76a0d16d4ba019f28d0b9881a013b32eb01d7056704b80b1b50d78594a2b529ee632458"
 
 #### 2.2.3 产生 h.encText 使用了两次加密
 
 
-def get_params(data):
+def get_params(data):  # data为字符串
     first = enc_params(data, g)
     second = enc_params(first, i)
     return second
 
+def to_16(data):
+    pad = 16 - len(data) % 16
+    data += chr(pad) * pad
+    return data
+
 def enc_params(data, key):
-    pass
+    iv = '0102030405060708'
+    aes = AES.new(key=key.encode('utf-8'), IV=iv.encode('utf-8'), mode=AES.MODE_CBC)  # 创建加密器
+
+    # 加密的内容长度必须是16的倍数【长度刚好是16也是需要加上chr(需要补齐的位数)进行补齐,不够要补，够了也要补】
+    # chr()返回值是当前整数对应的 ASCII 字符
+    # 如：'123456789abcde'，差1位，则需要1个chr(1)补齐成这样：'123456789abcdechr(1)'
+    # 如：'123456789abc'，差4位，则需要4个chr(4)补齐成这样：'123456789abcchr(4)chr(4)chr(4)chr(4)'
+    # 如：'123456789abcdef'，刚好16位，则需要16个chr(16)补齐成这样：'123456789abcdefchr(16)。。。chr(16)'
+    data = to_16(data)
+
+    # byte类型数据
+    data_byte = aes.encrypt( data.encode('utf-8') )  # 加密
+    # 加密后的数据无法用decode，解码不出来，因为是加密
+
+    return str(b64encode(data_byte), 'utf-8')
+
+
+if __name__ == '__main__':
+    url = 'https://music.163.com/weapi/comment/resource/comments/get?csrf_token='
+    req = requests.post(url, data={
+        'params': get_params(json.dumps(data)),  # json型字符串
+        'encSecKey': get_encSecKey()
+    })
+    print(req.text)
