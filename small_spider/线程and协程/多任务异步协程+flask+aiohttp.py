@@ -2,6 +2,7 @@
 import asyncio
 import time
 import aiohttp
+import aiofiles
 
 start_time = time.time()
 urls = [
@@ -17,7 +18,10 @@ async def get_page(url):
         async with session.get(url) as response:
             # 注意：获取响应数据之前一定要进行手动挂起
             page = await response.text()
-            print(page)
+
+            # 文件异步
+            async with aiofiles.open() as f:
+                await f.write(page)
 
 tasks = []
 for url in urls:
