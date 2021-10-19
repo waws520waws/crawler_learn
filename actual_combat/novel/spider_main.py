@@ -1,15 +1,25 @@
 import asyncio
-
+import aiohttp
 import requests
-
+import aiofiles
+import json
 
 async def get_content(title, cid, book_id):
-    url = 'https://dushu.baidu.com/api/pc/getChapterContent?data={"book_id":"4306063500","cid":"4306063500|11348571","need_bookinfo":1}'
     params = {
         "book_id": book_id,
         "cid": f"{book_id}|{cid}",
         "need_bookinfo": 1
     }
+    params = json.dumps(params)
+    url = f'https://dushu.baidu.com/api/pc/getChapterContent?data={params}'
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            page = await response.json()
+            # 将novel_content文件标记为exclusion，快，不卡，但。。。
+            file = './novel_content/%s' % title
+            async with aiofiles.open(file, 'w', encoding='utf-8') as f:
+                content = page['data']['novel']['content']
+                await f.write(content)
 
 
 async def get_book_id(url, book_id):
@@ -28,4 +38,5 @@ async def get_book_id(url, book_id):
 if __name__ == '__main__':
     book_id = "4306063500"
     url = 'https://dushu.baidu.com/api/pc/getCatalog?data={"book_id":"' + book_id + '"}'
-    get_book_id(url, book_id)
+
+    asyncio.run(get_book_id(url, book_id))
