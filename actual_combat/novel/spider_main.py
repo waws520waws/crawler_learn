@@ -3,6 +3,10 @@ import aiohttp
 import requests
 import aiofiles
 import json
+'''
+需求：抓取百度小说中 西游记 的全部章节内容
+参考：https://www.bilibili.com/video/BV1i54y1h75W?p=67
+'''
 
 async def get_content(title, cid, book_id):
     params = {
