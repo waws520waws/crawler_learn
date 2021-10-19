@@ -16,6 +16,7 @@ async def get_content(title, cid, book_id):
     }
     params = json.dumps(params)
     url = f'https://dushu.baidu.com/api/pc/getChapterContent?data={params}'
+    # 外层异步，内层若是io操作，则要异步？
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             page = await response.json()
