@@ -29,37 +29,64 @@ import requests
 
 # 请求js地址，解析出video的url
 def get_video_url(url):
-    req = requests.get(url).text
-    cmp = re.compile('HD\$(?P<video_url>.*?)\$yjyun', re.S)
-    video_url = cmp.search(req).group('video_url')  # https://v10.dious.cc/share/ZfhOMGgRqg0EHo2S
-    print('video_url: ', video_url)
-    return video_url
+    # req = requests.get(url).text
+    # cmp = re.compile('HD\$(?P<video_url>.*?)\$yjyun', re.S)
+    # video_url = cmp.search(req).group('video_url')  # https://v10.dious.cc/share/ZfhOMGgRqg0EHo2S
+    # print('video_url: ', video_url)
+    # return video_url
+    return 'https://v10.dious.cc/share/ZfhOMGgRqg0EHo2S'
 
 
 # 对原始url发起请求，观察页面，解析出js地址
 def get_video_url_js(url):
-    req = requests.get(url).text
-    cmp = re.compile('l player.*?src="(?P<video_url>/playdata.*?)">', re.S)
-    video_url_js = cmp.search(req).group('video_url')  # /playdata/81/184401.js?3110.984
+    # req = requests.get(url).text
+    # cmp = re.compile('l player.*?src="(?P<video_url>/playdata.*?)">', re.S)
+    # video_url_js = cmp.search(req).group('video_url')  # /playdata/81/184401.js?3110.984
+    #
+    # video_url_js = url.split('/xj')[0] + video_url_js
+    # print('video_url_js: ', video_url_js)
+    # video_url = get_video_url(video_url_js)
+    # return video_url
+    return 'https://v10.dious.cc/share/ZfhOMGgRqg0EHo2S'
 
-    video_url_js = url.split('/xj')[0] + video_url_js
-    print('video_url_js: ', video_url_js)
-    video_url = get_video_url(video_url_js)
-    return video_url
+
+def get_first_m3u8_url(url):
+    # req = requests.get(url).text
+    # cmp = re.compile('main = "(?P<m3u8_url>.*?)";', re.S)
+    # m3u8_url = cmp.search(req).group('m3u8_url')  # /20210923/F9kgfyAW/index.m3u8
+    # print('first_m3u8_url: ', m3u8_url)
+    # return m3u8_url
+    return '/20210923/F9kgfyAW/index.m3u8'
 
 
-def get_m3u8_url(url):
-    req = requests.get(url).text
-    cmp = re.compile('main = "(?P<m3u8_url>)";', re.S)
-    m3u8_url = cmp.search(req).group('m3u8_url')  # /20210923/F9kgfyAW/index.m3u8
-    m3u8_url = url.split('/share')[0] + m3u8_url
-    print('m3u8_url: ', m3u8_url)
-    return m3u8_url
+def down_m3u8_file(url, name):
+    req = requests.get(url)
+    with open(f'./{name}', 'wb') as f:
+        f.write(req.content)
 
 
 def main(url):
+    # 1、请求原始url，拿到js链接
+    # 2、请求js链接，拿到视频链接
     video_url = get_video_url_js(url)
-    m3u8_url = get_m3u8_url(video_url)
+    # 3、请求视频链接，拿到第一个m3u8文件，解析此文件，拿到第一个m3u8地址
+    first_m3u8_url = get_first_m3u8_url(video_url)  # /20210923/F9kgfyAW/mp4/F9kgfyAW.mp4
+    # 4、拼接成完整地址
+    first_m3u8_url = video_url.split('/share')[0] + first_m3u8_url
+    print('first_m3u8_url: ', first_m3u8_url)
+    # 5、获取包含第二个m3u8地址的文件
+    # down_m3u8_file(first_m3u8_url, 'first_m3u8.txt')
+    # 6、从文件中解析出第二个m3u8的地址， 并请求拿到包含视频切片的文件
+    with open('./first_m3u8.txt', 'r', encoding='utf-8') as f:
+        for line in f.readlines():
+            if line.startswith('#'):
+                continue
+            else:
+                line = line.strip()  # /20210923/F9kgfyAW/1000kb/hls/index.m3u8
+                second_m3u8_url = video_url.split('/share')[0] + line
+                # 拿到含有所有视频切片的文件
+                # down_m3u8_file(second_m3u8_url, 'second_m3u8.txt')
+
 
 
 if __name__ == '__main__':

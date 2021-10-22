@@ -1,5 +1,6 @@
-import re
+import requests
 
-line = "Cats are smarter than dogs"
-print(line.split('smarter'))
+aa = 'asasasas     \n'
+print(aa)
+print(aa.strip('a'))
 
