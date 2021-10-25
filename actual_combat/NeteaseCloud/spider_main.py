@@ -79,10 +79,12 @@ g = '0CoJUm6Qyw8W8jud'  # bva4e(["爱心", "女孩", "惊恐", "大笑"])
 # 在浏览器中设置断点查看i的值
 i = "NOLr4ipDZ5A9mMSV"
 
+
 #### 2.2.3 加密函数中产生 h.encSecKey 的过程中只有i是随机数，i定值的话，那么返回得到的 h.encSecKey 也是定值
 # 在浏览器中设置断点查看当前i对应的 h.encSecKey
 def get_encSecKey():
     return "4b718b4eb0223bcb3d074d7742c505b503a2d60b9c4e4056d3e98078036f07095fc854a536754eaf63fb57b451a39f4bd992d20ac5ab5be0b0eb0e5a7dd7e7b8114c5091dabb427a06292ca686067ec802e09b0ca3fde2edb2ecc179b76a0d16d4ba019f28d0b9881a013b32eb01d7056704b80b1b50d78594a2b529ee632458"
+
 
 #### 2.2.3 产生 h.encText 使用了两次加密
 
@@ -92,13 +94,17 @@ def get_params(data):  # data为字符串
     second = enc_params(first, i)
     return second
 
+
 def to_16(data):
     pad = 16 - len(data) % 16
     data += chr(pad) * pad
     return data
 
+
 def enc_params(data, key):
     iv = '0102030405060708'
+    # mode: 模式，先看m3u8文件是否提示用的什么模式，没有的话就一个一个的试
+    # IV：偏移量，字节型，位数与key相同
     aes = AES.new(key=key.encode('utf-8'), IV=iv.encode('utf-8'), mode=AES.MODE_CBC)  # 创建加密器
 
     # 加密的内容长度必须是16的倍数【长度刚好是16也是需要加上chr(需要补齐的位数)进行补齐,不够要补，够了也要补】
@@ -109,7 +115,7 @@ def enc_params(data, key):
     data = to_16(data)
 
     # byte类型数据
-    data_byte = aes.encrypt( data.encode('utf-8') )  # 加密
+    data_byte = aes.encrypt(data.encode('utf-8'))  # 加密
     # 加密后的数据无法用decode，解码不出来，因为是加密
 
     return str(b64encode(data_byte), 'utf-8')
