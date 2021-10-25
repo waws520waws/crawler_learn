@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/actual_combat/novel/novel_content" />
+      <excludeFolder url="file://$MODULE_DIR$/actual_combat/video/mp4" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7 (crawler)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -9,6 +9,7 @@
     - 2、通过m3u8下载ts切片文件【可能存在加密，需要先解密】
     - 3、可以通过各种手段（不仅是编程手段）把ts文件合并成一个mp4文件
 '''
+import asyncio
 
 '''
 此案例思路：
@@ -25,6 +26,8 @@
 import re
 
 import requests
+import aiohttp
+import aiofiles
 
 
 # 请求js地址，解析出video的url
@@ -65,7 +68,14 @@ def down_m3u8_file(url, name):
         f.write(req.content)
 
 
-def main(url):
+async def down_m3u8(url, title, session):
+    async with session.get(url) as response:
+        async with aiofiles.open(f'./mp4/m3u8_{title}', 'wb') as f:
+            await f.write(await response.content.read())
+    print(url, '下载完成')
+
+
+async def main(url):
     # 1、请求原始url，拿到js链接
     # 2、请求js链接，拿到视频链接
     video_url = get_video_url_js(url)
@@ -86,9 +96,23 @@ def main(url):
                 second_m3u8_url = video_url.split('/share')[0] + line
                 # 拿到含有所有视频切片的文件
                 # down_m3u8_file(second_m3u8_url, 'second_m3u8.txt')
-
+    #
+    tasks = []
+    m3u8_order = 1
+    async with aiohttp.ClientSession() as session:
+        async with aiofiles.open('./second_m3u8.txt', 'r', encoding='utf-8') as f:
+            # 这里为什么不能用f.readlines() ?
+             async for line in f:
+                if line.startswith('#'):
+                    continue
+                else:
+                    line = line.strip()
+                    tasks.append(asyncio.create_task(down_m3u8(line, m3u8_order, session)))
+                    m3u8_order += 1
+            # 注意缩紧，不要跟文件同一个级别，否则就相当于你去跑的函数跟文件是一个级别的，就不可以在函数里用文件f，但是函数里用了文件f，所以报错
+             await asyncio.wait(tasks)
 
 
 if __name__ == '__main__':
     url = 'https://www.ywtx360.com/xj/184401/player-0-0.html'
-    main(url)
+    asyncio.run(main(url))
