@@ -72,4 +72,9 @@ webdri.back()
 # webdri.forward()
 
 time.sleep(5)
+
+## 窗口之间的切换
+webdri.switch_to.window(webdri.window_handles[-1])  # 切换到最后一个窗口
+
+
 webdri.quit()

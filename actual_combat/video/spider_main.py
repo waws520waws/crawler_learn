@@ -72,7 +72,7 @@ def down_m3u8_file(url, name):
 
 async def down_m3u8(url, title, session):
     async with session.get(url) as response:
-        async with aiofiles.open(f'./mp4/m3u8_{title}', 'wb') as f:
+        async with aiofiles.open(f'./mp4/m3u8_{title}.ts', 'wb') as f:
             await f.write(await response.content.read())
     print(url, '下载完成')
 
@@ -109,8 +109,8 @@ def get_key():
 
 
 async def decode_ts(title, aes):
-    async with aiofiles.open(f'./mp4/m3u8_{title}', 'rb') as f1, \
-            aiofiles.open(f'./temp_mp4/temp_m3u8_{title}', 'wb') as f2:
+    async with aiofiles.open(f'./mp4/m3u8_{title}.ts', 'rb') as f1, \
+            aiofiles.open(f'./temp_mp4/temp_m3u8_{title}.ts', 'wb') as f2:
 
         data = await f1.read()
         await f2.write(aes.decrypt(data))
@@ -138,11 +138,13 @@ def merge_ts():
     file_list = []
 
     # 这里为了方便，直接看的是文件名称
-    for num in range(1, 794):
-        file = f'temp_mp4/temp_m3u8_{num}'
+    for num in range(1, 100):
+        file = f'temp_mp4/temp_m3u8_{num}.ts'
         file_list.append(file)
-    f = '+'.join(file_list)
-    os.system(f'copy /b {f} video.mp4')
+    # f = '+'.join(file_list)
+    # os.system(f'copy /b {f} video.mp4')
+    f = ' '.join(file_list)
+    os.system(f'cat {f} > movie.mp4')
     print('success!!!')
 
 
@@ -177,11 +179,11 @@ def main(url):
 
     # 8、获取密匙
     # key = get_key()
-
-    # 9、解密
+    #
+    # # 9、解密
     # asyncio.run(aio_decode(key))
-
-    # 10、合并ts视频成MP4
+    #
+    # # 10、合并ts视频成MP4
     merge_ts()
 
 
