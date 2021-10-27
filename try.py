@@ -1,6 +1,7 @@
 import requests
 
-aa = 'asasasas     \n'
-print(aa)
-print(aa.strip('a'))
+aa = 'a2'
+bb = aa.encode('utf-8')
+print(len(aa))
+print(len(bb))
 
