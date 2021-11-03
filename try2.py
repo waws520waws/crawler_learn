@@ -1,5 +1,3 @@
-
-
-import requests
-urls = "https://douge2013.zcool.com.cn/follow?condition=0&p=1"
-response = requests.get(urls, timeout=5)
+a = ["1", 2, '3']
+b = [4,5]
+print(a+b)

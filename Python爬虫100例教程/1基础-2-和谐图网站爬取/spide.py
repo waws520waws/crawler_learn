@@ -43,6 +43,7 @@ class Producer(threading.Thread):
                 all_pic_link = re.findall('<a target=\'_blank\' href="(.*?)">', response.text, re.S)
                 global all_img_urls
 
+                ## 这里为什么要加锁？
                 g_lock.acquire()  # 这里还有一个锁
                 all_img_urls += all_pic_link  # 这个地方注意数组的拼接，没有用append直接用的+=也算是python的一个新语法吧
                 print(all_img_urls)

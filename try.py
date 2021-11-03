@@ -4,7 +4,7 @@ import random  # 随机模块
 import re  # 正则表达式模块
 import time  # 时间模块
 import threading  # 线程模块
-import pymongo as pm   #mongodb模块
+import pymongo as pm   # mongodb模块
 
 class Config():
     def getHeaders(self):
@@ -78,7 +78,7 @@ class Producer(threading.Thread):
             g_lock.acquire()
             urls += threading_links_2
             g_lock.release()
-            # print(fo_url)
+            print(fo_url)
             # try:
             #     db.text.insert_many(fo_url,ordered=False )
             # except:

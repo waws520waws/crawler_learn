@@ -15,25 +15,90 @@ from lxml import etree
 技术：
 '''
 
+all_detail_urls = []
+# 起始种子地址
+urls = ["https://douge2013.zcool.com.cn/follow?condition=0&p=1"]
 
+
+# 生产者，获取各个用户的关注列表，并拿到各用户详情页链接
 class Producer(threading.Thread):
-    def __init__(self, url):
-        self.url = url
+    def __init__(self):
+        threading.Thread.__init__(self)  # 在自写的类中的init中需要先初始化Thread
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36'
         }
+        self.threadLock = threading.Lock()
 
     def run(self):
-        req = requests.get(self.url, headers=self.headers).text
-        page = etree.HTML(req)
-        detail_list = page.xpath('//p[@class="author-info-title"]/a/@href')
+
+        global urls
+        while len(urls) > 0:
+
+            self.threadLock.acquire()
+            url = urls.pop()
+            self.threadLock.release()
+            text = ''
+            try:
+                text = requests.get(url, headers=self.headers).text
+            except:
+                print('Producer异常')
+
+            page = etree.HTML(text)
+            this_detail_urls = page.xpath('//p[@class="author-info-title"]/a/@href')
+
+            global all_detail_urls
+
+            self.threadLock.acquire()
+            all_detail_urls += this_detail_urls
+            self.threadLock.release()
+
+            new_list_urls = []
+
+            for detail_url in this_detail_urls:
+                new_url = detail_url + '/follow?condition=0&p=1'
+                new_list_urls.append(new_url)
+
+            urls += new_list_urls
 
 
+# 访问详情页链接，并拿到图片地址，进而拿到图片，并保存到数据库
+class Consumer(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)  # 在自写的类中的init中需要先初始化Thread
+        self.headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36'
+        }
+        self.threadLock = threading.Lock()
 
+    def run(self):
 
+        # # 这个地方写成死循环，为的是不断监控图片链接数组是否更新
+        while True:
+            global all_detail_urls
+            self.threadLock.acquire()
+            detail_url = all_detail_urls.pop()
+            self.threadLock.release()
+
+            try:
+                text = requests.get(detail_url, headers=self.headers).text
+                page = etree.HTML(text)
+                img_srcs = page.xpath('//div[@class="card-img"]//img/@src')
+                for img_src in img_srcs:
+                    img = requests.get(img_src, headers=self.headers).content
+            except Exception as e:
+                print('Consumer error : ', e)
+
+            print('success!!!')
 
 
 if __name__ == "__main__":
-    # 起始种子地址
-    url = ["https://douge2013.zcool.com.cn/follow?condition=0&p=1"]
-    p = Producer(url)
+    # 开启5个线程
+    for t in range(5):
+        p = Producer()
+        p.start()
+
+    # # 开启5个线程
+    for t in range(5):
+        c = Consumer()
+        c.start()
+
