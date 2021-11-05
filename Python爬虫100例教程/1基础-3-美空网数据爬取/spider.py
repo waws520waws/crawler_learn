@@ -6,7 +6,7 @@ import random  # 随机模块
 import re  # 正则表达式模块
 import time  # 时间模块
 import threading  # 线程模块
-import pymongo as pm   #mongodb模块
+import pymongo  # mongodb模块
 from lxml import etree
 
 '''
@@ -27,16 +27,16 @@ class Producer(threading.Thread):
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36'
         }
-        self.threadLock = threading.Lock()
 
     def run(self):
 
         global urls
+        global threadLock
         while len(urls) > 0:
 
-            self.threadLock.acquire()
+            threadLock.acquire()
             url = urls.pop()
-            self.threadLock.release()
+            threadLock.release()
             text = ''
             try:
                 text = requests.get(url, headers=self.headers).text
@@ -48,9 +48,9 @@ class Producer(threading.Thread):
 
             global all_detail_urls
 
-            self.threadLock.acquire()
+            threadLock.acquire()
             all_detail_urls += this_detail_urls
-            self.threadLock.release()
+            threadLock.release()
 
             new_list_urls = []
 
@@ -61,6 +61,12 @@ class Producer(threading.Thread):
             urls += new_list_urls
 
 
+threadLock = threading.Lock()
+myclient = pymongo.MongoClient('127.0.0.1', 27017)
+pic_db = myclient['pic_db']
+index = 0
+
+
 # 访问详情页链接，并拿到图片地址，进而拿到图片，并保存到数据库
 class Consumer(threading.Thread):
     def __init__(self):
@@ -68,16 +74,19 @@ class Consumer(threading.Thread):
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36'
         }
-        self.threadLock = threading.Lock()
 
     def run(self):
+
+        global pic_db
+        global threadLock
+        global index
 
         # # 这个地方写成死循环，为的是不断监控图片链接数组是否更新
         while True:
             global all_detail_urls
-            self.threadLock.acquire()
+            threadLock.acquire()
             detail_url = all_detail_urls.pop()
-            self.threadLock.release()
+            threadLock.release()
 
             try:
                 text = requests.get(detail_url, headers=self.headers).text
@@ -85,6 +94,14 @@ class Consumer(threading.Thread):
                 img_srcs = page.xpath('//div[@class="card-img"]//img/@src')
                 for img_src in img_srcs:
                     img = requests.get(img_src, headers=self.headers).content
+
+                    threadLock.acquire()
+                    index += 1
+                    threadLock.release()
+
+                    data = {'_id': index, 'pic': img}
+
+
             except Exception as e:
                 print('Consumer error : ', e)
 
