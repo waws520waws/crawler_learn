@@ -33,25 +33,28 @@ class Producer(threading.Thread):
         global urls
         global threadLock
         while len(urls) > 0:
-
+            print('urls>>>>>>>>>>>>>', urls)
             threadLock.acquire()
             url = urls.pop()
             threadLock.release()
             text = ''
             try:
+                print('1111111')
                 text = requests.get(url, headers=self.headers).text
+                print('2222222')
             except:
                 print('Producer异常')
 
             page = etree.HTML(text)
             this_detail_urls = page.xpath('//p[@class="author-info-title"]/a/@href')
+            print('this_detail_urls>>>>>>', this_detail_urls)
 
             global all_detail_urls
 
-            threadLock.acquire()
+            # threadLock.acquire()
             all_detail_urls += this_detail_urls
-            threadLock.release()
-
+            # threadLock.release()
+            print('all_detail_urls>>>>>>>>>', all_detail_urls)
             new_list_urls = []
 
             for detail_url in this_detail_urls:
@@ -83,6 +86,7 @@ class Consumer(threading.Thread):
 
         # # 这个地方写成死循环，为的是不断监控图片链接数组是否更新
         while True:
+            print('Consumer is starting.......')
             global all_detail_urls
             threadLock.acquire()
             detail_url = all_detail_urls.pop()
@@ -101,6 +105,7 @@ class Consumer(threading.Thread):
 
                     data = {'_id': index, 'pic': img}
 
+                    pic_db.insert_one(data)
 
             except Exception as e:
                 print('Consumer error : ', e)
