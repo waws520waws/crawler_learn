@@ -33,28 +33,28 @@ class Producer(threading.Thread):
         global urls
         global threadLock
         while len(urls) > 0:
-            print('urls>>>>>>>>>>>>>', urls)
+            # print('urls>>>>>>>>>>>>>', urls)
             threadLock.acquire()
             url = urls.pop()
             threadLock.release()
             text = ''
             try:
-                print('1111111')
+                # print('1111111')
                 text = requests.get(url, headers=self.headers).text
-                print('2222222')
+                # print('2222222')
             except:
                 print('Producer异常')
 
             page = etree.HTML(text)
             this_detail_urls = page.xpath('//p[@class="author-info-title"]/a/@href')
-            print('this_detail_urls>>>>>>', this_detail_urls)
+            # print('this_detail_urls>>>>>>', this_detail_urls)
 
             global all_detail_urls
 
             # threadLock.acquire()
             all_detail_urls += this_detail_urls
             # threadLock.release()
-            print('all_detail_urls>>>>>>>>>', all_detail_urls)
+            # print('all_detail_urls>>>>>>>>>', all_detail_urls)
             new_list_urls = []
 
             for detail_url in this_detail_urls:
@@ -63,10 +63,13 @@ class Producer(threading.Thread):
 
             urls += new_list_urls
 
+            time.sleep(0.5)
+
 
 threadLock = threading.Lock()
 myclient = pymongo.MongoClient('127.0.0.1', 27017)
-pic_db = myclient['pic_db']
+eg_100_db = myclient['eg_100_db']
+
 index = 0
 
 
@@ -88,29 +91,35 @@ class Consumer(threading.Thread):
         while True:
             print('Consumer is starting.......')
             global all_detail_urls
-            threadLock.acquire()
-            detail_url = all_detail_urls.pop()
-            threadLock.release()
 
             try:
+                print('>>>>>>>>>>>>333333333333')
+                # threadLock.acquire()  # 为啥会锁死？？？？？？？？？？
+                detail_url = all_detail_urls.pop()
+                # threadLock.release()
+                print('>>>>>>>>>>>>44444444444')
+                # print('>>>>>>>>>>>>5555555555555')
                 text = requests.get(detail_url, headers=self.headers).text
                 page = etree.HTML(text)
                 img_srcs = page.xpath('//div[@class="card-img"]//img/@src')
+                # print('>>>>>>>>>>>>666666666666')
                 for img_src in img_srcs:
                     img = requests.get(img_src, headers=self.headers).content
-
+                    print('>>>>>>>>>>>>77777777777777')
                     threadLock.acquire()
                     index += 1
                     threadLock.release()
-
+                    print('>>>>>>>>>>>>888888888888')
                     data = {'_id': index, 'pic': img}
 
-                    pic_db.insert_one(data)
+                    eg_100_db.pic_3.insert_one(data)
 
+                    print('success save !!!')
             except Exception as e:
                 print('Consumer error : ', e)
 
-            print('success!!!')
+
+            time.sleep(0.5)
 
 
 if __name__ == "__main__":
