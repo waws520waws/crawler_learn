@@ -94,9 +94,9 @@ class Consumer(threading.Thread):
 
             try:
                 print('>>>>>>>>>>>>333333333333')
-                # threadLock.acquire()  # 为啥会锁死？？？？？？？？？？
-                detail_url = all_detail_urls.pop()
-                # threadLock.release()
+                threadLock.acquire()
+                detail_url = all_detail_urls.pop()  # 这里出错会直接抛出异常，就不会释放锁，会一直锁死
+                threadLock.release()
                 print('>>>>>>>>>>>>44444444444')
                 # print('>>>>>>>>>>>>5555555555555')
                 text = requests.get(detail_url, headers=self.headers).text
@@ -115,9 +115,10 @@ class Consumer(threading.Thread):
                     eg_100_db.pic_3.insert_one(data)
 
                     print('success save !!!')
-            except Exception as e:
-                print('Consumer error : ', e)
 
+            except Exception as e:
+                print('Consumer error !!!!!')
+                threadLock.release()
 
             time.sleep(0.5)
 
