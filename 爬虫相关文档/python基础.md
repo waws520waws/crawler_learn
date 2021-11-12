@@ -60,3 +60,16 @@
 - 用该模型的好处？
     - 1、实现了生产者与消费者的解耦和
     - 2、平衡了生产力与消费力，就是生产者一直不停的生产，消费者可以不停的消费，因为二者不再是直接沟通的，而是跟队列沟通的。
+    
+## 日期
+```python
+from datetime import datetime, date, timedelta
+
+yesterday = date.today() + timedelta(days = -1)    # 昨天日期
+print(yesterday)  # datetime.date(2018-7-16)
+
+# 可以选择格式化输出：
+yesterday = (date.today() + timedelta(days = -1)).strftime("%Y-%m-%d")    # 昨天日期
+print(yesterday)  # '2018-07-16'
+
+```

@@ -16,12 +16,13 @@ async def get_page(url):
     # async：声明后面跟的是异步操作
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            # 注意：获取响应数据之前一定要进行手动挂起
-            page = await response.text()
+            if response == 200:
+                # 注意：获取响应数据之前一定要进行手动挂起
+                page = await response.text()
 
-            # 文件异步
-            async with aiofiles.open() as f:
-                await f.write(page)
+                # 文件异步
+                async with aiofiles.open() as f:
+                    await f.write(page)
 
 tasks = []
 for url in urls:

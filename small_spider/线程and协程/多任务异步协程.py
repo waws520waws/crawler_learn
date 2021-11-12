@@ -16,13 +16,27 @@ async def request(url):
 
 start_time = time.time()
 
-urls = ['www.aaaa.com', 'www.bbbb.com', 'www.cccc.com']
 
+sema = asyncio.Semaphore(3)
+# 为避免爬虫一次性请求次数太多，对并发量控制一下
+async def x_get_source(url):
+    with(await sema):
+        await request(url)
+
+
+urls = ['www.aaaa.com', 'www.bbbb.com', 'www.cccc.com', 'a', 'b', 'c']
+
+# tasks = []
+# for url in urls:
+#     c = request(url)
+#     task = asyncio.ensure_future(c)
+#     tasks.append(task)
 tasks = []
 for url in urls:
-    c = request(url)
+    c = x_get_source(url)
     task = asyncio.ensure_future(c)
     tasks.append(task)
+
 
 
 # 生成或获取一个事件循环
