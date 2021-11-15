@@ -31,6 +31,11 @@ import os
     8、合并ts文件为mp4文件
 '''
 
+'''
+无法看下载进度，想有进度，可以接迅雷：
+    windows有调用迅雷的接口，python可以利用
+'''
+
 
 # 请求js地址，解析出video的url
 def get_video_url(url):
@@ -133,6 +138,11 @@ def merge_ts():
     可执行以下命令行进行合并：
         - mac：cat 1.ts 2.ts 3.ts > xxx.mp4
         - windows: copy /b 1.ts+2.ts+3.ts xxx.mp4
+
+    也可以用 FFmpeg 工具：
+        FFmpeg 有非常强大的功能包括视频采集、视频格式转换、视频抓图、给视频加水印，合并等功能。
+        也有python API接口：
+            pip install ffmpy3
     '''
 
     file_list = []

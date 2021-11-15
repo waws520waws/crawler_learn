@@ -1,15 +1,17 @@
+import requests_html
 
-import json
+list_url = 'https://www.freetechbooks.com/topics?page=1'
+
+session = requests_html.HTMLSession()
+res = session.get(list_url)
+res.encoding='utf-8'
+href = res.html.xpath("//p[@class='h1']/text()")
+print(href)
+
 import requests
-from datetime import datetime, date, timedelta
+from lxml import etree
 
-date_today = str(date.today())
-print(date_today)
-print(type(date_today))
-date_today = date_today.replace('-', '')
-print(date_today)
-
-yesterday = (date.today() + timedelta(days=-1)).strftime("%Y%m%d")
-print(yesterday)
-
-
+res = requests.get(list_url).text
+page = etree.HTML(res)
+href = page.xpath("//p[@class='h1']/text()")
+print(href)
