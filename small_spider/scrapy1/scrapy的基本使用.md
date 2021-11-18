@@ -1,19 +1,19 @@
 
 - 目录
-    - 使用流程
-    - 日志log
-    - 持久化存储
-    - scrapy五大核心组件简介
-    - 请求传参（在持久化存储时在不同方法中传递item对象）
-    - 图片数据爬取之ImagesPipeline
-    - scrapy中间件
-    - 基于CrawlSpider的全站数据爬取
-    - 分布式爬虫
-    - 增量式爬虫
+    - 1、使用流程
+    - 2、日志log
+    - 3、持久化存储
+    - 4、scrapy五大核心组件简介
+    - 5、请求传参（在持久化存储时在不同方法中传递item对象）
+    - 6、图片数据爬取之ImagesPipeline
+    - 7、scrapy中间件
+    - 8、基于CrawlSpider的全站数据爬取
+    - 9、分布式爬虫 (redis)
+    - 10、增量式爬虫 (redis)
 
 
 
-### 使用流程
+### 1、使用流程
 - 1、创建工程：
     - 进入到某路径下执行`scrapy startproject ProName`
 - 2、进入工程目录：
@@ -30,7 +30,7 @@
 - 6、 执行工程：
     - `scrapy crawl spiderName [--nolog]`
   
-### 日志log
+### 2、日志log
 - 控制输出信息
   - 在执行工程时会输出log信息，可加--nolog让其不输出（不推荐，因为看不到错误信息）
   - 可在settings.py文件中添加属性 `LOG_LEVEL = 'ERROR'` 来实现 （推荐）
@@ -41,7 +41,7 @@
         INFO - 一般信息(informational messages)  
         DEBUG - 调试信息(debugging messages)
       
-### 持久化存储
+### 3、持久化存储
 - 【代码在 learn_scrapy 中】
 - 基于终端指令的持久化存储
     - 要求：只可以将parse方法的可迭代类型对象（通常为列表or字典）返回值写入本地的文本文件中
@@ -105,7 +105,7 @@
             ```
             
           
-### scrapy五大核心组件简介
+### 4、scrapy五大核心组件简介
 ![img_1.png](img_1.png)
 - 引擎(Scrapy)
     - 用来处理整个系统的数据流处理, 触发事务(框架核心)
@@ -120,14 +120,14 @@
     - 负责处理爬虫从网页中抽取的实体，主要的功能是持久化实体、验证实体的有效性、清除不需要的信息。当页面被爬虫解析后，将被发送到项目管道，并经过几个特定的次序处理数据。
     
 
-### 请求传参（在持久化存储时在不同方法中传递item对象）
+### 5、请求传参（在持久化存储时在不同方法中传递item对象）
 - 【all_page_crawl文件中的示例】
 - 使用场景：列表列和详情页均有需要解析的数据（一条数据的各项不在同一个页面中），且不在同一个方法中，在持久化存储时不能提交多次item，所以用到meta属性来传递上一个方法的item对象给下一个方法
 - 【问题】为什么不用全局变量呢？这样就可以不用传参了啊
     - 【答】可能这里是为了演示有这个功能吧
     
 
-### 图片数据爬取之ImagesPipeline
+### 6、图片数据爬取之ImagesPipeline
 - ImagesPipeline使用流程
     - 在爬虫文件中获取图片的src，并提交item给管道类【同上面持久化存储的提交】
     - 在配置文件中进行如下配置：
@@ -149,7 +149,7 @@
               return item  #该返回值会传递给下一个即将被执行的管道类
         ```         
       
-### scrapy中间件
+### 7、scrapy中间件
 - 下载中间件（Downloader Middlewares）【selenium的使用】
     - 位置：位于scrapy引擎和下载器之间的一层组件。
     - 作用：我们主要使用下载中间件处理请求，一般会对请求设置随机的User-Agent ，设置随机的代理。目的在于防止爬取网站的反爬虫策略。
@@ -171,7 +171,7 @@
             - 在配置文件中开启下载中间件、开启管道
         - 在spider777爬虫文件下编写爬虫程序
     
-### 基于CrawlSpider的全站数据爬取
+### 8、基于CrawlSpider的全站数据爬取
 - 【代码在 crawlSpider_learn 文件中】
 - CrawlSpider类：Spider的一个子类
 - 全站数据爬取的方式：
@@ -191,7 +191,7 @@
                     print('DetailItem类中的item')
     - 开启管道 
     
-### 分布式爬虫
+### 9、分布式爬虫
 - 【代码在 distributed_crawl 文件中】
 - 如何实现？
     - 安装scrapy_redis包
@@ -199,12 +199,12 @@
     - 可以给scrapy提供可以被共享的调度器和管道
 - 使用实例：
     - 本实例基于CrawlSpider类实现
-    - 爬虫文件中【代码基于crawlSpider_learn文件中的】：
+    - 1）爬虫文件中【代码基于crawlSpider_learn文件中的】：
         - 导入 `from scrapy_redis.spiders import RedisCrawlSpider`
         - 将`allowed_domains`、`start_urls`属性注释掉
         - 添加新属性 `redis_key = 'sun'`，可以被共享的调度器队列的名称
         - 将当前爬虫类的父类修改成 `RedisCrawlSpider`
-    - 修改配置文件settings.py
+    - 2）修改配置文件settings.py
         - 指定使用可以被共享的管道：  
             ```python
             ITEM_PIPELINES = {
@@ -226,7 +226,7 @@
             DEDIS_HOST = 'redis服务的ip地址'
             REDIS_PORT = 6379
             ```
-    - redis相关操作
+    - 3）redis相关操作
         - win10安装
             - 网上有安装包
             - 进入到安装目录下，执行 `redis-server redis.windows.conf`，可看到是否安装成功
@@ -250,14 +250,14 @@
                 - 查看分布式相关信息：`key *` (spiderName:items中存放着爬取的数据)
                 - 查看爬取到的数据：`lrange spiderName:items 0 -1`  (0 -1表示所有范围)
                 - 查看数据长度: `llen spiderName:items`
-    - 执行工程（注意与非分布式的scrapy工程的执行命令区分）：
+    - 4）执行工程（注意与非分布式的scrapy工程的执行命令区分）：
         - `scrapy runspider spiderName.py`
-    - 向调度器的队列中放入一个起始的url：
+    - 5）向调度器的队列中放入一个起始的url：
         - 调度器的队列在redis的客户端中（在上面启动的redis客户端后输入以下命令）：
             - `lpush 调度器名称(爬虫文件中添加的redis_key) 起始url`
     - 爬取的数据存储在redis的 spiderName:item 中（在上面的redis客户端中输入命令可查看）
     
-### 增量式爬虫
+### 10、增量式爬虫
 - 【代码在 get_update_data 文件中】
 - 概念：检测网站数据更新的情况，只会爬取网站最新更新出来的数据
 - 例子步骤：

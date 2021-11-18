@@ -41,6 +41,7 @@ option.add_experimental_option('excludeSwitches', ['enable-automation'])
 webdri = webdriver.Chrome(executable_path='chromedriver.exe', chrome_options=chrome_options, options=option)
 
 ## 1、实现自动搜索‘iPhone’
+## 等待加载的方式见 wait_load_setting.py 文件
 
 webdri.get('https://www.taobao.com/')
 # 定位元素
