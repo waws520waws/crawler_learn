@@ -17,7 +17,7 @@ dblist = myclient.list_database_names()
 
 ## 2、创建集合（表）sites
 mycol = test_db["sites"]
-# 或者不用单独创建，直接 xxx_db.xxx_col.insert_one() 会自动创建集合
+## 或者不用单独创建，直接 xxx_db.xxx_col.insert_one() 会自动创建集合
 
 # 【注意】: 在 MongoDB 中，集合只有在内容插入后才会创建! 就是说，创建集合(数据表)后要再插入一个文档(记录)，集合才会真正创建。
 

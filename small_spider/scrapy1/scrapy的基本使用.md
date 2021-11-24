@@ -226,15 +226,15 @@
             DEDIS_HOST = 'redis服务的ip地址'
             REDIS_PORT = 6379
             ```
-    - 3）redis相关操作
+    - 3）redis相关操作 (win10)
         - win10安装
             - 网上有安装包
             - 进入到安装目录下，执行 `redis-server redis.windows.conf`，可看到是否安装成功
             - ‘任务管理器’里的‘服务’下可看到Redis服务
         - 常用的Redis服务命令
-            - 卸载服务：redis-server  --service-uninstall
-            - 开启服务：redis-server  --service-start
-            - 停止服务：redis-server  --service-stop
+            - 卸载服务：`redis-server  --service-uninstall`
+            - 开启服务：`redis-server  --service-start`
+            - 停止服务：`redis-server  --service-stop`
         - 配置redis的配置文件
             - linux或者mac：redis.conf
             - windows: redis.windows.conf
