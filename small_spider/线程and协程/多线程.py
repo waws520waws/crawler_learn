@@ -1,8 +1,5 @@
 # !/usr/bin/python3
 
-import threading
-import time
-
 '''
 参考：https://www.runoob.com/python3/python3-multithreading.html
 
@@ -20,7 +17,8 @@ import time
     setName(): 设置线程名。
 
 '''
-
+import threading
+import time
 
 class myThread(threading.Thread):
     def __init__(self, threadID, name, counter):

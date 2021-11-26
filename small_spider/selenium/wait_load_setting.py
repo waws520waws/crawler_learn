@@ -1,5 +1,5 @@
 from selenium import webdriver
-driver = webdriver.Chrome(executable_path='./selenium/chromedriver')
+driver = webdriver.Chrome(executable_path='./chromedriver.exe')
 
 ## 1、强制等待
 import time

@@ -1,40 +1,42 @@
-from requests_html import AsyncHTMLSession   # 导入异步模块
+import asyncio
+from pyppeteer import launch
 
-asession = AsyncHTMLSession()
 
-BASE_URL = "http://edu.51cto.com/courselist/index-p{}.html"
+async def main():
+    browser = await launch(headless=False, args=['--disable-infobars'])  # 运行一个无头的浏览器,headless是否输出网页源码
 
-async def get_html():
-    for i in range(1,3):
-        r =  await asession.get(BASE_URL.format(i))   # 异步等待
-        get_item(r.html)
+    # 打开新的标签页
+    page = await browser.newPage()
 
-def get_item(html):
-    c_list = html.find('.cList',first=True)
-    if c_list:
-        items = c_list.find('.cList_Item')
-        for item in items:
-            title = item.find("h3",first=True).text # 课程名称
-            href = item.find('h3>a',first=True).attrs["href"]  # 课程的链接地址
-            class_time = item.find("div.course_infos>p:eq(0)",first=True).text
-            study_nums = item.find("div.course_infos>p:eq(1)", first=True).text
-            stars = item.find("div.course_infos>div", first=True).text
-            course_target = item.find(".main>.course_target", first=True).text
-            price = item.find(".main>.course_payinfo h4", first=True).text
-            dict = {
-                "title":title,
-                "href":href,
-                "class_time":class_time,
-                "study_nums":study_nums,
-                "stars":stars,
-                "course_target":course_target,
-                "price":price
-            }
-            print(dict)
+    # 设置视图大小
+    await page.setViewport({'width': 1366, 'height': 768})
 
-    else:
-        print("数据解析失败")
+    # 设置UserAgent
+    await page.setUserAgent(
+        'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36')
 
-if __name__ == '__main__':
-    result = asession.run(get_html)
+    # 访问页面
+    response = await page.goto('https://www.baidu.com')
 
+    # status
+    print(response.status)
+
+
+    # 定位元素
+    # 1、只定位一个元素（css选择器）
+    # element = await page.querySelector('#s-top-left > a')
+    # 2、css选择器
+    # elements = await page.querySelectorAll('#s-top-left > a:nth-child(2n)')
+    # 3、xpath
+    # elements = await page.xpath('//div[@id="s-top-left"]/a[1]/text()')
+    # print(elements)
+    # for element in elements:
+    #     print(await (await element.getProperty('textContent')).jsonValue())  # 获取文本内容
+    #     print(await (await element.getProperty('href')).jsonValue())  # 获取href属性
+
+    await asyncio.sleep(5)
+    await browser.close()
+
+
+asyncio.get_event_loop().run_until_complete(main())  # 异步
+# asyncio.run(main())

@@ -19,6 +19,11 @@
         - 1.driver.execute_script(document.body.style.zoom=0.8)，执行这样的JS代码
         - 2.浏览器默认100%，将location，size的值，每个值都乘以5/4
         - 3.直接截标签 code_img = driver.find_element_by_xpath('//*[@id="loginImg"]').screenshot('code.png')
+
+- selenium 的缺点
+    - 速度太慢、对版本配置要求严苛，最麻烦是经常要更新对应的驱动。
+    - 还有些网页是可以检测到是否是使用了selenium 。
+    - 并且selenium 所谓的保护机制不允许跨域 cookies 保存以及登录的时候必须先打开网页然后后加载 cookies 再刷新的方式很不友好
 '''
 
 
