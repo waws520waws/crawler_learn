@@ -10,6 +10,7 @@
     - 8、基于CrawlSpider的全站数据爬取
     - 9、分布式爬虫 (redis)
     - 10、增量式爬虫 (redis)
+    - 11、面试
 
 
 
@@ -275,5 +276,9 @@
         # 存入redis的一个列表中
         self.conn.lpush('name_of_list', data)
         ```
-        
+    
+11、面试
+- 【scrapy 中 yield 的作用】
+    - 在scrapy中，爬取的数据量往往十分巨大，如果使用 return 和 list 存储之后再一次性返回将带来巨大的内存消耗。
+      而 yield 可以在返回一组数据后再处理下一组数据，大大减少了内存的浪费。
     

@@ -71,5 +71,8 @@ print(yesterday)  # datetime.date(2018-7-16)
 # 可以选择格式化输出：
 yesterday = (date.today() + timedelta(days = -1)).strftime("%Y-%m-%d")    # 昨天日期
 print(yesterday)  # '2018-07-16'
-
 ```
+
+## yield
+- 【参考】https://blog.csdn.net/mieleizhi0522/article/details/82142856/
+- 简要理解：yield就是 return 返回一个值，并且记住这个返回的位置，下次再调用时就从这个位置后开始
