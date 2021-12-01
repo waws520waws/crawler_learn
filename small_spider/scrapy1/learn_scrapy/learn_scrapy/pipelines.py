@@ -10,7 +10,7 @@ from itemadapter import ItemAdapter
 
 class LearnScrapyPipeline:
 
-    def __init__(self):
+    def __init__(self):  # 执行一次
         self.fp = None  # 定义一个文件描述符属性
 
     # 重写父类的一个方法：该方法只在爬虫开始的时候被调用一次
@@ -23,7 +23,7 @@ class LearnScrapyPipeline:
     # 该方法可以接收爬虫文件提交过来的item对象
     # 该方法每接收一个item就会被调用一次
     # 因为该方法会被执行调用多次，所以文件的开启和关闭操作写在了另外两个只会各自执行一次的方法中。
-    def process_item(self, item, spider):
+    def process_item(self, item, spider):  # 执行多次
         author = item['author']
         content = item['content']
         self.fp.write(author+'+'+content+'\n')

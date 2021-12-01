@@ -6,13 +6,15 @@
 '''
 import scrapy
 from scrapy import FormRequest
+import json
+from arch_record.items import ArchRecordItem
 
 
 class MainspiderSpider(scrapy.Spider):
     name = 'mainSpider'
     # allowed_domains = ['www.jzda001.coom']
     # start_urls = ['https://www.jzda001.coom']
-    url = ['https://admin.jzda001.com/api/core/002--newsList']
+    url = 'https://admin.jzda001.com/api/core/002--newsList'
 
     def __init__(self):
         self.headers = {
@@ -30,4 +32,13 @@ class MainspiderSpider(scrapy.Spider):
             yield request  # 因为有循环，得到一个结果就返回一个结果，防止一次性返回带来巨大的内存消耗
 
     def parse(self, response):
-        pass
+        data = json.loads(response.text)
+
+        for item in data['rows']:
+            archRecord = ArchRecordItem()
+            archRecord['title'] = item['title']
+            archRecord['author'] = item['userName']
+            archRecord['date'] = item['createTime']
+            # print({'title': archRecord['title'], 'author': archRecord['author'], 'date': archRecord['date']})
+
+            yield archRecord

@@ -4,7 +4,7 @@
     - 2、日志log
     - 3、持久化存储
     - 4、scrapy五大核心组件简介
-    - 5、请求传参（在持久化存储时在不同方法中传递item对象）
+    - 5、请求传参（在持久化存储时在爬虫文件中的不同方法中传递item对象）
     - 6、图片数据爬取之ImagesPipeline
     - 7、scrapy中间件
     - 8、基于CrawlSpider的全站数据爬取
@@ -104,7 +104,10 @@
                   return item
             # 【return item 会将item传递给下一个即将被执行的管道类】
             ```
-            
+
+- 请求后返回的数据解析
+    - json ：使用 `data = json.loads(response.text)`
+    - html: 使用 `response.xpath()`
           
 ### 4、scrapy五大核心组件简介
 ![img_1.png](img_1.png)
