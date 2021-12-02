@@ -6,11 +6,12 @@
     - 4、scrapy五大核心组件简介
     - 5、请求传参（在持久化存储时在爬虫文件中的不同方法中传递item对象）
     - 6、图片数据爬取之ImagesPipeline
-    - 7、scrapy中间件
+    - 7、scrapy中间件（设置请求代理）（selenium）
     - 8、基于CrawlSpider的全站数据爬取
     - 9、分布式爬虫 (redis)
     - 10、增量式爬虫 (redis)
-    - 11、面试
+    - 11、scrapy提高爬取速度
+    - 12、面试
 
 
 
@@ -159,6 +160,7 @@
     - 作用：我们主要使用下载中间件处理请求，一般会对请求设置随机的User-Agent ，设置随机的代理。目的在于防止爬取网站的反爬虫策略。
         - （1）引擎将请求传递给下载器过程中， 下载中间件可以对请求进行一系列处理。比如设置请求的 User-Agent，设置代理等
         - （2）在下载器完成将Response传递给引擎中，下载中间件可以对响应进行一系列处理。比如进行gzip解压等。
+        - 单个代理可以直接在配置文件中设置，多个代理、代理列表则需要用到中间件 
     - 1、'拦截请求'的使用步骤（crawl_wangyi_news项目文件下）：
         - 在middlewares.py文件中，配置ScrapyLearnDownloaderMiddleware类
             - 在process_request(),process_exception()方法中设置UA、代理
@@ -174,6 +176,7 @@
             - 在process_response()方法中设置拦截响应数据后的处理
             - 在配置文件中开启下载中间件、开启管道
         - 在spider777爬虫文件下编写爬虫程序
+- 当然，也可以在中间件中自定一个 中间件类，在此类中实现相应的方法就行，然后在配置文件中开启此管道【例如100例中的'3scrapy-32-B站博人传评论数据'】
     
 ### 8、基于CrawlSpider的全站数据爬取
 - 【代码在 crawlSpider_learn 文件中】
@@ -279,8 +282,42 @@
         # 存入redis的一个列表中
         self.conn.lpush('name_of_list', data)
         ```
-    
-11、面试
+
+### 11、scrapy提高爬取速度
+- 在settings.py中设置如下参数：
+```python
+'''
+scrapy网络请求是基于Twisted，而Twisted默认支持多线程，而且scrapy默认也是通过多线程请求的，并且支持多核CPU的并发，
+我们通过一些设置提高scrapy的并发数可以提高爬取速度。以下三个参数设置：
+
+CONCURRENT_REQUESTS  # 并发请求数
+CONCURRENT_REQUESTS_PER_DOMAIN  # 每个域名的并发请求数
+CONCURRENT_REQUESTS_PER_IP  # 每个ip的并发请求数
+
+COOKIES_ENABLED = False   # 禁用cookies可以避免被ban ？
+'''
+
+# Configure maximum concurrent requests performed by Scrapy (default: 16)
+# 中文：并发请求
+CONCURRENT_REQUESTS = 32
+
+# Configure a delay for requests for the same website (default: 0)
+# See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
+# See also autothrottle settings and docs
+# 降低下载延迟
+# 将下载延迟设为0，这时需要相应的防ban措施，一般使用user agent轮转，构建user agent池，使用中间件轮流选择其中之一来作为user agent。
+DOWNLOAD_DELAY = 0  # 秒
+
+# The download delay setting will honor only one of:
+CONCURRENT_REQUESTS_PER_DOMAIN = 16
+CONCURRENT_REQUESTS_PER_IP = 16
+
+# Disable cookies (enabled by default)
+COOKIES_ENABLED = False
+
+```
+ 
+### 12、面试
 - 【scrapy 中 yield 的作用】
     - 在scrapy中，爬取的数据量往往十分巨大，如果使用 return 和 list 存储之后再一次性返回将带来巨大的内存消耗。
       而 yield 可以在返回一组数据后再处理下一组数据，大大减少了内存的浪费。
