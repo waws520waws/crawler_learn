@@ -197,7 +197,12 @@
         - 【答】  if item.__class__.__name__ == 'DetailItem':
                     print('DetailItem类中的item')
     - 开启管道 
-    
+ 
+- 另外，在100例教程中也有全站数据爬取【3scrapy-34-掘金网全站用户】
+    - 不同类型的网页结构
+    - 不同的操作方法
+
+   
 ### 9、分布式爬虫
 - 【代码在 distributed_crawl 文件中】
 - 如何实现？
@@ -310,7 +315,7 @@ DOWNLOAD_DELAY = 0  # 秒
 
 # The download delay setting will honor only one of:
 CONCURRENT_REQUESTS_PER_DOMAIN = 16
-CONCURRENT_REQUESTS_PER_IP = 16
+CONCURRENT_REQUESTS_PER_IP = 16  # 若此项非0，相对于DOMAIN来说，优先此项 ？
 
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = False
