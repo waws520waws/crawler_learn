@@ -1,11 +1,17 @@
-import asyncio
-from pyppeteer import launch
+import scrapy
 
-async def main():
-    browser = await launch(headless=True)  # 运行一个无头的浏览器
-    page = await browser.newPage()  # 在此浏览器上创建新页面
-    await page.goto('https://www.baidu.com')  # 加载一个页面
-    # await page.screenshot({'path': 'baidu.png'})  # 把网页生成截图
-    await browser.close()
+from apps.items import AppsItem  # 导入item类
+import re  # 导入正则表达式类
 
-asyncio.get_event_loop().run_until_complete(main())  # 异步
+class AppsSpider(scrapy.Spider):
+    name = 'Apps'
+    allowed_domains = ['www.coolapk.com']
+    start_urls = ['https://www.coolapk.com/apk?p=1']
+    custom_settings = {
+        "DEFAULT_REQUEST_HEADERS" :{
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en',
+            'User-Agent':'Mozilla/5.0 你的UA'
+
+        }
+    }

@@ -13,13 +13,6 @@ class CrawlManyPageSpider(scrapy.Spider):
     url = 'https://www.ivsky.com/tupian/ziranfengguang/index_%d.html'
     page_num = 2
 
-    # 回调函数接受item，解析详情页
-    def crawl_detail(self, response):
-        item = response.meta['img_item']  # 调用传递过来的item对象
-        img_desc = response.xpath('//div[@class="al_p"]//text()').extract()
-        item['img_desc'] = img_desc
-        yield item
-
     ## 解析图片名称
     def parse(self, response):
         img_name = response.xpath('//ul[@class="ali"]/li/p/a/text()').extract()
@@ -43,3 +36,10 @@ class CrawlManyPageSpider(scrapy.Spider):
             self.page_num += 1
             # 递归爬取数据：callback参数的值为回调函数（将url请求后，得到的相应数据继续进行parse解析），递归调用parse函数
             yield scrapy.Request(url=new_url, callback=self.parse)
+
+    # 回调函数接受item，解析详情页
+    def crawl_detail(self, response):
+        item = response.meta['img_item']  # 调用传递过来的item对象
+        img_desc = response.xpath('//div[@class="al_p"]//text()').extract()
+        item['img_desc'] = img_desc
+        yield item

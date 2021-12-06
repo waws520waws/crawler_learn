@@ -11,7 +11,8 @@
     - 9、分布式爬虫 (redis)
     - 10、增量式爬虫 (redis)
     - 11、scrapy提高爬取速度
-    - 12、面试
+    - 12、请求返回的数据（response）的解析
+    - 13、面试
 
 
 
@@ -45,13 +46,13 @@
       
 ### 3、持久化存储
 - 【代码在 learn_scrapy 中】
-- 基于终端指令的持久化存储
+- 3.1 基于终端指令的持久化存储
     - 要求：只可以将parse方法的可迭代类型对象（通常为列表or字典）返回值写入本地的文本文件中
     - 执行终端指令：
         - scrapy crawl 爬虫名称 -o xxx.json
         - scrapy crawl 爬虫名称 -o xxx.xml
         - scrapy crawl 爬虫名称 -o xxx.csv
-- 基于管道的持久化存储
+- 3.2 基于管道的持久化存储
     - 认识两个文件
         - items.py：数据结构模板文件。定义数据属性。
         - pipelines.py：管道文件。接收数据（items），进行持久化操作
@@ -105,10 +106,27 @@
                   return item
             # 【return item 会将item传递给下一个即将被执行的管道类】
             ```
+- 3.3 管道类初始化传参（from_crawler类方法）
+    - 可以在初始化的时候传递参数
+```python
+import pymongo
+class KuanPipeline(object):
 
-- 请求后返回的数据解析
-    - json ：使用 `data = json.loads(response.text)`
-    - html: 使用 `response.xpath()`
+    def __init__(self, mongo_url, mongo_db):  # 可以传参，参数来自下面的类方法中
+        self.mongo_url = mongo_url
+        self.mongo_db = mongo_db
+
+    # from_crawler 是一个类方法，在初始化的时候，从 setting.py 中读取配置
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(     # cls代表的是类的本身，相对应的self则是类的一个实例对象
+            # 获取当前爬虫项目下的setting.py文件中的参数
+            mongo_url=crawler.settings.get("MONGO_URL"), 
+            mongo_db=crawler.settings.get("MONGO_DB")
+        )
+```
+
+
           
 ### 4、scrapy五大核心组件简介
 ![img_1.png](img_1.png)
@@ -322,7 +340,22 @@ COOKIES_ENABLED = False
 
 ```
  
-### 12、面试
+### 12、请求返回的数据（response）的解析
+- 返回 json 类型 ：
+    - 使用 `data = json.loads(response.text)`
+- 返回 html 类型:
+    - 使用xpath： `response.xpath()`
+    - 使用css选择器
+        - `response.css('.classname > a')`   定位标签【参考】https://www.w3school.com.cn/cssref/css_selectors.asp
+        - `response.css('span::text')`    选择文本
+        - `response.css('a::attr(href)')`    选择href
+        - `response.css('a::attr(href)').re('')`    支持正则
+- `response.urljoin(url)` 
+    - 自己的理解：会自动获取请求的链接的主域名url，然后与参数中的url拼接
+- `response.request.headers`
+- `response.url`
+
+### 13、面试
 - 【scrapy 中 yield 的作用】
     - 在scrapy中，爬取的数据量往往十分巨大，如果使用 return 和 list 存储之后再一次性返回将带来巨大的内存消耗。
       而 yield 可以在返回一组数据后再处理下一组数据，大大减少了内存的浪费。

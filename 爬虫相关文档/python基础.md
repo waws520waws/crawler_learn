@@ -76,3 +76,26 @@ print(yesterday)  # '2018-07-16'
 ## yield
 - 【参考】https://blog.csdn.net/mieleizhi0522/article/details/82142856/
 - 简要理解：yield就是 return 返回一个值，并且记住这个返回的位置，下次再调用时就从这个位置后开始
+
+## cls 、类方法
+- cls代表的是类的本身，相对应的self则是类的一个实例对象
+- 类方法需要使用 ＠classmethod 修饰符进行修饰
+```python
+class Person(object):
+    def __init__(self, name, age):  # 带两参数
+        self.name = name
+        self.age = age
+        print('self:', self)
+
+    # 定义一个build方法，返回一个person实例对象，这个方法等价于 p = Person("Tom", 18)
+    @classmethod
+    def build(cls):
+        # cls()等于Person()
+        p = cls("Tom", 18)  # 需带两参数
+        print('cls:', cls)
+        return p
+
+if __name__ == '__main__':
+    person = Person.build()
+    print(person, person.name, person.age)
+```
