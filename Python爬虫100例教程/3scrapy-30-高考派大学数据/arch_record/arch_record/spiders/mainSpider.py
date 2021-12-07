@@ -28,7 +28,8 @@ class MainspiderSpider(scrapy.Spider):
                 'limit': '17',
                 'pageNo': str(i)
             }
-            request = FormRequest(self.url, headers=self.headers, formdata=form_data, callback=self.parse)
+            # dont_filter=True 不过滤重复请求
+            request = FormRequest(self.url, headers=self.headers, formdata=form_data, callback=self.parse, dont_filter=True)
             yield request  # 因为有循环，得到一个结果就返回一个结果，防止一次性返回带来巨大的内存消耗
 
     def parse(self, response):

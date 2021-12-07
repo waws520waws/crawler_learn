@@ -31,6 +31,7 @@ class JuejinspiderSpider(scrapy.Spider):
         for li in li_list:
             userID = li.xpath('.//a[@class="username"]/@href').extract_first()
             userID = userID.split('user/')[1]
-            yield scrapy.Request(self.base_url.format(userID), callback=self.parse)
+            # dont_filter=True 不过滤重复请求
+            yield scrapy.Request(self.base_url.format(userID), callback=self.parse, dont_filter=True)
 
 
