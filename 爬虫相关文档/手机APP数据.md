@@ -11,6 +11,8 @@
 - Fiddler与Charles 功能大同小异，基本上都是抓包、断点调试、请求替换、构造请求、代理功能
 - mitmproxy跟Fiddler和Charles最大的不同就是，mitmproxy可以进行二次开发
 
+- 【**注意**】如果是没有无线网卡的 台式机 那似乎只能使用 模拟器 进行网络代理配置
+
 ### 1、Fiddler
 - Fiddler 运行在Windows平台
 - Fiddler 是一款开源免费抓包工具
@@ -50,14 +52,48 @@
   mitmpproxy 作为代理可以拦截、存储爬虫获取到的数据，或修改数据调整爬虫的行为
   
 #### 3.1 安装
-- `pip install mitmproxy` 完成后，系统将拥有 mitmproxy、mitmdump、mitmweb 三个命令
-- 要启动 mitmproxy 用 `mitmproxy`、`mitmdump`、`mitmweb` 这三个命令中的任意一个即可，这三个命令功能一致，且都可以加载自定义脚本，唯一的区别是交互界面的不同
-- `mitmproxy`    
-  mitmproxy 命令启动后，会提供一个命令行界面，用户可以实时看到发生的请求，并通过命令过滤请求，查看请求数据。
-  mitmproxy 命令不支持在 windows 系统中运行
+- 1）`pip install mitmproxy` 
+  - 完成后，系统将拥有 mitmproxy、mitmdump、mitmweb 三个命令
+- 2）证书安装
+  - 【官方文档】https://docs.mitmproxy.org/stable/overview-getting-started/
+  - 【win10】: https://blog.csdn.net/hihell/article/details/86603528
+  - 监听谁，谁就需要证书，手机的证书安装参考Charles的方法
+- 3）网络代理设置
+  - 启动 mitmproxy 后会看到默认端口
+  - 电脑代理需要设置成上面看到的ip、port
+  - 手机上代理只需设置成电脑的ip（端口默认为8080，可填也可不填）
   
-- `mitmweb`  
-  mitmweb 命令启动后，会提供一个 web 界面，用户可以实时看到发生的请求，并通过 GUI 交互来过滤请求，查看请求数据。
+#### 3.2 使用
+- 在python环境下启动 mitmproxy，用 `mitmproxy`、`mitmdump`、`mitmweb` 这三个命令中的任意一个即可，这三个命令功能一致，且都可以加载自定义脚本，唯一的区别是交互界面的不同
+  - `mitmproxy`    
+    mitmproxy 命令启动后，会提供一个命令行界面，用户可以实时看到发生的请求，并通过命令过滤请求，查看请求数据。
+    mitmproxy 命令不支持在 windows 系统中运行
+    
+  - `mitmweb`  
+    mitmweb 命令启动后，会提供一个 web 界面，用户可以实时看到发生的请求，并通过 GUI 交互来过滤请求，查看请求数据。
+    
+  - `mitmdump`  
+    mitmdump 命令启动后——你应该猜到了，没有界面，程序默默运行，所以 mitmdump 无法提供过滤请求、查看数据的功能，只能结合自定义脚本，默默工作
+
+- `mitmdump -p 8889` 指定端口启动
+    
+- 执行python脚本
+  - 1）进入到python环境下的某个目录下（带python脚本）
+  - 2）带脚本的方式启动 mitmproxy：`mitmdump -s script.py` (如100例中的例子48)
+  - 也可以保存数据：`mitmdump -w crawl.txt`
+  - 可访问 http://httpbin.org/get 看请求头是否设置成功
+- python脚本相关方法
+  - 1）mitmdump提供了专门的日志输出功能，可以设定不同级别以不同颜色输出结果。 ctx模块有log功能，调用不同的输出方法就可以输出不同颜色的结果，以方便我们做调试。
+```python
+from mitmproxy import ctx
+def response(flow):
+    info = ctx.log.info
+    ctx.log.warn(str(flow.request.query))
+    ctx.log.error(str(flow.request.headers))
+
+```
   
-- `mitmdump`  
-  mitmdump 命令启动后——你应该猜到了，没有界面，程序默默运行，所以 mitmdump 无法提供过滤请求、查看数据的功能，只能结合自定义脚本，默默工作
+## 二、app自动化测试工具 Appium
+- 简介：Appium 是一种开源、跨平台的测试自动化工具，适用于原生、混合和移动 Web 和桌面应用程序。
+  支持模拟器 (iOS)、模拟器 (Android) 和真实设备 (iOS、Android、Windows、Mac)。  
+  它有点类似Selenium，可以自动操作APP实现一系列的操作。
