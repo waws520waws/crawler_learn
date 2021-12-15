@@ -1,8 +1,17 @@
 import requests
-from lxml import etree
+import re
+class VIP(object):
+    def __init__(self):
+        self.api = "http://y.mt2t.com/lines?url="
+        self.url = "http://v.youku.com/v_show/id_XNDA0MDg2NzU0OA==.html?spm=a2h03.8164468.2069780.5"
 
-res = requests.get('https://xclusiveloaded.com/dragon-beatz-with-me-ft-berry-l/').text
+    def run(self):
+        res = requests.get(self.api+self.url)
+        html = res.text
 
-html = etree.HTML(res)
-aa = html.xpath('//strong[contains(text(), "DOWNLOAD MP3")]/../@href')
-print(aa)
+        key = re.search(r'key:"(.*?)"',html).group(1)
+        print(key)
+
+if __name__ == '__main__':
+    vip = VIP()
+    vip.run()
