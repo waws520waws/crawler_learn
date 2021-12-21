@@ -20,12 +20,16 @@ drag = webdri.find_element_by_id('draggable')
 print(type(drag))
 print(drag.text)
 
-# 实例化动作链对象
+## 实例化动作链对象
 action = ActionChains(webdri)
 
-action.click_and_hold(drag)
+# 模拟人移动鼠标到指定DOM元素位置
+action.move_to_element(drag).perform()
+
+action.click_and_hold(drag).perform()
 
 for i in range(5):
+    ## 当调用ActionChains的方法时，不会立即执行，而是会将所有的操作按顺序存放在一个队列里，当你调用perform()方法时，队列中的事件会依次执行
     # perform立即执行动作链操作
     action.move_by_offset(17, 0).perform()
 
