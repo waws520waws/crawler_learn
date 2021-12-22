@@ -113,43 +113,50 @@ def slide(driver, distance):
     button = driver.find_element_by_class_name('geetest_slider_button')
     print(button.location)
     while True:
-        action = ActionChains(driver)
 
-        action.click_and_hold(button).perform()
+        ActionChains(driver).click_and_hold(button).perform()
+
+        # action.move_by_offset(50, 0).perform()
 
         # 模拟人的移动轨迹
+        ## 这里移动的轨迹还不够随机，可能会被识别出来
         tracks = get_tracks(distance)
         for track in tracks:
             print(track)
-            action.move_by_offset(track, 0).perform()
+            ActionChains(driver).move_by_offset(track, 0).perform()
+            newBtn = driver.find_element_by_class_name('geetest_slider_button')
+            print(newBtn.location)
 
-        action.release().perform()
+        ActionChains(driver).release().perform()
 
         time.sleep(5)
-        break
+
         # 判断
-        # if driver.current_url == url:
-        #     print("失败...再来一次...")
-        #     # 单击刷新按钮刷新
-        #     driver.execute_script('document.getElementsByClassName("geetest_refresh_1")[0].click()')
-        #     # 停一下
-        #     time.sleep(2)
-        #     # 截图
-        #     save_img(driver)
-        #     # 识别
-        #     distance = discern_distance()
-        # else:
-        #     print("成功")
-        #     break
+        if driver.current_url == url:
+            print("失败...再来一次...")
+            # 单击刷新按钮刷新
+            driver.execute_script('document.getElementsByClassName("geetest_refresh_1")[0].click()')
+            # 停一下
+            time.sleep(2)
+            # 截图
+            save_img(driver)
+            # 识别
+            distance = discern_distance()
+        else:
+            print("成功")
+            break
 
 
 def get_canvas_img(driver):
     driver.find_element_by_class_name("el-button").click()
 
+
 def main():
     url = 'https://captcha1.scrape.center/'
-    driver = webdriver.Chrome('/Users/jieyang/Downloads/chromedriver96')
-    # driver.set_window_size(1280, 800)
+    # driver = webdriver.Chrome('/Users/jieyang/Downloads/chromedriver96')
+    driver = webdriver.Chrome('D:/pyEnvsPackage/chromedriver_win32_92/chromedriver.exe')
+
+    # driver.maximize_window()
     driver.get(url)
 
     driver.find_elements_by_class_name('el-input__inner')[0].send_keys('qqqq')
@@ -175,7 +182,7 @@ def main():
     # 滑动
     slide(driver, distance)
 
-    # driver.close()
+    driver.close()
 
 
 if __name__ == '__main__':
