@@ -31,6 +31,7 @@ action.click_and_hold(drag).perform()
 for i in range(5):
     ## 当调用ActionChains的方法时，不会立即执行，而是会将所有的操作按顺序存放在一个队列里，当你调用perform()方法时，队列中的事件会依次执行
     # perform立即执行动作链操作
+    # move_by_offset中每一步的位置坐标都是针对上一步的位置的偏移量
     action.move_by_offset(17, 0).perform()
 
 # 释放动作链

@@ -1,3 +1,4 @@
+### 1、简介
 - selenium作用：
     - 便捷获取网站中动态加载的数据
     - 便捷实现模拟登陆
@@ -9,25 +10,28 @@
     - 速度太慢、对版本配置要求严苛，最麻烦是经常要更新对应的驱动。
     - 还有些网页是可以检测到是否是使用了selenium 。
     - 并且selenium 所谓的保护机制不允许跨域 cookies 保存以及登录的时候必须先打开网页然后后加载 cookies 再刷新的方式很不友好
-- 使用：
-    - 安装selenium包
-    - 下载一个浏览器的驱动程序（需要下载与浏览器版本对应的驱动程序）
-        - google：http://chromedriver.storage.googleapis.com/index.html
-        - hotfire：https://github.com/mozilla/geckodriver/releases/
-        - IE：http://selenium-release.storage.googleapis.com/index.html
-- 设置浏览器窗口大小
+    
+### 2、使用：
+#### 2.1 安装
+- 安装selenium包
+- 下载一个浏览器的驱动程序（需要下载与浏览器版本对应的驱动程序）
+    - google：http://chromedriver.storage.googleapis.com/index.html
+    - hotfire：https://github.com/mozilla/geckodriver/releases/
+    - IE：http://selenium-release.storage.googleapis.com/index.html
+#### 2.2 使用
+- 1）设置浏览器窗口大小
     - 最大化和最小化浏览器
         - `driver.maximize_window()`
         - `driver.minimize_window()`
     - 将浏览器设置一个指定大小
         - `driver.set_window_size(100, 50)`
-- 截图问题
+- 2）截图问题
     - 缩放比例的问题。如果你的谷歌浏览器调整成80%缩放就不会有问题，默认打开是100%。3种解决方式：
         - 1.`driver.execute_script(document.body.style.zoom=0.8)`，执行这样的JS代码
         - 2.浏览器默认100%，将location，size的值，每个值都乘以5/4
         - 3.直接截标签 `code_img = driver.find_element_by_xpath('//*[@id="loginImg"]').screenshot('code.png')`
     
-### 如何更改selenium标识，防止被检测出来
+### 3、如何更改selenium标识，防止被检测出来
 - 使用selenium时，window.navigator.webdriver 的值为 true，我们要将其改为false
 - 访问这个网站可以测试是否设置成功：https://intoli.com/blog/not-possible-to-block-chrome-headless/chrome-headless-test.html
   
