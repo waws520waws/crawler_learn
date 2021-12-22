@@ -29,6 +29,11 @@
     - 有两种数据类型，str和bytes；str类型存unicode数据，bytes类型存bytes数据
     - 文本总是unicode，由str类型表示，二进制数据则由bytes类型表示
     
+## 转码
+- 字符 与 Unicode编码 互转
+    - 1、字符 转化为 Unicode编码 方法：`ord("A")`
+    - 2、Unicode编码 转化为 字符 方法：`chr(65)`
+    
 
 ## 字符串
 - r" " : 的作用是去除转义字符
@@ -71,6 +76,10 @@ print(yesterday)  # datetime.date(2018-7-16)
 # 可以选择格式化输出：
 yesterday = (date.today() + timedelta(days = -1)).strftime("%Y-%m-%d")    # 昨天日期
 print(yesterday)  # '2018-07-16'
+
+import time
+t = time.time()  # 当前时间的毫秒数
+print(t)  # 1640244263.058194
 ```
 
 ## yield
