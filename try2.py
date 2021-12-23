@@ -1,5 +1,5 @@
 import random
 
-q = 2
+q = 'qwert'
 a = 10
-print(11 % a)
+print(q[2])
