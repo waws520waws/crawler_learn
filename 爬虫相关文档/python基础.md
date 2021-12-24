@@ -33,7 +33,16 @@
 - 字符 与 Unicode编码 互转
     - 1、字符 转化为 Unicode编码 方法：`ord("A")`
     - 2、Unicode编码 转化为 字符 方法：`chr(65)`
-    
+- 字节 转 字符串
+```python
+import chardet
+response = requests.get(url=url, headers=headers).content  # 得到字节
+# chardet.detect() 函数接受一个参数，一个非unicode字符串， 它返回一个字典， 其中包含自动检测到的字符编码和从0到1的可信度级别。
+charset = chardet.detect(response).get('encoding')  # 得到编码格式, {'confidence': 0.98999999999999999, 'encoding': 'GB2312'}
+# bytes.decode(encoding=, errors=), 该函数返回字符串。换句话说是bytes类型转化成str类型的函数
+# encoding规定解码方式。bytes数据是由什么编码方式编码的，该函数encoding参数就必须用相应解码方式，这样才能返回正确字符串
+response = response.decode(charset, "ignore")  # 解码得到字符串
+```
 
 ## 字符串
 - r" " : 的作用是去除转义字符
