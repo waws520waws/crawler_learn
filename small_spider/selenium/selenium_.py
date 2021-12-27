@@ -5,7 +5,7 @@ import time
 
 ## 设置成无可视化界面（亦称无头浏览器，phantomJs亦是）
 chrome_options = webdriver.ChromeOptions()
-# chrome_options.add_argument('--proxy-server=%s' % ip)
+# chrome_options.add_argument('--proxy-server=%s' % ip)  # 代理ip
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
 
@@ -16,6 +16,9 @@ webdri = webdriver.Chrome(executable_path='chromedriver.exe', chrome_options=chr
 ## 等待加载的方式见 wait_load_setting.py 文件
 
 webdri.get('https://www.taobao.com/')
+# 加载本地 html文件【以 file:// 开头的绝对路径】
+# webdri.get("file:///Users/jieyang/PycharmProjects/crawler_learn/Python爬虫100例教程/7反爬-64-字体反爬2(汽车之家)/demo.html")
+
 # 定位元素
 search_input = webdri.find_element_by_id('q')
 # 交互

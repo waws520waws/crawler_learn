@@ -1,14 +1,14 @@
-from fontTools.ttLib import TTFont
+import execjs
 
-### 本地已经下载好的字体处理
-base_font = TTFont('Python爬虫100例教程/7反爬-63-字体反爬1(猫眼影视)/font.ttf')  # 打开本地的ttf文件
+with open('test3.js', 'r', encoding='utf-8') as f:
+    js = f.read()
 
-# font.saveXML('01.xml')  # 转为xml文件
+exe = execjs.compile(js)
 
-base_uni_list = base_font.getGlyphOrder()[2:]   # 获取所有编码，去除前2个，可查看前文图示
+res = exe.call('fs')
 
-print(base_uni_list)
+print(res)
 
-obj1 = base_font['glyf']['uniE481']
+aa = exe.eval('bb')
 
-print(obj1)
+print(aa)
