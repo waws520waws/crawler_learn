@@ -3,15 +3,14 @@ line = "Cats are smarter than dogs{aaa}, sa are dog gg"
 
 cls_name = 'hs_kw0_baikeXV'
 string = '2#.hs_kw0_baikeXV::before { content:"适" }#.hs_kw1_baikeXV::before { content:"离地间隙" }'
-searchObj = re.search('\.%s::before { content:"(.*?)" }' % cls_name, line)
-print(searchObj)
-print(searchObj.group())
-print(searchObj.group(1))
-print(searchObj.group(2))
+# searchObj = re.search('\.%s::before { content:"(.*?)" }' % cls_name, line)
+# print(searchObj)
+# print(searchObj.group())
+# print(searchObj.group(1))
+# print(searchObj.group(2))
 
-# rex = re.compile('%s (.*?){aaa}' % aa)
-# msg = rex.search(line).group(1)
-# print(msg)
+rex = re.findall('\..*?::before { conssstent:"(.*?)" }', string)
+print()
 
 
 '''
