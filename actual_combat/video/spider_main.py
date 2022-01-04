@@ -139,10 +139,10 @@ def merge_ts():
         - mac：cat 1.ts 2.ts 3.ts > xxx.mp4
         - windows: copy /b 1.ts+2.ts+3.ts xxx.mp4
 
-    也可以用 FFmpeg 工具：
+    也可以用 ffmpeg 工具：
         FFmpeg 有非常强大的功能包括视频采集、视频格式转换、视频抓图、给视频加水印，合并等功能。
         也有python API接口：
-            pip install ffmpy3
+            pip install ffmpeg-python
     '''
 
     file_list = []

@@ -117,3 +117,84 @@ if __name__ == '__main__':
     person = Person.build()
     print(person, person.name, person.age)
 ```
+
+## os模块
+- 简介：操作系统接口模块
+  - 与 sys模块 的区别
+    - os模块负责程序与操作系统的交互，提供了访问操作系统底层的接口;
+      sys模块负责程序与python解释器的交互，提供了一系列的函数和变量，用于操控python的运行时环境
+- 使用
+- 1）查看操作系统信息
+```python
+import os
+print(os.name)  # posix
+info = os.uname()
+print(info)  # posix.uname_result(sysname='Darwin', nodename='jiedeMacBook-Pro.local', release='20.3.0', version='Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021; root:xnu-7195.81.3~1/RELEASE_ARM64_T8101', machine='x86_64')
+print(info.sysname)  # Darwin
+print(info.nodename)  # jiedeMacBook-Pro.local
+
+print(os.sep)  # 当前系统路径的分隔符
+```
+
+- 2）os 执行cmd命令
+```python
+import os
+# os.system
+# os.system是简单粗暴的执行cmd指令，如果想获取在cmd输出的内容，是没办法获到的
+os.system('pip install requests')
+
+# os.popen
+# 如果想获取控制台输出的内容，那就用os.popen的方法，popen返回的是一个file对象，跟open打开文件一样操作了，r是以读的方式打开
+f = os.popen(r"python ./hello.py", "r")
+d = f.read()  # 读文件
+print(d)
+print(type(d))
+f.close()
+
+```
+
+- 3）文件路径相关
+```python
+import os
+#  生成绝对路径
+print(os.path.abspath('data.txt'))
+print(os.path.abspath('hello.png'))
+
+# 将2个路径合并成一个（不会判断有没有这个绝对路径）
+print(os.path.join('/home/kiosk','hello.png'))  # 结果：/home/kiosk/hello.png
+print(os.path.join(os.path.abspath('.'),'hello.jpg'))  # 当前路径下
+
+# 获取当前路径
+print (os.getcwd())
+
+# 获取文件名或目录名
+filename = ' /Users/jieyang/PycharmProjects/crawler_learn/try.py'
+print(os.path.basename(filename))  # try.py
+print(os.path.dirname(filename))  # /Users/jieyang/PycharmProjects/crawler_learn
+
+# 返回目录下的所有文件和目录名
+os.listdir()
+
+# 创建目录/删除目录
+os.mkdir('img')						##创建目录（若存在则创建失败）
+os.makedirs('img/jpg/png')			##递归创建
+os.rmdir('img')						##删除目录
+
+# 创建文件/删除文件
+os.mknod('aa.txt')  ##创建
+os.remove('aa.txt')  ##删除
+
+# 判断文件或目录是否存在
+print(os.path.exists('data1.txt'))
+
+# 判断是否是文件
+print(os.path.isfile(filepath))
+
+# 分离后缀名和文件名
+print(os.path.splitext('hello.png'))  # ('hello', '.png')
+
+# 将目录名和文件名分离
+print(os.path.split('/tmp/hello/python.jpg'))  # ('/tmp/hello', 'python.jpg')
+
+
+```

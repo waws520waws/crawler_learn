@@ -37,6 +37,11 @@
 - 4）加载本地数据（`Map Local`）
   - 加载本地的模拟数据来开发测试
   
+#### 2.3、出现的问题
+- url下出现 <unknown>, 查看unknown的notes里面出现：SSL Proxying not enabled for this host:enable in Proxy Setting,SSL locations
+  - 解决方法：`proxy` -> `SSL Proxying Settings` 下设置需要代理的域名和端口号，`*:*` 为代理所有
+  
+
 ### 3、mitmproxy
 - 简介： mitmproxy 就是用于MITM的proxy, MITM即中间人攻击。说白了就是服务器和客户机中间通讯多增加了一层，会适时的查、记录其截获的数据，或篡改数据。
   跟Fiddler和Charles最大的不同就是，mitmproxy可以进行二次开发，尤其可以对接python。  
