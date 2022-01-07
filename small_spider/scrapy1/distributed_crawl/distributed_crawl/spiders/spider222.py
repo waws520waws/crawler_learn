@@ -11,7 +11,7 @@ class Spider222Spider(RedisCrawlSpider):
     # start_urls = ['http://www.xxx.com/']
 
     # 调度器名称
-    redis_key = 'sun'
+    redis_key = 'spider222:start_urls'  # 一般取名为 '爬虫文件名:start_urls'
 
     links = LinkExtractor(allow=r'index_\d+.html')
 

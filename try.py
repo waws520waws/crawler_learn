@@ -1,53 +1,8 @@
-import requests
-import re
+import redis
 
-url = 'https://www.bilibili.com/video/BV1Eq4y1m7AM'
+## 1、连接数据库
 
-url_headers = {
-    'referer': 'https://www.bilibili.com/',
-    'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"macOS"',
-    'sec-fetch-dest': 'document',
-    'sec-fetch-mode': 'navigate',
-    'sec-fetch-site': 'same-origin',
-    'sec-fetch-user': '?1',
-    'upgrade-insecure-requests': '1',
-    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36',
-}
+# redis 取出的结果默认是字节, 可以设定 decode_responses=True 改成字符串
+r = redis.StrictRedis('127.0.0.1', port=6379, db=0, decode_responses=True)  # 连接本地编号为0的数据库
 
-page = requests.get(url, headers=url_headers).text
-# with open('./bilibili.html', 'w') as f:
-#     f.write(req.text)
-
-# with open('./bilibili.html', 'r', encoding='utf-8') as f:
-#     page = f.read()
-
-cmp1 = re.compile('"id":64.*?"baseUrl":"(.*?)"', re.S)
-baseUrl = cmp1.search(page).group(1)
-print(baseUrl)
-
-cmp2 = re.compile('"id":64.*?"bandwidth":(.*?),', re.S)
-bandwidth = cmp2.search(page).group(1)
-print(bandwidth)
-video_range = 'bytes=0-' + bandwidth
-
-base_headers = {
-    'accept': '*/*',
-    'accept-encoding': 'identity',
-    'accept-language': 'zh-CN,zh;q=0.9',
-    'if-range': 'Fri, 31 Dec 2021 00:58:42 GMT',
-    'origin': 'https://www.bilibili.com',
-    'range': video_range,
-    'referer': url,
-    'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"macOS"',
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'cross-site',
-    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
-}
-req = requests.get(baseUrl, headers=base_headers)
-with open('./video1.mp4', 'wb') as f:
-    f.write(req.content)
+r.set('key2', 'sting2')

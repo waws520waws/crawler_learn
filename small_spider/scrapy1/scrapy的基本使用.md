@@ -133,8 +133,9 @@ class KuanPipeline(object):
 - 引擎(Scrapy)
     - 用来处理整个系统的数据流处理, 触发事务(框架核心)
 - 调度器(Scheduler)
-    - 用来接受引擎发过来的请求, 压入队列中, 并在引擎再次请求的时候返回. 可以想像成一个URL（抓取网页的网址或者说是链接）的优先队列, 由它来决定下一个要抓取的网址是什么, 
+    - 用来接受引擎发过来的请求, 将请求地址压入队列（Queue）中, 并在引擎再次请求的时候返回. 可以想像成一个URL（抓取网页的网址或者说是链接）的优先队列, 由它来决定下一个要抓取的网址是什么, 
     - 同时去除重复的网址
+    - scrapy中有一个本地爬取队列Queue，这个队列是利用deque模块实现的，如果有新的请求发起之后，就会放到队列里面，然后该请求会被scheduler调度，之后该请求就会交给Downloader执行爬取。
 - 下载器(Downloader)
     - 用于下载网页内容, 并将网页内容返回给蜘蛛(Scrapy下载器是建立在twisted这个高效的异步模型上的)
 - 爬虫(Spiders)
@@ -232,7 +233,7 @@ class KuanPipeline(object):
     - 1）爬虫文件中【代码基于crawlSpider_learn文件中的】：
         - 导入 `from scrapy_redis.spiders import RedisCrawlSpider`
         - 将`allowed_domains`、`start_urls`属性注释掉
-        - 添加新属性 `redis_key = 'sun'`，可以被共享的调度器队列的名称
+        - 添加新属性 `redis_key = 'spider222:start_urls'`，可以被共享的调度器队列的名称(一般取名为 '爬虫文件名:start_urls')
         - 将当前爬虫类的父类修改成 `RedisCrawlSpider`
     - 2）修改配置文件settings.py
         - 指定使用可以被共享的管道：  
@@ -249,12 +250,15 @@ class KuanPipeline(object):
             SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
             # 配置调度器是否要持久化，也就是当爬虫结束时，要不要清空Redis中请求队列和去重指纹的set
             # 例如某一台机子宕机了，这台机子爬过的数据就可以不用再爬了
+            # 可以实现暂停和恢复的功能
             SCHEDULER_PERSIST = True
             ```
         - 指定redis【数据存放位置】（不指定的话默认是存放在本机）
             ```python
             DEDIS_HOST = 'redis服务的ip地址'
             REDIS_PORT = 6379
+            REDIS_ENCODING = 'utf-8'
+            REDIS_PARAMS = {'password':'abcd@1234'}
             ```
     - 3）redis相关操作 (win10)
         - win10安装
@@ -285,7 +289,7 @@ class KuanPipeline(object):
     - 5）向调度器的队列中放入一个起始的url：
         - 调度器的队列在redis的客户端中（在上面启动的redis客户端后输入以下命令）：
             - `lpush 调度器名称(爬虫文件中添加的redis_key) 起始url`
-    - 爬取的数据存储在redis的 spiderName:item 中（在上面的redis客户端中输入命令可查看）
+    - 爬取的数据存储在redis的 spiderName:items 中（在上面的redis客户端中输入命令可查看）
     
 ### 10、增量式爬虫
 - 【代码在 get_update_data 文件中】

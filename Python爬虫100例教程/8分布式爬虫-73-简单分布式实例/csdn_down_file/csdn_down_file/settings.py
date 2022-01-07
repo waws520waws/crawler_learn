@@ -1,4 +1,4 @@
-# Scrapy settings for distributed_crawl project
+# Scrapy settings for csdn_down_file project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -6,19 +6,19 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-import scrapy_redis.dupefilter
 
-BOT_NAME = 'distributed_crawl'
+BOT_NAME = 'csdn_down_file'
 
-SPIDER_MODULES = ['distributed_crawl.spiders']
-NEWSPIDER_MODULE = 'distributed_crawl.spiders'
+SPIDER_MODULES = ['csdn_down_file.spiders']
+NEWSPIDER_MODULE = 'csdn_down_file.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'distributed_crawl (+http://www.yourdomain.com)'
+#USER_AGENT = 'csdn_down_file (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
+
 LOG_LEVEL = 'ERROR'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
@@ -47,13 +47,13 @@ LOG_LEVEL = 'ERROR'
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'distributed_crawl.middlewares.DistributedCrawlSpiderMiddleware': 543,
+#    'csdn_down_file.middlewares.CsdnDownFileSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'distributed_crawl.middlewares.DistributedCrawlDownloaderMiddleware': 543,
+#    'csdn_down_file.middlewares.CsdnDownFileDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -64,28 +64,9 @@ LOG_LEVEL = 'ERROR'
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'distributed_crawl.pipelines.DistributedCrawlPipeline': 300,
-#}
-
-## 指定共享的管道
-ITEM_PIPELINES = {
-    'scrapy_redis.pipelines.RedisPipeline': 400,
-}
-
-## 指定共享的调度器
-# 增加一个去重容器类的配置，作用：使用Redis的set集合来存储请求的指纹数据，从而实现请求去重的持久化
-DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
-# 使用scrapy_redis组件自己的调度器
-SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
-# 配置调度器是否要持久化，也就是当爬虫结束时，要不要清空Redis中请求队列和去重指纹的set
-# 例如某一台机子宕机了，这台机子爬过的数据就可以不用再爬了
-SCHEDULER_PERSIST = True
-
-REDIS_HOST = '127.0.0.1'
-REDIS_PORT = 6379
-REDIS_ENCODING = 'utf-8'
-# REDIS_PARAMS = {'password': 'abcd@1234'}
+# ITEM_PIPELINES = {
+#    'csdn_down_file.pipelines.CsdnDownFilePipeline': 300,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -107,4 +88,25 @@ REDIS_ENCODING = 'utf-8'
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+# ####################### redis配置文件 #######################
+
+# 引入相关头文件
+from scrapy_redis.scheduler import Scheduler
+from scrapy_redis.pipelines import RedisPipeline
+
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# 确保所有爬虫共享相同的去重指纹,也可以自定义自己的去重规则
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+# 设置redis为item pipeline
+ITEM_PIPELINES = {
+  'scrapy_redis.pipelines.RedisPipeline': 300
+}
+# 在redis中保持scrapy-redis用到的队列，不会清理redis中的队列，从而可以实现暂停和恢复的功能。
+SCHEDULER_PERSIST = True
+
+REDIS_HOST = '127.0.0.1'  # 主机名
+REDIS_PORT = 6379  # 端口
+REDIS_ENCODING = "utf-8"
 
