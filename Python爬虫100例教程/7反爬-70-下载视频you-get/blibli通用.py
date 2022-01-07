@@ -1,3 +1,7 @@
+'''
+【注意】此案例对 bilibili 视频，进行下载，通用
+'''
+
 import requests
 import re
 
@@ -27,9 +31,8 @@ cmp1 = re.compile('"id":64.*?"baseUrl":"(.*?)"', re.S)
 baseUrl = cmp1.search(page).group(1)
 print(baseUrl)
 
-cmp2 = re.compile('"id":64.*?"bandwidth":(.*?),', re.S)
-bandwidth = cmp2.search(page).group(1)
-print(bandwidth)
+## range 的取值范围可以先请求一次 baseUrl，然后在响应头中找到
+bandwidth = '1111111'
 video_range = 'bytes=0-' + bandwidth
 
 base_headers = {

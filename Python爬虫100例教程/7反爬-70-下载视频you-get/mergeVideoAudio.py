@@ -1,3 +1,7 @@
+'''
+合并 无声视频 与 音频
+'''
+
 import ffmpeg
 
 input_video = ffmpeg.input('video.mp4')  # 等价于在命令行输入 ffmpeg，所以系统还需要安装 ffmpeg
