@@ -259,6 +259,7 @@ class KuanPipeline(object):
             REDIS_PORT = 6379
             REDIS_ENCODING = 'utf-8'
             REDIS_PARAMS = {'password':'abcd@1234'}
+            # REDIS_URL = 'redis://用户名:密码@ip:port/数据库索引号'
             ```
     - 3）redis相关操作 (win10)
         - win10安装
@@ -280,7 +281,7 @@ class KuanPipeline(object):
         - 命令行执行 `redis-server redis.windows.conf`
         - 启动客户端【当前终端已被占用，打开另一个终端】：`redis-cli`
             - 客户端常用命令
-                - 向调度器的队列中放入一个起始的: `urllpush 调度器名称 url`
+                - 向调度器的队列中放入一个起始的: `lpush 调度器名称 url`
                 - 查看分布式相关信息：`key *` (spiderName:items中存放着爬取的数据)
                 - 查看爬取到的数据：`lrange spiderName:items 0 -1`  (0 -1表示所有范围)
                 - 查看数据长度: `llen spiderName:items`

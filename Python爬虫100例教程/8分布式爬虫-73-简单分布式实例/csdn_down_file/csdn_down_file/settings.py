@@ -14,12 +14,12 @@ NEWSPIDER_MODULE = 'csdn_down_file.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'csdn_down_file (+http://www.yourdomain.com)'
+USER_AGENT = "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2224.3 Safari/537.36"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
-LOG_LEVEL = 'ERROR'
+# LOG_LEVEL = 'ERROR'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -92,21 +92,22 @@ LOG_LEVEL = 'ERROR'
 
 # ####################### redis配置文件 #######################
 
-# 引入相关头文件
-from scrapy_redis.scheduler import Scheduler
-from scrapy_redis.pipelines import RedisPipeline
-
+# 1.启用调度将请求存储进redis  必须
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-# 确保所有爬虫共享相同的去重指纹,也可以自定义自己的去重规则
+
+# 2.确保所有spider通过redis共享相同的重复过滤。  必须
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
-# 设置redis为item pipeline
-ITEM_PIPELINES = {
-  'scrapy_redis.pipelines.RedisPipeline': 300
+
+#公共管道
+ITEM_PIPELINES  =  {
+    'scrapy_redis.pipelines.RedisPipeline':300,
+    # 'db250.pipelines.Db250Pipeline': 200,
 }
-# 在redis中保持scrapy-redis用到的队列，不会清理redis中的队列，从而可以实现暂停和恢复的功能。
+# 3.指定连接到Redis时要使用的主机和端口。  必须
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+# 不清理redis队列，允许暂停/恢复抓取。
+# 可选  允许暂定,redis数据不丢失
 SCHEDULER_PERSIST = True
 
-REDIS_HOST = '127.0.0.1'  # 主机名
-REDIS_PORT = 6379  # 端口
-REDIS_ENCODING = "utf-8"
 

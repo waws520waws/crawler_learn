@@ -7,8 +7,8 @@ from scrapy_redis.spiders import RedisCrawlSpider
 
 class Spider222Spider(RedisCrawlSpider):
     name = 'spider222'
-    # allowed_domains = ['www.xxx.com']
-    # start_urls = ['http://www.xxx.com/']
+    # allowed_domains = ['www.ivsky.com']
+    # start_urls = ['https://www.ivsky.com/tupian/ziranfengguang/']
 
     # 调度器名称
     redis_key = 'spider222:start_urls'  # 一般取名为 '爬虫文件名:start_urls'
