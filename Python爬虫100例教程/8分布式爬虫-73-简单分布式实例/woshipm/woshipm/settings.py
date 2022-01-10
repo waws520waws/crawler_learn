@@ -1,4 +1,4 @@
-# Scrapy settings for csdn_down_file project
+# Scrapy settings for woshipm project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,19 +7,17 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'csdn_down_file'
+BOT_NAME = 'woshipm'
 
-SPIDER_MODULES = ['csdn_down_file.spiders']
-NEWSPIDER_MODULE = 'csdn_down_file.spiders'
+SPIDER_MODULES = ['woshipm.spiders']
+NEWSPIDER_MODULE = 'woshipm.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2224.3 Safari/537.36"
+USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.60 Safari/537.17"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
-
-# LOG_LEVEL = 'ERROR'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -47,13 +45,13 @@ ROBOTSTXT_OBEY = False
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'csdn_down_file.middlewares.CsdnDownFileSpiderMiddleware': 543,
+#    'woshipm.middlewares.WoshipmSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'csdn_down_file.middlewares.CsdnDownFileDownloaderMiddleware': 543,
+#    'woshipm.middlewares.WoshipmDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -64,9 +62,9 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'csdn_down_file.pipelines.CsdnDownFilePipeline': 300,
-# }
+#ITEM_PIPELINES = {
+#    'woshipm.pipelines.WoshipmPipeline': 300,
+#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -111,7 +109,7 @@ REDIS_HOST = '127.0.0.1'  # 主机名
 REDIS_PORT = 6379  # 端口
 REDIS_ENCODING = "utf-8"
 REDIS_PARAMS = {
-  'db': 0
+    'db': 1
 }
 
 

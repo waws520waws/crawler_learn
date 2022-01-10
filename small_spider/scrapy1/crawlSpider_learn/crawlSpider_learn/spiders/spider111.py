@@ -28,7 +28,7 @@ class Spider111Spider(CrawlSpider):
         # 不用担心取到相同的链接，scrapy自带过滤器，自动去重
         Rule(links, callback='parse_item', follow=True),
 
-        Rule(links_detail, callback='parse_detail', follow=False),
+        Rule(links_detail, callback='parse_detail', follow=False),  # 因为是元祖，逗号不可省略
     )
 
     ## 【如下两个方法不可以实现请求传参，因为其是继承Spider父类】

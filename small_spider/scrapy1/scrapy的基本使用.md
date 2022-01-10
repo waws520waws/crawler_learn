@@ -12,7 +12,8 @@
     - 10、增量式爬虫 (redis)
     - 11、scrapy提高爬取速度
     - 12、请求返回的数据（response）的解析
-    - 13、面试
+    - 13、scrapy调试
+    - 14、面试
 
 
 
@@ -258,7 +259,10 @@ class KuanPipeline(object):
             DEDIS_HOST = 'redis服务的ip地址'
             REDIS_PORT = 6379
             REDIS_ENCODING = 'utf-8'
-            REDIS_PARAMS = {'password':'abcd@1234'}
+            REDIS_PARAMS = {
+                'password':'abcd@1234',
+                'db': 1
+            }
             # REDIS_URL = 'redis://用户名:密码@ip:port/数据库索引号'
             ```
     - 3）redis相关操作 (win10)
@@ -355,12 +359,32 @@ COOKIES_ENABLED = False
         - `response.css('span::text')`    选择文本
         - `response.css('a::attr(href)')`    选择href
         - `response.css('a::attr(href)').re('')`    支持正则
-- `response.urljoin(url)` 
-    - 自己的理解：会自动获取请求的链接的主域名url，然后与参数中的url拼接
+- `response.urljoin(url1)` 
+    - 自己的理解：会自动获取请求的链接的主域名url（如：https://www.baidu.com），然后与参数中的url1（相对路径）拼接成一个完整的路径
 - `response.request.headers`
 - `response.url`
 
-### 13、面试
+
+### 13、scrapy调试
+- 1、在项目的文件夹下增加一个文件main.py（scrapy.cfg同等级中）
+```python
+from scrapy.cmdline import execute
+import os
+import sys
+if __name__ == '__main__':
+    
+    # 1、os.path.abspath(path) 返回绝对路径
+    # 2、os.path.dirname(path) 返回文件夹路径
+    # 3、sys.path 返回模块的搜索路径，初始化时使用PYTHONPATH环境变量的值， sys.path.append当前文件执行的目录的路劲就加入到python
+    # 4、file 本文件的地址
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    execute(['scrapy','crawl','scrapy_name'])
+```
+- 2、在scrapy的spider中设置断点，main.py中用debug调试则可
+- 相当于是在脚本中执行cmd命令，这样可以使用debug运行
+
+
+### 14、面试
 - 【scrapy 中 yield 的作用】
     - 在scrapy中，爬取的数据量往往十分巨大，如果使用 return 和 list 存储之后再一次性返回将带来巨大的内存消耗。
       而 yield 可以在返回一组数据后再处理下一组数据，大大减少了内存的浪费。
