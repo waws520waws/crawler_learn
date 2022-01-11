@@ -37,10 +37,10 @@ class Spider333Spider(CrawlSpider):
         for li in li_list:
             detail_url = li.xpath('./p/a/@href').extract_first()
 
-            # 将详情页的url存入redis的set中(urls_set_name中是存的url)
+            # 将详情页的url存入redis的set中(key:urls_set_name； value:一个集合，detail_url存储在这个集合中)
             ex = self.conn.sadd('urls_set_name', detail_url)
 
-            # 若redis中没有此url，则成功存入set中，ex为1，表示还未爬取过
+            # 若redis中没有此url，则成功存入set中，返回1，表示还未爬取过，否则返回0
             if ex == 1:
                 print('该url没有被爬过，可以进行数据的爬取')
                 yield scrapy.Request(url=detail_url, callback=self.parse_detail)
