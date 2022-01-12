@@ -124,6 +124,13 @@ class CrawlWangyiNewsDownloaderMiddleware:
 
         # UA伪装
         request.headers['User-Agent'] = random.choice(self.user_agent_list)
+
+        # cookie设置（scrapy中cookie的设置必须是字典格式）
+        request.cookies = {
+            '': '',
+            '': ''
+        }
+
         # 也可设置代理（请求之前设置的代理）
 
         return None

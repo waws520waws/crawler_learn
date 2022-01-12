@@ -11,6 +11,8 @@ from redis import Redis
         - 方法：继承Spider父类，手动编写request，传递item
     - 分析2：继承CrawlSpider父类，自动获取链接，请求数据，解析数据
         - 下面使用此方法
+        
+- 技术：借助redis集合进行url去重
 '''
 
 class Spider333Spider(CrawlSpider):

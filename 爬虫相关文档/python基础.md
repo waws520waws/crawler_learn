@@ -198,3 +198,13 @@ print(os.path.split('/tmp/hello/python.jpg'))  # ('/tmp/hello', 'python.jpg')
 
 
 ```
+
+## 导入目录文件
+- https://zhuanlan.zhihu.com/p/64893308
+- 导入上级模块
+```python
+import sys 
+# sys.path的作用：当使用import语句导入模块时，解释器会搜索当前模块所在目录以及sys.path指定的路径去找需要import的模块
+sys.path.append("..") 
+import xxx
+```
