@@ -1,0 +1,50 @@
+{
+    "status": "ok",
+    "datas": {
+        "firstScrapyd": {
+            "mainspider": {
+                "5451eff4744f11eca2c81e00a236d081": {
+                    "log_path": "./logs/firstScrapyd/mainspider/5451eff4744f11eca2c81e00a236d081.log",
+                    "json_path": "./logs/firstScrapyd/mainspider/5451eff4744f11eca2c81e00a236d081.json",
+                    "json_url": "http://127.0.0.1:6800/logs/firstScrapyd/mainspider/5451eff4744f11eca2c81e00a236d081.json",
+                    "size": 9213,
+                    "position": 9213,
+                    "status": "ok",
+                    "pages": 2,
+                    "items": 30,
+                    "first_log_time": "2022-01-13 17:01:03",
+                    "latest_log_time": "2022-01-13 17:01:06",
+                    "runtime": "0:00:03",
+                    "shutdown_reason": "N/A",
+                    "finish_reason": "finished",
+                    "last_update_time": "2022-01-14 14:14:06"
+                }
+            }
+        }
+    },
+    "settings_py": "/Users/jieyang/opt/anaconda3/envs/crawler/lib/python3.7/site-packages/logparser/settings.py",
+    "settings": {
+        "scrapyd_server": "127.0.0.1:6800",
+        "scrapyd_logs_dir": "./logs",
+        "parse_round_interval": 10,
+        "enable_telnet": true,
+        "override_telnet_console_host": "",
+        "log_encoding": "utf-8",
+        "log_extensions": [
+            ".log",
+            ".txt"
+        ],
+        "log_head_lines": 100,
+        "log_tail_lines": 200,
+        "log_categories_limit": 10,
+        "jobs_to_keep": 100,
+        "chunk_size": 10000000,
+        "delete_existing_json_files_at_startup": false,
+        "keep_data_in_memory": false,
+        "verbose": false,
+        "main_pid": 0
+    },
+    "last_update_timestamp": 1642141002,
+    "last_update_time": "2022-01-14 14:16:42",
+    "logparser_version": "0.8.2"
+}
