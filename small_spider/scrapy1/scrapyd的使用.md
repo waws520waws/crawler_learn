@@ -7,8 +7,9 @@
         - cmd输入：`scrapyd` 运行
     - 2、创建scrapy项目
     - 3、安装scrapyd-client: `pip install scrapyd-client`
+        - scrapyd-client模块是专门打包scrapy爬虫项目到scrapyd服务中的
     - 4、Linux或者Mac可以直接运行：`scrapyd-deploy -l`
-        - windows需要做一些其他工作，才能运行
+        - windows需要做一些其他工作，才能运行（见【参考】链接）
     - 5、修改scrapy项目下的 scrapy.cfg 文件
         - 解开url的注释
         - 将 `[deploy]` 修改为 `[deploy:target_name]`，如下：
