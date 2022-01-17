@@ -68,3 +68,27 @@ threads.append(thread2)
 for t in threads:
     t.join()
 print("退出主线程")
+
+
+
+
+############################################# 最简单实现
+import threading
+import time
+
+def run(n):
+    print("task", n)
+    time.sleep(1)
+    print('2s')
+    time.sleep(1)
+    print('1s')
+    time.sleep(1)
+    print('0s')
+    time.sleep(1)
+
+if __name__ == '__main__':
+    for i in range(5):
+        t = threading.Thread(target=run)
+        t.start()
+##############################################
+

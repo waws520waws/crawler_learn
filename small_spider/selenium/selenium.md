@@ -113,3 +113,23 @@ driver = webdriver.Chrome('/Users/jieyang/Downloads/chromedriver96', options=opt
 driver.get('https://www.baidu.com')
 # 。。。。其他操作
 ```
+
+- 存在的问题（跳转到新的标签页时selenium被反爬识别）
+    - 有的网站中的超链接是在新的标签页中打开，如果网站新的页面也加入了验证（一般都会加的）那么我们还是没有办法验证通过，解决办法其实也非常简单，
+      我们通过selenium把页面中所有的超链接都增加一个 target属性，并且把值设置为 _self，表示在当前页中打开链接。
+        ```python
+        driver.implicitly_wait(10)
+        driver.get("https://passport.csdn.net/login?code=public")
+        
+        js =  "let a_list = document.getElementsByTagName('a');[...a_list].map(a => {a.setAttribute('target', '_self')})"
+        driver.execute_script(js)  # 执行JavaScript代码
+        ```
+      
+    - 在当前标签页中打开指定链接
+        ```python
+        # 跳转页面
+        time.sleep(2)
+        new_window = 'window.open("{}", "_self")'.format("https://i.csdn.net/#/uc/profile")  
+        driver.execute_script(new_window)
+        driver.implicitly_wait(10)
+        ```
