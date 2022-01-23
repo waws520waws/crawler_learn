@@ -1,0 +1,130 @@
+2022-01-23 17:16:03 [scrapy.utils.log] INFO: Scrapy 2.5.0 started (bot: firstserver)
+2022-01-23 17:16:03 [scrapy.utils.log] INFO: Versions: lxml 4.6.3.0, libxml2 2.9.10, cssselect 1.1.0, parsel 1.6.0, w3lib 1.22.0, Twisted 21.7.0, Python 3.7.11 (default, Jul 27 2021, 07:03:16) - [Clang 10.0.0 ], pyOpenSSL 19.1.0 (OpenSSL 1.1.1h  22 Sep 2020), cryptography 3.2.1, Platform Darwin-20.3.0-x86_64-i386-64bit
+2022-01-23 17:16:03 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.selectreactor.SelectReactor
+2022-01-23 17:16:03 [scrapy.crawler] INFO: Overridden settings:
+{'BOT_NAME': 'firstserver',
+ 'LOG_FILE': 'logs/firstserver/tryspider/2022-01-23T17_15_57.log',
+ 'NEWSPIDER_MODULE': 'firstserver.spiders',
+ 'ROBOTSTXT_OBEY': True,
+ 'SPIDER_MODULES': ['firstserver.spiders']}
+2022-01-23 17:16:03 [scrapy.extensions.telnet] INFO: Telnet Password: 034be3eb4c532f3a
+2022-01-23 17:16:03 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats']
+2022-01-23 17:16:03 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2022-01-23 17:16:03 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2022-01-23 17:16:03 [scrapy.middleware] INFO: Enabled item pipelines:
+[]
+2022-01-23 17:16:03 [scrapy.core.engine] INFO: Spider opened
+2022-01-23 17:16:03 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2022-01-23 17:16:03 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+2022-01-23 17:16:03 [scrapy.core.engine] DEBUG: Crawled (404) <GET http://top.baidu.com/robots.txt> (referer: None)
+2022-01-23 17:16:03 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301) to <GET https://top.baidu.com/board?tab=realtime> from <GET http://top.baidu.com/buzz?b=1&fr=topindex>
+2022-01-23 17:16:04 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://top.baidu.com/board?tab=realtime> (referer: None)
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  勇于自我革命赢得历史主动 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  疫情外溢2省3地 均与北京丰台关联 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  讲好冬奥故事 共赴冰雪之约 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  北京新增5例本土确诊 4例无症状 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  新年落马第四虎曾被下属妻子举报 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  被拐24年的张洋洋给了母亲一个吻 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  小红书回应违反未成年人保护法被罚 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  国足回应3名归化球员滞留荷兰机场 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  济南增2例本土确诊 系北京病例密接 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  西安社区领导怒怼咨询群众被停职 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  山东聊城发现1例无症状 从北京返乡 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  中纪委全会闭幕 两虎应声落马 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  北京冬奥会开幕式彩排 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  博主刘庸在印度染新冠 曾饮恒河水 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  东海航空与乘务员空中互殴机长发声 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  青海德令哈5.8级地震 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  初六返程车票今日开售 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  美下令撤离驻乌克兰使馆人员家属 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  西安男子因家暴妻子被撤职 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  北京风险区域人员原则上不出京 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  31省区市新增本土确诊19例 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  许昆林当选江苏省省长 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  13岁男生手绘中草药图走红 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  洛国富炮轰足协不尊重球员 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  大陆卖31元的立陶宛酒在台卖137元 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  大规模山火席卷美国加州沿岸 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  汤加火山喷发引发海啸已致6死 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  被宁波的欢迎回家过年整破防了 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  北京现有1个高风险2个中风险地区 '}
+2022-01-23 17:16:04 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>
+{'title': '  美国3只逃跑实验室猴子被安乐死 '}
+2022-01-23 17:16:04 [scrapy.core.engine] INFO: Closing spider (finished)
+2022-01-23 17:16:04 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'downloader/request_bytes': 717,
+ 'downloader/request_count': 3,
+ 'downloader/request_method_count/GET': 3,
+ 'downloader/response_bytes': 144068,
+ 'downloader/response_count': 3,
+ 'downloader/response_status_count/200': 1,
+ 'downloader/response_status_count/301': 1,
+ 'downloader/response_status_count/404': 1,
+ 'elapsed_time_seconds': 1.21819,
+ 'finish_reason': 'finished',
+ 'finish_time': datetime.datetime(2022, 1, 23, 9, 16, 4, 333130),
+ 'item_scraped_count': 30,
+ 'log_count/DEBUG': 33,
+ 'log_count/INFO': 10,
+ 'memusage/max': 235536384,
+ 'memusage/startup': 235536384,
+ 'response_received_count': 2,
+ 'robotstxt/request_count': 1,
+ 'robotstxt/response_count': 1,
+ 'robotstxt/response_status_count/404': 1,
+ 'scheduler/dequeued': 2,
+ 'scheduler/dequeued/memory': 2,
+ 'scheduler/enqueued': 2,
+ 'scheduler/enqueued/memory': 2,
+ 'start_time': datetime.datetime(2022, 1, 23, 9, 16, 3, 114940)}
+2022-01-23 17:16:04 [scrapy.core.engine] INFO: Spider closed (finished)
