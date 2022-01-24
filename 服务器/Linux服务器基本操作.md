@@ -2,6 +2,7 @@
 - Mac
   - `ssh root@47.101.158.121`
   - or `ssh usrname@47.101.158.121`
+  - `Ctrl + D` 断开连接
 - Win
   - 先安装 xshell
 
@@ -53,6 +54,7 @@
 
 ### 5、服务器上安装mongodb（centos）
 - 【参考】https://www.cnblogs.com/zhenling/p/14415116.html
+    - 此种方法安装后的配置文件在：/etc/mongodb.conf
 - 添加用户
     - 【参考】https://www.cnblogs.com/stardust233/p/12193850.html
 
@@ -62,3 +64,13 @@
     - `systemctl stop mongod.service` 　　  # 停止
     - `systemctl enable mongod.service` 　　# 自启
     - `mongo`   进入mongodb
+
+- 出现的问题
+    - 1）注意配置文件（mongodb.conf）中的参数值的格式
+        ```commandline
+        security:
+          authorization: enabled   # disable or enabled
+        ```
+    - 2）无法启动服务（像自定义的方式）
+        - 【参考】https://www.cnblogs.com/lax-17xu/p/11660700.html
+        - 但是这种方法要启动两个终端（需要先运行 mongod）
