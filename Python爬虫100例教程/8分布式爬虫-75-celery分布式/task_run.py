@@ -66,7 +66,7 @@ Periodic Tasks:（要写配置文件）
     celery beat是一个调度器，它可以周期内指定某个worker来执行某个任务。
     如果我们想周期执行某个任务需要增加beat_schedule配置信息. 
     不能在windows上运行
-    启动worker处理周期性任务(命令行):celery -A proj worker --loglevel=info --beat
+    启动worker处理周期性任务(shell命令行):celery -A proj worker --loglevel=info --beat
 
     celery需要保存上次任务运行的时间在数据文件中，文件在当前目录下名字叫celerybeat-schedule. beat需要访问此文件：
         celery -A proj beat -s /home/celery/var/run/celerybeat-schedule
