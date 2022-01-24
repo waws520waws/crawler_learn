@@ -50,6 +50,7 @@
     - 此方法是在root下安装环境，不会污染环境吗？
     
 - 3）可以将这些命令添加到一个定时执行的脚本中，利用linux的定时任务（crontab）来跑
+    - 【参考】https://mapengsen.blog.csdn.net/article/details/109016423
 
 
 ### 5、服务器上安装mongodb（centos）
