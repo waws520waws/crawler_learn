@@ -51,7 +51,18 @@
     
 - 3）可以将这些命令添加到一个定时执行的脚本中，利用linux的定时任务（crontab）来跑
     - 【参考】https://mapengsen.blog.csdn.net/article/details/109016423
-
+    - 定时crontab
+        - `*/1 * * * * sh /home/jieyangali/test.sh > /home/jieyangali/crontab_shell.log 2>&1 &`
+            - 解释：每分钟执行一次后面的命令
+            - `>` 将输出重定向到log文件（通常是输出到终端，这里是输出到文件）（以覆盖的方式）
+            - `>>` （以追加的方式）【参考：https://www.runoob.com/linux/linux-shell-io-redirections.html】
+            - `2>&1` 将错误重定向到标准输出（而输出使用了 `>` 重定向到了log文件），所以log文件中会记录错误信息
+            - 最后的 `&` 表示把该命令以 后台方式 执行
+            
+        - crontab定时任务中使用python相关命令要 **写全命令安装路径**
+            - 例如：使用python执行py文件 `~/anaconda3/bin/python /home/jieyangali/project111/myfirst.py`
+            - `which python` or `whereis python` 查看路径
+    
 
 ### 5、服务器上安装mongodb（centos）
 - 【参考】https://www.cnblogs.com/zhenling/p/14415116.html
