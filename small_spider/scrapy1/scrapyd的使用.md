@@ -40,6 +40,7 @@
     - 8、修改配置文件，允许外网访问
         - scrapyd包 路径下的 default_scrapyd.conf 文件：
             - 将文件中的 bind_address 改为 `0.0.0.0`(所有均可访问) 或者 指定某个ip
+    
          
 ## 2、scrapydweb
 - （爬虫管理平台）是一个美化scrapyd的可视化组件，集成并且提供 更多 可视化功能和 更优美 的界面。
@@ -49,8 +50,9 @@
 - 使用
     - 【参考】https://dream.blog.csdn.net/article/details/108325969
     - 安装scrapydweb：`pip install scrapydweb`
-    - 运行scrapydweb：`scrapydweb` （需要先运行scrapyd）
+    - 运行scrapydweb：`scrapydweb` （需要先运行scrapyd）（在哪个文件下运行都可以，不care）
         - 会在当前目录下生成 scrapydweb_settings_v10.py 文件
+        - 第二次运行才会出现 访问网址（即得先有scrapydweb_settings_v10.py文件）
     - 打开上面的配置文件，进行配置
         - 由于是本地跑，所注释掉 `('username', 'password', 'localhost', '6801', 'group')`, 其中group是组名，可以吧scrapyd自动划分成组
         - 注意下面参数
@@ -74,8 +76,15 @@
         - Deploy Project ：  部署项目
         - Send Text ：       可邮件通知爬取结果
         - 其他功能如：打开scrapyweb安全认证，开启https，可在配置文件中设置
+- 服务器上运行scrapydweb
+    - `nohub scrapydweb > /dev/null &` 
     
 - 其他爬虫管理平台
     - SpiderKeeper本篇博客待介绍的，基于 scrapyd，开源版的scrapyhub，同样不支持scrapy以外的爬虫。
     - Gerapy 采用 Django+VUE 实现，该平台国内大佬开发，UI美观，支持的功能与 Scrapydweb 类似。
     - Grawlab 采用 Golang+VUE 实现，该平台不局限于scrapy了，可以运行各种爬虫，不过部署比较复杂。
+    
+    
+## 3、基于scrapyd + scrapydweb 的可视化部署（服务器）（多台机器，分布式）
+- 【参考】https://www.cnblogs.com/TurboWay/p/12019005.html
+- 【问题】没有日志文件，可以在本地跑下（版本是否一致）

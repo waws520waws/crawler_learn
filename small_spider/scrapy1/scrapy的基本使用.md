@@ -13,7 +13,7 @@
     - 10、增量式爬虫 (redis)
     - 11、scrapy提高爬取速度
     - 12、请求返回的数据（response）的解析
-    - 13、scrapy调试
+    - 13、scrapy调试（执行）
     - 14、面试
 
 
@@ -34,6 +34,7 @@
 - 【5、可选：持久化存储】
 - 6、 执行工程：
     - `scrapy crawl spiderName [--nolog]`
+    - 另一种执行方式：目录中的第13点
     
 ### scrapy优缺点
 - 优点
@@ -395,7 +396,7 @@ COOKIES_ENABLED = False
 - `response.url`
 
 
-### 13、scrapy调试
+### 13、scrapy调试（执行）
 - 1、在项目的文件夹下增加一个文件main.py（scrapy.cfg同等级中）
 ```python
 from scrapy.cmdline import execute
@@ -408,7 +409,7 @@ if __name__ == '__main__':
     # 3、sys.path 返回模块的搜索路径，初始化时使用PYTHONPATH环境变量的值， sys.path.append当前文件执行的目录的路劲就加入到python
     # 4、file 本文件的地址
     sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-    execute(['scrapy','crawl','scrapy_name'])
+    execute(['scrapy','crawl','spider_name'])
 ```
 - 2、在scrapy的spider中设置断点，main.py中用debug调试则可
 - 相当于是在脚本中执行cmd命令，这样可以使用debug运行

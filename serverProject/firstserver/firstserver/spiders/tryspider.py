@@ -11,4 +11,6 @@ class TryspiderSpider(scrapy.Spider):
         for title in title_list:
             item = FirstserverItem()
             item["title"] = title
-            yield item
+            print(item)
+            print(type(item))
+            return item

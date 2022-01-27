@@ -38,7 +38,9 @@
         - 原因：系统会优先找 /usr/bin 下的启动文件，此时，进入/usr/bin，建立软连接（让此python指向我们配置的环境下的python）
             - `ln -s /home/jieyangali/anaconda3/envs/crawler37/bin/python ./python`
     
-    - 方法3：在定时脚本中，先写一些命令进入到conda环境下，再写执行项目的命令
+    - 方法3：先激活conda环境（`source activate crawler37`），这时可直接执行 python命令
+
+    - 方法4：在定时脚本中，先写一些命令进入到conda环境目录下（或者先激活conda环境），再写执行项目的命令
 
 - 2））不用conda环境，如何配置python环境并运行？
     - 阿里云自带 python3
@@ -51,6 +53,12 @@
     
 - 3）可以将这些命令添加到一个定时执行的脚本中，利用linux的定时任务（crontab）来跑
     - 【参考】https://mapengsen.blog.csdn.net/article/details/109016423
+        - `systemctl start crond`  启动服务 
+        - `systemctl stop crond`  关闭服务 
+        - `systemctl restart crond`  重启服务 
+        - `systemctl reload crond`  重新载入配置
+        - `service  crond status`  查看crontab运行状态
+        - `chkconfig –level 35 crond on` 或 `chkconfig crond on`  加入开机自动启动
     - 定时crontab
         - `*/1 * * * * sh /home/jieyangali/test.sh > /home/jieyangali/crontab_shell.log 2>&1 &`
             - 解释：每分钟执行一次后面的命令
@@ -62,6 +70,8 @@
         - crontab定时任务中使用python相关命令要 **写全命令安装路径**
             - 例如：使用python执行py文件 `~/anaconda3/bin/python /home/jieyangali/project111/myfirst.py`
             - `which python` or `whereis python` 查看路径
+      
+- 3））scrapydweb中也可以定时
     
 
 ### 5、服务器上安装mongodb（centos）
@@ -78,7 +88,7 @@
     - `mongo`   进入mongodb
 
 - 出现的问题
-    - 1）注意配置文件（mongodb.conf）中的参数值的格式
+    - 1）注意配置文件（mongodb.conf）中的参数值的格式（值不加引号）
         ```commandline
         security:
           authorization: enabled   # disable or enabled
@@ -86,3 +96,5 @@
     - 2）无法启动服务（像自定义的方式）
         - 【参考】https://www.cnblogs.com/lax-17xu/p/11660700.html
         - 但是这种方法要启动两个终端（需要先运行 mongod）
+    - 3）端口问题（mongodb远程连接不上）
+        - 阿里云有个**安全组规则**，需要在里面打开需要用到的端口

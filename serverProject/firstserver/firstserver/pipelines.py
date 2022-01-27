@@ -11,7 +11,11 @@ import pymongo
 
 class FirstserverPipeline:
     def __init__(self):
-        pymongo.MongoClient('127.0.0.1:')
+        client = pymongo.MongoClient('47.101.158.121', 27017)
+        self.db = client['testdb']
+        self.db.authenticate('jieyang', '970706')
 
     def process_item(self, item, spider):
+        if item:
+            self.db['mytable1'].insert_one(dict(item))
         return item

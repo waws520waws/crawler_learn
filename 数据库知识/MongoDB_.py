@@ -5,10 +5,11 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 # 或者
 # myclient = pymongo.MongoClient('127.0.0.1', 27017)
 
-
 ## 1、创建数据库test
 test_db = myclient["test_db"]
-test_db.authenticate('user', 'password')
+test_db.authenticate('user', 'password')  ## pymongo3.9版本及以前
+## myclient = pymongo.MongoClient('mongodb://jieyang:970706@47.101.158.121:27017/test_db')  ## pymongo4.0
+
 
 # 【注意】: 在 MongoDB 中，数据库只有在内容插入后才会创建! 就是说，数据库创建后要创建集合(数据表)并插入一个文档(记录)，数据库才会真正创建。
 
