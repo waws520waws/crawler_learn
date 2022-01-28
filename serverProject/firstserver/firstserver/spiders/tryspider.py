@@ -13,4 +13,5 @@ class TryspiderSpider(scrapy.Spider):
             item["title"] = title
             print(item)
             print(type(item))
-            return item
+            yield item
+            break

@@ -1,0 +1,98 @@
+{
+    "status": "ok",
+    "datas": {
+        "firstserver": {
+            "tryspider": {
+                "2022-01-28T10_42_43": {
+                    "log_path": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs/firstserver/tryspider/2022-01-28T10_42_43.log",
+                    "json_path": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs/firstserver/tryspider/2022-01-28T10_42_43.json",
+                    "json_url": "http://127.0.0.1:6800/logs/firstserver/tryspider/2022-01-28T10_42_43.json",
+                    "size": 4051,
+                    "position": 4051,
+                    "status": "ok",
+                    "pages": 1,
+                    "items": 1,
+                    "first_log_time": "2022-01-28 10:42:46",
+                    "latest_log_time": "2022-01-28 10:42:47",
+                    "runtime": "0:00:01",
+                    "shutdown_reason": "N/A",
+                    "finish_reason": "finished",
+                    "last_update_time": "2022-01-28 10:56:33"
+                },
+                "2022-01-27T19_17_22": {
+                    "log_path": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs/firstserver/tryspider/2022-01-27T19_17_22.log",
+                    "json_path": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs/firstserver/tryspider/2022-01-27T19_17_22.json",
+                    "json_url": "http://127.0.0.1:6800/logs/firstserver/tryspider/2022-01-27T19_17_22.json",
+                    "size": 0,
+                    "position": 0,
+                    "status": "ok",
+                    "pages": null,
+                    "items": null,
+                    "first_log_time": "N/A",
+                    "latest_log_time": "N/A",
+                    "runtime": "N/A",
+                    "shutdown_reason": "N/A",
+                    "finish_reason": "N/A",
+                    "last_update_time": "2022-01-28 10:56:33"
+                },
+                "2022-01-28T10_39_57": {
+                    "log_path": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs/firstserver/tryspider/2022-01-28T10_39_57.log",
+                    "json_path": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs/firstserver/tryspider/2022-01-28T10_39_57.json",
+                    "json_url": "http://127.0.0.1:6800/logs/firstserver/tryspider/2022-01-28T10_39_57.json",
+                    "size": 0,
+                    "position": 0,
+                    "status": "ok",
+                    "pages": null,
+                    "items": null,
+                    "first_log_time": "N/A",
+                    "latest_log_time": "N/A",
+                    "runtime": "N/A",
+                    "shutdown_reason": "N/A",
+                    "finish_reason": "N/A",
+                    "last_update_time": "2022-01-28 10:56:33"
+                },
+                "2022-01-28T10_57_10": {
+                    "log_path": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs/firstserver/tryspider/2022-01-28T10_57_10.log",
+                    "json_path": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs/firstserver/tryspider/2022-01-28T10_57_10.json",
+                    "json_url": "http://127.0.0.1:6800/logs/firstserver/tryspider/2022-01-28T10_57_10.json",
+                    "size": 4050,
+                    "position": 4050,
+                    "status": "ok",
+                    "pages": 1,
+                    "items": 1,
+                    "first_log_time": "2022-01-28 10:57:16",
+                    "latest_log_time": "2022-01-28 10:57:18",
+                    "runtime": "0:00:02",
+                    "shutdown_reason": "N/A",
+                    "finish_reason": "finished",
+                    "last_update_time": "2022-01-28 10:57:23"
+                }
+            }
+        }
+    },
+    "settings_py": "/Users/jieyang/opt/anaconda3/envs/crawler/lib/python3.7/site-packages/logparser/settings.py",
+    "settings": {
+        "scrapyd_server": "127.0.0.1:6800",
+        "scrapyd_logs_dir": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs",
+        "parse_round_interval": 10,
+        "enable_telnet": true,
+        "override_telnet_console_host": "",
+        "log_encoding": "utf-8",
+        "log_extensions": [
+            ".log",
+            ".txt"
+        ],
+        "log_head_lines": 100,
+        "log_tail_lines": 200,
+        "log_categories_limit": 10,
+        "jobs_to_keep": 100,
+        "chunk_size": 10000000,
+        "delete_existing_json_files_at_startup": false,
+        "keep_data_in_memory": false,
+        "verbose": false,
+        "main_pid": 0
+    },
+    "last_update_timestamp": 1643342366,
+    "last_update_time": "2022-01-28 11:59:26",
+    "logparser_version": "0.8.2"
+}

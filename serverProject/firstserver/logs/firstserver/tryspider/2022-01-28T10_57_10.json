@@ -1,0 +1,102 @@
+{
+    "log_path": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs/firstserver/tryspider/2022-01-28T10_57_10.log",
+    "json_path": "/Users/jieyang/PycharmProjects/crawler_learn/serverProject/firstserver/logs/firstserver/tryspider/2022-01-28T10_57_10.json",
+    "json_url": "http://127.0.0.1:6800/logs/firstserver/tryspider/2022-01-28T10_57_10.json",
+    "size": 4050,
+    "position": 4050,
+    "status": "ok",
+    "_head": "2022-01-28 10:57:16 [scrapy.utils.log] INFO: Scrapy 2.5.0 started (bot: firstserver)\n2022-01-28 10:57:16 [scrapy.utils.log] INFO: Versions: lxml 4.6.3.0, libxml2 2.9.10, cssselect 1.1.0, parsel 1.6.0, w3lib 1.22.0, Twisted 21.7.0, Python 3.7.11 (default, Jul 27 2021, 07:03:16) - [Clang 10.0.0 ], pyOpenSSL 19.1.0 (OpenSSL 1.1.1h  22 Sep 2020), cryptography 3.2.1, Platform Darwin-20.3.0-x86_64-i386-64bit\n2022-01-28 10:57:16 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.selectreactor.SelectReactor\n2022-01-28 10:57:16 [scrapy.crawler] INFO: Overridden settings:\n{'BOT_NAME': 'firstserver',\n 'LOG_FILE': 'logs/firstserver/tryspider/2022-01-28T10_57_10.log',\n 'NEWSPIDER_MODULE': 'firstserver.spiders',\n 'SPIDER_MODULES': ['firstserver.spiders']}\n2022-01-28 10:57:16 [scrapy.extensions.telnet] INFO: Telnet Password: 0c5629fdb524cee1\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled extensions:\n['scrapy.extensions.corestats.CoreStats',\n 'scrapy.extensions.telnet.TelnetConsole',\n 'scrapy.extensions.memusage.MemoryUsage',\n 'scrapy.extensions.logstats.LogStats']\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled downloader middlewares:\n['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',\n 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',\n 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',\n 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',\n 'scrapy.downloadermiddlewares.retry.RetryMiddleware',\n 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',\n 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',\n 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',\n 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',\n 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',\n 'scrapy.downloadermiddlewares.stats.DownloaderStats']\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled spider middlewares:\n['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',\n 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',\n 'scrapy.spidermiddlewares.referer.RefererMiddleware',\n 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',\n 'scrapy.spidermiddlewares.depth.DepthMiddleware']\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled item pipelines:\n['firstserver.pipelines.FirstserverPipeline']\n2022-01-28 10:57:16 [scrapy.core.engine] INFO: Spider opened\n2022-01-28 10:57:16 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)\n2022-01-28 10:57:16 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023\n2022-01-28 10:57:16 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301) to <GET https://top.baidu.com/board?tab=realtime> from <GET http://top.baidu.com/buzz?b=1&fr=topindex>\n2022-01-28 10:57:17 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://top.baidu.com/board?tab=realtime> (referer: None)\n2022-01-28 10:57:18 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>\n{'title': '  讲好冬奥故事 共赴冰雪之约 '}\n2022-01-28 10:57:18 [scrapy.core.engine] INFO: Closing spider (finished)\n2022-01-28 10:57:18 [scrapy.statscollectors] INFO: Dumping Scrapy stats:\n{'downloader/request_bytes': 484,\n 'downloader/request_count': 2,\n 'downloader/request_method_count/GET': 2,\n 'downloader/response_bytes': 142669,\n 'downloader/response_count': 2,\n 'downloader/response_status_count/200': 1,\n 'downloader/response_status_count/301': 1,\n 'elapsed_time_seconds': 1.206136,\n 'finish_reason': 'finished',\n 'finish_time': datetime.datetime(2022, 1, 28, 2, 57, 18, 65200),\n 'item_scraped_count': 1,\n 'log_count/DEBUG': 3,\n 'log_count/INFO': 10,\n 'memusage/max': 271777792,\n 'memusage/startup': 271777792,\n 'response_received_count': 1,\n 'scheduler/dequeued': 2,\n 'scheduler/dequeued/memory': 2,\n 'scheduler/enqueued': 2,\n 'scheduler/enqueued/memory': 2,\n 'start_time': datetime.datetime(2022, 1, 28, 2, 57, 16, 859064)}\n2022-01-28 10:57:18 [scrapy.core.engine] INFO: Spider closed (finished)\n",
+    "head": "2022-01-28 10:57:16 [scrapy.utils.log] INFO: Scrapy 2.5.0 started (bot: firstserver)\n2022-01-28 10:57:16 [scrapy.utils.log] INFO: Versions: lxml 4.6.3.0, libxml2 2.9.10, cssselect 1.1.0, parsel 1.6.0, w3lib 1.22.0, Twisted 21.7.0, Python 3.7.11 (default, Jul 27 2021, 07:03:16) - [Clang 10.0.0 ], pyOpenSSL 19.1.0 (OpenSSL 1.1.1h  22 Sep 2020), cryptography 3.2.1, Platform Darwin-20.3.0-x86_64-i386-64bit\n2022-01-28 10:57:16 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.selectreactor.SelectReactor\n2022-01-28 10:57:16 [scrapy.crawler] INFO: Overridden settings:\n{'BOT_NAME': 'firstserver',\n 'LOG_FILE': 'logs/firstserver/tryspider/2022-01-28T10_57_10.log',\n 'NEWSPIDER_MODULE': 'firstserver.spiders',\n 'SPIDER_MODULES': ['firstserver.spiders']}\n2022-01-28 10:57:16 [scrapy.extensions.telnet] INFO: Telnet Password: 0c5629fdb524cee1\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled extensions:\n['scrapy.extensions.corestats.CoreStats',\n 'scrapy.extensions.telnet.TelnetConsole',\n 'scrapy.extensions.memusage.MemoryUsage',\n 'scrapy.extensions.logstats.LogStats']\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled downloader middlewares:\n['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',\n 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',\n 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',\n 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',\n 'scrapy.downloadermiddlewares.retry.RetryMiddleware',\n 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',\n 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',\n 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',\n 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',\n 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',\n 'scrapy.downloadermiddlewares.stats.DownloaderStats']\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled spider middlewares:\n['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',\n 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',\n 'scrapy.spidermiddlewares.referer.RefererMiddleware',\n 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',\n 'scrapy.spidermiddlewares.depth.DepthMiddleware']\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled item pipelines:\n['firstserver.pipelines.FirstserverPipeline']\n2022-01-28 10:57:16 [scrapy.core.engine] INFO: Spider opened\n2022-01-28 10:57:16 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)\n2022-01-28 10:57:16 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023\n2022-01-28 10:57:16 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301) to <GET https://top.baidu.com/board?tab=realtime> from <GET http://top.baidu.com/buzz?b=1&fr=topindex>\n2022-01-28 10:57:17 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://top.baidu.com/board?tab=realtime> (referer: None)\n2022-01-28 10:57:18 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>\n{'title': '  讲好冬奥故事 共赴冰雪之约 '}\n2022-01-28 10:57:18 [scrapy.core.engine] INFO: Closing spider (finished)\n2022-01-28 10:57:18 [scrapy.statscollectors] INFO: Dumping Scrapy stats:\n{'downloader/request_bytes': 484,\n 'downloader/request_count': 2,\n 'downloader/request_method_count/GET': 2,\n 'downloader/response_bytes': 142669,\n 'downloader/response_count': 2,\n 'downloader/response_status_count/200': 1,\n 'downloader/response_status_count/301': 1,\n 'elapsed_time_seconds': 1.206136,\n 'finish_reason': 'finished',\n 'finish_time': datetime.datetime(2022, 1, 28, 2, 57, 18, 65200),\n 'item_scraped_count': 1,\n 'log_count/DEBUG': 3,\n 'log_count/INFO': 10,\n 'memusage/max': 271777792,\n 'memusage/startup': 271777792,\n 'response_received_count': 1,\n 'scheduler/dequeued': 2,\n 'scheduler/dequeued/memory': 2,\n 'scheduler/enqueued': 2,\n 'scheduler/enqueued/memory': 2,\n 'start_time': datetime.datetime(2022, 1, 28, 2, 57, 16, 859064)}\n2022-01-28 10:57:18 [scrapy.core.engine] INFO: Spider closed (finished)\n",
+    "tail": "2022-01-28 10:57:16 [scrapy.utils.log] INFO: Scrapy 2.5.0 started (bot: firstserver)\n2022-01-28 10:57:16 [scrapy.utils.log] INFO: Versions: lxml 4.6.3.0, libxml2 2.9.10, cssselect 1.1.0, parsel 1.6.0, w3lib 1.22.0, Twisted 21.7.0, Python 3.7.11 (default, Jul 27 2021, 07:03:16) - [Clang 10.0.0 ], pyOpenSSL 19.1.0 (OpenSSL 1.1.1h  22 Sep 2020), cryptography 3.2.1, Platform Darwin-20.3.0-x86_64-i386-64bit\n2022-01-28 10:57:16 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.selectreactor.SelectReactor\n2022-01-28 10:57:16 [scrapy.crawler] INFO: Overridden settings:\n{'BOT_NAME': 'firstserver',\n 'LOG_FILE': 'logs/firstserver/tryspider/2022-01-28T10_57_10.log',\n 'NEWSPIDER_MODULE': 'firstserver.spiders',\n 'SPIDER_MODULES': ['firstserver.spiders']}\n2022-01-28 10:57:16 [scrapy.extensions.telnet] INFO: Telnet Password: 0c5629fdb524cee1\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled extensions:\n['scrapy.extensions.corestats.CoreStats',\n 'scrapy.extensions.telnet.TelnetConsole',\n 'scrapy.extensions.memusage.MemoryUsage',\n 'scrapy.extensions.logstats.LogStats']\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled downloader middlewares:\n['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',\n 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',\n 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',\n 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',\n 'scrapy.downloadermiddlewares.retry.RetryMiddleware',\n 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',\n 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',\n 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',\n 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',\n 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',\n 'scrapy.downloadermiddlewares.stats.DownloaderStats']\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled spider middlewares:\n['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',\n 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',\n 'scrapy.spidermiddlewares.referer.RefererMiddleware',\n 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',\n 'scrapy.spidermiddlewares.depth.DepthMiddleware']\n2022-01-28 10:57:16 [scrapy.middleware] INFO: Enabled item pipelines:\n['firstserver.pipelines.FirstserverPipeline']\n2022-01-28 10:57:16 [scrapy.core.engine] INFO: Spider opened\n2022-01-28 10:57:16 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)\n2022-01-28 10:57:16 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023\n2022-01-28 10:57:16 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301) to <GET https://top.baidu.com/board?tab=realtime> from <GET http://top.baidu.com/buzz?b=1&fr=topindex>\n2022-01-28 10:57:17 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://top.baidu.com/board?tab=realtime> (referer: None)\n2022-01-28 10:57:18 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>\n{'title': '  讲好冬奥故事 共赴冰雪之约 '}\n2022-01-28 10:57:18 [scrapy.core.engine] INFO: Closing spider (finished)\n2022-01-28 10:57:18 [scrapy.statscollectors] INFO: Dumping Scrapy stats:\n{'downloader/request_bytes': 484,\n 'downloader/request_count': 2,\n 'downloader/request_method_count/GET': 2,\n 'downloader/response_bytes': 142669,\n 'downloader/response_count': 2,\n 'downloader/response_status_count/200': 1,\n 'downloader/response_status_count/301': 1,\n 'elapsed_time_seconds': 1.206136,\n 'finish_reason': 'finished',\n 'finish_time': datetime.datetime(2022, 1, 28, 2, 57, 18, 65200),\n 'item_scraped_count': 1,\n 'log_count/DEBUG': 3,\n 'log_count/INFO': 10,\n 'memusage/max': 271777792,\n 'memusage/startup': 271777792,\n 'response_received_count': 1,\n 'scheduler/dequeued': 2,\n 'scheduler/dequeued/memory': 2,\n 'scheduler/enqueued': 2,\n 'scheduler/enqueued/memory': 2,\n 'start_time': datetime.datetime(2022, 1, 28, 2, 57, 16, 859064)}\n2022-01-28 10:57:18 [scrapy.core.engine] INFO: Spider closed (finished)\n",
+    "first_log_time": "2022-01-28 10:57:16",
+    "latest_log_time": "2022-01-28 10:57:18",
+    "runtime": "0:00:02",
+    "first_log_timestamp": 1643338636,
+    "latest_log_timestamp": 1643338638,
+    "datas": [
+        [
+            "2022-01-28 10:57:16",
+            0,
+            0,
+            0,
+            0
+        ]
+    ],
+    "pages": 1,
+    "items": 1,
+    "latest_matches": {
+        "scrapy_version": "2.5.0",
+        "telnet_console": "127.0.0.1:6023",
+        "telnet_username": "",
+        "telnet_password": "0c5629fdb524cee1",
+        "resuming_crawl": "",
+        "latest_offsite": "",
+        "latest_duplicate": "",
+        "latest_crawl": "2022-01-28 10:57:17 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://top.baidu.com/board?tab=realtime> (referer: None)",
+        "latest_scrape": "2022-01-28 10:57:18 [scrapy.core.scraper] DEBUG: Scraped from <200 https://top.baidu.com/board?tab=realtime>",
+        "latest_item": "{'title': '  讲好冬奥故事 共赴冰雪之约 '}",
+        "latest_stat": "2022-01-28 10:57:16 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)"
+    },
+    "latest_crawl_timestamp": 1643338637,
+    "latest_scrape_timestamp": 1643338638,
+    "log_categories": {
+        "critical_logs": {
+            "count": 0,
+            "details": []
+        },
+        "error_logs": {
+            "count": 0,
+            "details": []
+        },
+        "warning_logs": {
+            "count": 0,
+            "details": []
+        },
+        "redirect_logs": {
+            "count": 1,
+            "details": [
+                "2022-01-28 10:57:16 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301) to <GET https://top.baidu.com/board?tab=realtime> from <GET http://top.baidu.com/buzz?b=1&fr=topindex>"
+            ]
+        },
+        "retry_logs": {
+            "count": 0,
+            "details": []
+        },
+        "ignore_logs": {
+            "count": 0,
+            "details": []
+        }
+    },
+    "shutdown_reason": "N/A",
+    "finish_reason": "finished",
+    "crawler_stats": {
+        "source": "log",
+        "last_update_time": "2022-01-28 10:57:18",
+        "last_update_timestamp": 1643338638,
+        "downloader/request_bytes": 484,
+        "downloader/request_count": 2,
+        "downloader/request_method_count/GET": 2,
+        "downloader/response_bytes": 142669,
+        "downloader/response_count": 2,
+        "downloader/response_status_count/200": 1,
+        "downloader/response_status_count/301": 1,
+        "elapsed_time_seconds": 1.206136,
+        "finish_reason": "finished",
+        "finish_time": "datetime.datetime(2022, 1, 28, 2, 57, 18, 65200)",
+        "item_scraped_count": 1,
+        "log_count/DEBUG": 3,
+        "log_count/INFO": 10,
+        "memusage/max": 271777792,
+        "memusage/startup": 271777792,
+        "response_received_count": 1,
+        "scheduler/dequeued": 2,
+        "scheduler/dequeued/memory": 2,
+        "scheduler/enqueued": 2,
+        "scheduler/enqueued/memory": 2,
+        "start_time": "datetime.datetime(2022, 1, 28, 2, 57, 16, 859064)"
+    },
+    "last_update_time": "2022-01-28 10:57:23",
+    "last_update_timestamp": 1643338643,
+    "logparser_version": "0.8.2",
+    "crawler_engine": {}
+}

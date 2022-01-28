@@ -67,8 +67,13 @@
             - 这里是scrapydweb比较方便的地方，不用事先将项目先上传到scrapyd服务器，scrapydweb能够帮我们上传
     - 重启scrapydweb
         - 需要进入到 scrapydweb_settings_v10.py 文件所在目录启动
+      
     - 启动后可能会报一个警告 或者 访问 http://127.0.0.1:5000/ 时显示 'pip install logparser...'
         - 可以执行 `logparser -dir D:\...\project_name/logs` 用于记录日志
+        - logparser的作用：
+            - 顾名思义，是用于解析scrapy的日志，专为ScrapydWeb设计，分析scrapy日志并在ScrapydWeb中可视化显示
+            - 【参考】https://github.com/my8100/logparser
+      
     - scrapydweb面板功能介绍
         - Servers ：         scrapyd server 服务器信息
         - Timer Tasks ：     定时任务
@@ -85,6 +90,7 @@
     - Grawlab 采用 Golang+VUE 实现，该平台不局限于scrapy了，可以运行各种爬虫，不过部署比较复杂。
     
     
-## 3、基于scrapyd + scrapydweb 的可视化部署（服务器）（多台机器，分布式）
+## 3、基于scrapyd + scrapydweb 的部署（服务器）（多台机器，分布式）
 - 【参考】https://www.cnblogs.com/TurboWay/p/12019005.html
-- 【问题】没有日志文件，可以在本地跑下（版本是否一致）
+- 【问题】scrapyd的日志文件中无内容，项目提交了items，items中有内容（在scrapyd的配置文件中默认是没有配置item的存放路径的，需要配置）
+    - 可能是scrapy项目的配置文件中设置了 `LOG_LEVEL='ERROR'`

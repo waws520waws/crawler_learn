@@ -2,7 +2,7 @@
 - Mac
   - `ssh root@47.101.158.121`
   - or `ssh usrname@47.101.158.121`
-  - `Ctrl + D` 断开连接
+  - `Ctrl + D` or `exit` 断开连接
 - Win
   - 先安装 xshell
 
