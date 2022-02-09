@@ -1,7 +1,8 @@
-import pymongo
+import requests
+from lxml import etree
 
-client = pymongo.MongoClient('47.101.158.121', 27017)
-db = client['testdb']
-db.authenticate('jieyang', '970706')
-item = {'title': '  党历史自信的最大底气 '}
-db['mytable1'].insert_one(item)
+req = requests.get('http://news.baidu.com/').text
+
+page = etree.HTML(req)
+info = page.xpath(r'//*[re:match(text(), ".*?总书记.*?")]', namespace={"re": "http://exslt.org/regular-expressions"})
+print(info)
