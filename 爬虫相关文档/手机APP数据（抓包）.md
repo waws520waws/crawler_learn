@@ -17,7 +17,25 @@
 - Fiddler 运行在Windows平台
 - Fiddler 是一款开源免费抓包工具
 - 功能大同小异，基本上都是抓包、断点调试、请求替换、构造请求、代理功能
-
+#### 2.1、安装
+- 【官网】https://www.telerik.com/fiddler
+  - 下载 `Fiddler Classic` 版本
+#### 2.2、使用
+- 【参考】https://blog.csdn.net/weixin_43664254/article/details/94601280
+- 【注意】
+  - fiddler默认是抓http请求的，对于pc上的https请求，会提示网页不安全，这时候需要在浏览器上安装证书；
+  - 有些设置需要fiddler重启才能生效
+  - 如果APP上是https请求，这时候手机需要下载证书（也可以pc上下载证书后传给手机）
+  
+- 一些功能
+  - 接口测试（Composer）
+    - 可以模拟发送请求（具体方法参考链接）
+  - 打断点
+  - 会话（session）保存
+    - 作用：下次直接将保存的会话导入到fiddler，不需要再重新请求
+  - 自定义会话框
+    - 作用：fiddler左边区域添加或者隐藏列
+        
 ### 2、Charles
 - Charles 是基于Java实现的，基本上可以运行在所有主流的桌面系统
 - Charles 是一款收费的抓包工具，但是支持破解
