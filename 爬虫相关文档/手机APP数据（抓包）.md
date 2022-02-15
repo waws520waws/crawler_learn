@@ -120,3 +120,81 @@ def response(flow):
 - 简介：Appium 是一种开源、跨平台的测试自动化工具，适用于原生、混合和移动 Web 和桌面应用程序。
   支持模拟器 (iOS)、模拟器 (Android) 和真实设备 (iOS、Android、Windows、Mac)。  
   它有点类似Selenium，可以自动操作APP实现一系列的操作。
+  
+
+## 三、APP逆向
+
+### 3.1 绕过证书验证类
+- 简介：打开 fiddler 先来抓个包，fiddler 开启之后 app提示连接不到服务器，发现这个 app 做了证书验证
+- 解决这种问题一般都是安装 xposed 框架，里面有一个 JustTrustme 模块，它的原理就是hook，直接绕过证书验证类
+
+### 3.2 反编译与混淆技术
+- 1、反编译
+    - 【参考】https://blog.csdn.net/guolin_blog/article/details/49738023
+    - 简介：Android程序打完包之后得到的是一个APK文件，这个文件是可以直接安装到任何Android手机上的，我们反编译其实也就是对这个APK文件进行反编译。
+      Android的反编译主要又分为两个部分，一个是对代码的反编译，一个是对资源的反编译。
+    - 作用：为了获取app源码（如：获取加密规则代码）
+    - 有些APP进行了加固，需要用到脱壳技术，然后再反编译
+    
+    - 反编译代码：
+        - 作用：将APK文件中的代码转换成可读的java代码
+        - 可以先将APK文件的后缀改为ZIP，再解压
+        - 将APK文件中的代码反编译出来，需要用到两款工具：
+            - dex2jar: 这个工具用于将dex文件转换成jar文件
+                - dex文件是存放所有java代码的地方
+            - jd-gui: 这个工具用于查看源码（此工具将jar文件转换成java代码）
+        - 根据请求或响应的参数去源码中搜索需要的东西（如：加密方式）
+            - 【**阅读代码技巧**】
+                - 需要注意的是，反编译的代码非常混乱，错误很多，并且apk经过混淆，变量名都消失了，这时一定要有有耐心，仔细研究代码。
+                - 根据前面请求、响应参数去搜索，或者请求的 url 地址去搜索，而且经验很重要。
+                - 如果不知道生成的方式，就用 java运行一波，将这两个参数打印出来
+                - 一个技巧：可以使用 xposed 写一个 hook插件 把参数打印出来
+        
+    - 反编译资源
+        - 作用：还原APK文件中的9-patch图片、布局、字符串等等一系列的资源
+        - 将APK文件中的资源反编译出来，又要用到另外一个工具
+            - apktool：这个工具用于最大幅度地还原APK文件中的资源
+                - 我们需要的就是 apktool.bat 和 apktool.jar 这两个文件
+    - 重新打包
+        - 将反编译后的文件重新打包成APK
+        - 1）apktool工具将程序文件打包成APK
+        - 2）进行签名
+            - 作用：若APK没有进行过签名，APK不能安装
+            - 没有办法拿到它原来的签名文件，只能拿自己的签名文件来对这个APK文件重新进行签名，但同时也表明我们重新打包出来的软件就是个十足的盗版软件；
+              使用Android Studio或者Eclipse都可以非常简单地生成一个签名文件。
+            - 签名命令： 
+              - cd到jdk的bin目录下，执行：
+              - `jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore 签名文件名 -storepass 签名密码 待签名的APK文件名 签名的别名`
+        - 3）对齐操作
+            - 作用：使得我们的程序在Android系统中运行得更快
+            - 使用的是zipalign工具，该工具存放于<Android SDK>/build-tools/<version>目录下，执行：
+                - `zipalign 4 New_Demo.apk New_Demo_aligned.apk`
+    
+- 2、混淆技术
+    - 【参考】https://blog.csdn.net/guolin_blog/article/details/50451259
+    - 简介：对代码进行混淆，将代码中的类、方法、变量等信息进行重命名，把它们改成一些毫无意义的名字
+        - 在Android Studio当中混淆APK实在是太简单了，借助SDK中自带的Proguard工具，只需要修改 build.gradle 中的一行配置即可；
+        build.gradle 中 minifyEnabled 的值是false，这里我们只需要把值改成true，打出来的APK包就会是混淆过的了。
+            ```text
+            release {
+                minifyEnabled true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }        
+            ```
+        - 根据作者亲身测试得出结论，凡是需要在AndroidManifest.xml中去注册的所有类的类名以及从父类重写的方法名都自动不会被混淆
+    - 如何破解混淆
+        - 混淆是根据混淆规则来的，那么混淆规则是在哪里定义的呢？
+          - 在 build.gradle 的release闭包下配置的 proguard-android.txt 文件中，这个文件存放于 <Android SDK>/tools/proguard 目录下
+        - 直接在proguard-android.txt中修改会对我们本机上所有项目的混淆规则都生效，那么有没有什么办法只针对当前项目的混淆规则做修改呢？
+          当然是有办法的了，你会发现任何一个Android Studio项目在app模块目录下都有一个proguard-rules.pro文件，这个文件就是用于让我们编写只适用于当前项目的混淆规则的
+        - 修改其中的混淆规则
+        - 然后反编译
+    
+### 3.3 APP脱壳
+- 加壳（加固）的原理
+    - 给dex文件加层壳，反编译后的代码就是加壳的代码，看不到原dex代码，在一定程度上来说，还是可以起到防破解的，也可以防止二次打包
+- 常用的APP加固壳
+    - 360、腾讯乐固、百度、网易、阿里、爱加密、梆梆、娜迦、顶象等
+- 查壳工具：
+    - ApkScan-PKID
+    - 检查一下 app 是否加固，打开 ApkScan-PKID ，把 app 拖入
