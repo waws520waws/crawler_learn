@@ -148,7 +148,9 @@ def response(flow):
                 - 需要注意的是，反编译的代码非常混乱，错误很多，并且apk经过混淆，变量名都消失了，这时一定要有有耐心，仔细研究代码。
                 - 根据前面请求、响应参数去搜索，或者请求的 url 地址去搜索，而且经验很重要。
                 - 如果不知道生成的方式，就用 java运行一波，将这两个参数打印出来
-                - 一个技巧：可以使用 xposed 写一个 hook插件 把参数打印出来
+                - 一个技巧：可以使用 xposed 写一个 hook代码 把参数打印出来；或者 使用 frida 来写一段 hook 代码
+                    - 【参考】https://www.cnblogs.com/yhoil/articles/14705792.html
+                - 一般先从最大的文件开始依次搜索关键字
         
     - 反编译资源
         - 作用：还原APK文件中的9-patch图片、布局、字符串等等一系列的资源
@@ -192,9 +194,30 @@ def response(flow):
     
 ### 3.3 APP脱壳
 - 加壳（加固）的原理
+    - 壳dex 读取 源dex文件，加密后，写进一个新的dex文件
     - 给dex文件加层壳，反编译后的代码就是加壳的代码，看不到原dex代码，在一定程度上来说，还是可以起到防破解的，也可以防止二次打包
 - 常用的APP加固壳
     - 360、腾讯乐固、百度、网易、阿里、爱加密、梆梆、娜迦、顶象等
 - 查壳工具：
     - ApkScan-PKID
     - 检查一下 app 是否加固，打开 ApkScan-PKID ，把 app 拖入
+    - 脱壳原理：在 壳APK 解密 源APK 后，源APK被加载前，拦截（hook技术）这个过程中的系统函数，把内存中的Dex 给dump出来
+- 脱壳工具
+    - 1）使用 Frida 与 frida-dexdump 对apk 进行 脱壳
+        - frida（可以hook住java层、Native层）
+        - pc上安装Frida客户端（python环境下安装 Frida），手机（用模拟器吧）中安装Frida服务端
+            - `pip3 install frida-tools`
+            - 手机端 server 的版本号需要 与 电脑端的一致
+            - Frida简介：Frida是个轻量级别的 hook 框架
+            - hook技术：
+                - 改变程序执行流程的一种技术 在函数被调用前，通过HOOK技术，先得到该函数的控制权，实现该函数的逻辑改写；
+                - Hook可以在在Java层、Native层（.so库）；
+                - 在代码层 寻找要Hook的地方 进行Hook 改下代码逻辑
+        - 安装 frida-dexdump
+            - `pip3 install frida-dexdump`
+    - 2）基于 xposed 脱壳工具：
+        - 【参考】https://blog.csdn.net/qq409732112/article/details/109382336
+        - xposed（只能hook住java层）
+        - 工具 Fdex2 ：Hook ClassLoader loadClass方法
+        - 通用脱壳  dumpDex：https://github.com/WrBug/dumpDex
+- 反编译

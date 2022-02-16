@@ -31,7 +31,7 @@ ROBOTSTXT_OBEY = False
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = True
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -50,9 +50,25 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'firstserver.middlewares.FirstserverDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   'aroay_cloudscraper.downloadermiddlewares.CloudScraperMiddleware': 543,
+
+}
+import logging
+# 默认日志级别
+AROAY_CLOUDSCRAPER_LOGGING_LEVEL = logging.DEBUG
+
+# 默认超时
+AROAY_CLOUDSCRAPER_DOWNLOAD_TIMEOUT = 30
+
+# 默认延迟
+AROAY_CLOUDSCRAPER_DELAY = 1
+
+#必须设置，否则报错
+COMPRESSION_ENABLED = False
+
+RETRY_ENABLED: True
+RETRY_TIMES: 3
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -62,9 +78,9 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'firstserver.pipelines.FirstserverPipeline': 300,
-}
+# ITEM_PIPELINES = {
+#    'firstserver.pipelines.FirstserverPipeline': 300,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

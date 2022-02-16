@@ -133,3 +133,8 @@ driver.get('https://www.baidu.com')
         driver.execute_script(new_window)
         driver.implicitly_wait(10)
         ```
+      
+- 方法3
+    - 一个webdirver的驱动模块，但是并不是selenium，而是 undetected_chromedriver；
+      这个模块可以完美的模拟chrome浏览器，并且不用设置js默认值，也就是无需自己再添加瞒天过海的设置
+      - 【参考】https://blog.csdn.net/m0_60570576/article/details/121429251

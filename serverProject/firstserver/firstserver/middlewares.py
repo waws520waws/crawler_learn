@@ -8,6 +8,8 @@ from scrapy import signals
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
+import time
+from scrapy.http import HtmlResponse
 
 class FirstserverSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
@@ -55,11 +57,15 @@ class FirstserverSpiderMiddleware:
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
 
+import cloudscraper
+
 
 class FirstserverDownloaderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
+
+    browser = cloudscraper.create_scraper(browser={'browser': 'chrome', 'mobile': False})
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -81,12 +87,11 @@ class FirstserverDownloaderMiddleware:
         return None
 
     def process_response(self, request, response, spider):
-        # Called with the response returned from the downloader.
-
-        # Must either;
-        # - return a Response object
-        # - return a Request object
-        # - or raise IgnoreRequest
+        if response.status == 503 or response.status == 403:
+            url = request.url
+            req = self.browser.get(url, headers={'referer': url})
+            time.sleep(5)
+            return HtmlResponse(url=url, body=req.text, encoding="utf-8", request=request)
         return response
 
     def process_exception(self, request, exception, spider):

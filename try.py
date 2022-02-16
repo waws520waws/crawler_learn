@@ -1,13 +1,25 @@
 import requests
 from lxml import etree
 
-url = 'https://www.elespectador.com/mundo/mas-paises/biden-y-putin-hablaron-por-telefono-continuan-las-discusiones-por-ucrania-noticias-de-hoy/'
+url = 'https://www.today.ng/sport/basketball'
 
-req = requests.get(url).text
+
+# 解决办法
+# 首先 pip install cloudscraper
+
+import cfscrape
+# 实例化一个create_scraper对象
+# scraper = cfscrape.create_scraper()
+# 请求报错，可以加上时延
+scraper = cfscrape.create_scraper(delay = 10)
+# 获取网页源代码
+req = scraper.post("http://example.com").text
+print(req)
+
+
+# req = requests.get(url)
+print(req.status_code)
 page = etree.HTML(req)
-tab_p = page.xpath('//*[@id="main-layout"]/section[1]/div[2]/div[2]/div[2]/section[1]/article/div[1]/section/p')
+tab_p = page.xpath('//h2/a/text()')
 
-for p in tab_p:
-    cnt = p.xpath('.//text()')
-
-    print(cnt)
+print(tab_p)
