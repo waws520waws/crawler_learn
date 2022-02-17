@@ -123,6 +123,7 @@ def response(flow):
   
 
 ## 三、APP逆向
+- 【安卓逆向的一些工具】https://zhuanlan.zhihu.com/p/313886157
 
 ### 3.1 绕过证书验证类
 - 简介：打开 fiddler 先来抓个包，fiddler 开启之后 app提示连接不到服务器，发现这个 app 做了证书验证
