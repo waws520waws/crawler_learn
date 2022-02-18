@@ -95,4 +95,21 @@
 
 - 其他：排序、分组、like
 - `quit` 退出数据库连接
-      
+
+### 4、其他sql
+![img.png](other_sql1.png)
+```text
+select * from (select distinct dwd.orig_url from dwd.dwd_feeds_crawl_content_i_d dwd
+where dwd.ds = 20220214 
+and dwd.orig_domain ='comicbook.com'
+and dwd.res_type = '1'
+and dwd.valid_status = '100'
+group by dwd.orig_url) a  full outer join (select distinct dwd.orig_url from dwd.dwd_feeds_crawl_content_i_d dwd
+where dwd.ds = 20220214
+and dwd.res_type = '1'
+and dwd.source_host_name = 'comicbook.com'
+group by dwd.orig_url
+) b
+on 
+replace(a.orig_url, '.amp?', '') =b.orig_url
+```
