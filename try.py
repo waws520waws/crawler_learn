@@ -1,25 +1,12 @@
 import requests
 from lxml import etree
 
-url = 'https://www.today.ng/sport/basketball'
+url = 'https://m.gmw.cn/toutiao/2022-02/19/content_35529067.htm'
 
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Linux; Android 7.1.2; SM-G973N Build/PPR1.190810.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/92.0.4515.131 Mobile Safari/537.36 JsSdk/2 NewsArticle/8.2.8 NetType/wifi (NewsLite 8.2.8) JsSdk/2 NewsArticle/8.2.8 NetType/wifi (NewsLite 8.2.8)',
 
-# 解决办法
-# 首先 pip install cloudscraper
+}
 
-import cfscrape
-# 实例化一个create_scraper对象
-# scraper = cfscrape.create_scraper()
-# 请求报错，可以加上时延
-scraper = cfscrape.create_scraper(delay = 10)
-# 获取网页源代码
-req = scraper.post("http://example.com").text
-print(req)
-
-
-# req = requests.get(url)
-print(req.status_code)
-page = etree.HTML(req)
-tab_p = page.xpath('//h2/a/text()')
-
-print(tab_p)
+req = requests.get(url, headers=headers)
+print(req.text)

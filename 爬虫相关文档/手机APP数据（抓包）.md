@@ -24,6 +24,7 @@
 - 【参考】https://blog.csdn.net/weixin_43664254/article/details/94601280
 - 【注意】
   - fiddler默认是抓http请求的，对于pc上的https请求，会提示网页不安全，这时候需要在浏览器上安装证书；
+  - 模拟器上会提示网页不安全，可进入设置，关闭安全警告
   - 有些设置需要fiddler重启才能生效
   - 如果APP上是https请求，这时候手机需要下载证书（也可以pc上下载证书后传给手机）
   
@@ -102,13 +103,14 @@
     
 - 执行python脚本
   - 1）进入到python环境下的某个目录下（带python脚本）
-  - 2）带脚本的方式启动 mitmproxy：`mitmdump -s script.py` (如100例中的例子48)
+  - 2）带脚本的方式启动 mitmproxy：`mitmdump -s script.py -p 8889` (如100例中的例子48)
   - 也可以保存数据：`mitmdump -w crawl.txt`
   - 可访问 http://httpbin.org/get 看请求头是否设置成功
 - python脚本相关方法
   - 1）mitmdump提供了专门的日志输出功能，可以设定不同级别以不同颜色输出结果。 ctx模块有log功能，调用不同的输出方法就可以输出不同颜色的结果，以方便我们做调试。
 ```python
 from mitmproxy import ctx
+# 返回的数据都会调用这个方法
 def response(flow):
     info = ctx.log.info
     ctx.log.warn(str(flow.request.query))
@@ -124,10 +126,15 @@ def response(flow):
 
 ## 三、APP逆向
 - 【安卓逆向的一些工具】https://zhuanlan.zhihu.com/p/313886157
+- 关于逆向的文章：去看雪论坛或者吾爱破解论坛吧，哪里有太多的文章
 
 ### 3.1 绕过证书验证类
 - 简介：打开 fiddler 先来抓个包，fiddler 开启之后 app提示连接不到服务器，发现这个 app 做了证书验证
 - 解决这种问题一般都是安装 xposed 框架，里面有一个 JustTrustme 模块，它的原理就是hook，直接绕过证书验证类
+    - 注意事项：
+        - 手机必须获取root权限
+        - 安装xposed框架有手机变成砖块的危险（因为会改变系统文件）
+            - 手机可以直接刷带有Xposed框架的系统（如：刷机精灵）
 
 ### 3.2 反编译与混淆技术
 - 1、反编译
@@ -143,7 +150,12 @@ def response(flow):
         - 将APK文件中的代码反编译出来，需要用到两款工具：
             - dex2jar: 这个工具用于将dex文件转换成jar文件
                 - dex文件是存放所有java代码的地方
+                - 要先安装java
+                - 最新2.1版本下载地址：https://github.com/pxb1988/dex2jar/releases
+                    - 用之前的版本在转换时会报错：`Detail Error Information in File .\classes-error.zip`
+                - 一次转换多个文件：`d2j-dex2jar.bat classes2.dex classes3.dex classes4.dex`
             - jd-gui: 这个工具用于查看源码（此工具将jar文件转换成java代码）
+          
         - 根据请求或响应的参数去源码中搜索需要的东西（如：加密方式）
             - 【**阅读代码技巧**】
                 - 需要注意的是，反编译的代码非常混乱，错误很多，并且apk经过混淆，变量名都消失了，这时一定要有有耐心，仔细研究代码。
@@ -199,8 +211,17 @@ def response(flow):
     - 给dex文件加层壳，反编译后的代码就是加壳的代码，看不到原dex代码，在一定程度上来说，还是可以起到防破解的，也可以防止二次打包
 - 常用的APP加固壳
     - 360、腾讯乐固、百度、网易、阿里、爱加密、梆梆、娜迦、顶象等
+    - 通常是看lib文件夹下so库特征，以下是市面上常见的不同厂商对APP的加固特征：
+        - 爱加密：libexec.so,libexecmain.so，ijiami.dat
+        - 梆梆： libsecexe.so,libsecmain.so , libDexHelper.so libSecShell.so
+        - 360：libprotectClass.so,libjiagu.so，libjiagu_art.so，libjiagu_x86.so
+        - 百度：libbaiduprotect.so
+        - 腾讯：libshellx-2.10.6.0.so，libBugly.so，libtup.so, libexec.so，libshell.so，stub_tengxun
+        - 网易易盾：libnesec.so
+
 - 查壳工具：
     - ApkScan-PKID
+      - 下载地址：https://www.jianshu.com/p/dbea956c64aa
     - 检查一下 app 是否加固，打开 ApkScan-PKID ，把 app 拖入
     - 脱壳原理：在 壳APK 解密 源APK 后，源APK被加载前，拦截（hook技术）这个过程中的系统函数，把内存中的Dex 给dump出来
 - 脱壳工具
@@ -222,3 +243,12 @@ def response(flow):
         - 工具 Fdex2 ：Hook ClassLoader loadClass方法
         - 通用脱壳  dumpDex：https://github.com/WrBug/dumpDex
 - 反编译
+
+### 3.4 adb
+- 【参考】https://blog.csdn.net/qq_36424455/article/details/105467734
+- 什么是adb?
+    - 简单来说,ADB是来调试Android开发工具,ADB（Android Debug Bridge）是Android SDK中的一个工具, 使用ADB可以直接操作管理Android模拟器或者真实的Andriod设备。
+-  ADB主要功能有:
+    - 1）在Android设备上运行度Shell(命令行)
+    - 2）管理模拟器或设备的端口映射
+    - 3）在计算机和知设备之间上传/下载文件

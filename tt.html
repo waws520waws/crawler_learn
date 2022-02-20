@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="" xmlns="">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<link rel="icon" href="../rs/transfer/people.ico" type="image/x-icon"
+		/>
+		<meta name="MobileOptimized" content="320" />
+		<meta name="robots" content="all" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"
+		/>
+		<!-- 天润统计 -->
+		<meta charset="utf-8" />
+		<meta name="publishdate" content="" />
+		<meta name="author" content="" />
+		<meta name="catalogs" content="" />
+		<meta name="contentid" content="" />
+		<meta name="filetype" content="0" />
+		<meta name="publishedtype" content="1" />
+		<meta name="pagetype" content="1" />
+		<meta name='partner' content="m2_toutiao" />
+		<!-- 计入天润统计原创稿 -->
+		<meta name="source" content="" />
+		<meta name="sourcetype" content="" />
+		<meta name="editor" content="" />
+		<title>
+		</title>
+		<link type="text/css" rel="stylesheet" href="https://s0.pstatp.com/inapp/TTDefaultCSS.css">
+		<script type="text/javascript" src="../rs/jquery-1.11.1.min.js">
+		</script>
+		<script type="text/javascript" src="../rs/template/template.js">
+		</script>
+		<script type="text/javascript">
+			$.main = {};
+		</script>
+		<script type="text/javascript" src="../rs/video.js">
+		</script>
+		<script type="text/javascript" src="../rs/showPeopleVideoPlayerMulti.js">
+		</script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				//url参数 判断来源
+				var getUrl = "http://m2.people.cn/n/" + getUrlParam('s') + '.json';
+
+				if (getUrlParam('from') == null) {
+					var fromOrigin = "toutiao";
+				} else {
+					var fromOrigin = getUrlParam('from');
+				}
+				if (getUrlParam('source') == null) {
+					source_name = "da";
+				} else {
+					source_name = getUrlParam('source');
+				}
+				var tmpHtml1 = $('#baseTemplate').html() var tmpDiv = document.createElement('div') tmpDiv.style.display = 'none'tmpDiv.id = 'tmp-div'$('body').prepend(tmpDiv) $('#tmp-div').html(tmpHtml1) $.ajax({
+					url: getUrl,
+					success: function(result) {
+						var doJson = eval("(" + result + ")");
+						var title_str = doJson.title + doJson.title_str
+						var data = {
+							title: doJson.title,
+							title_str: title_str,
+							content: doJson.content.replace("@1l", ""),
+							//处理content中的img标签的@符号
+							url: doJson.url,
+							author: doJson.author,
+							fromOrigin: fromOrigin,
+							source: source_name,
+							origin_node_id: doJson.origin_node_id,
+							origin: doJson.origin_name == '' ? '人民网': '人民网（来源：' + doJson.origin_name + '）',
+
+							display_time: getLocalTime(doJson.display_time),
+							//'2021-11-08',
+							//display_time:date('Y-m-d',doJson.display_date).substring(5, 16),
+							editor: doJson.editor,
+							sourcetype: doJson.sourcetype,
+						};
+						//console.log(data);
+						$(document).attr("title");
+						$(document).attr("title", data.title_str);
+						var tmpHtml = template("baseTemplate", data);
+						$('body').prepend(tmpHtml);
+						$('#tmp-div').remove();
+						$('meta[name="source"]').attr("content", data.origin);
+						$('meta[name="sourcetype"]').attr("content", data.sourcetype);
+						$('meta[name="editor"]').attr("content", data.editor);
+						$('meta[name="partner"]').attr("content", 'm2_' + data.fromOrigin);
+						$('meta[name="publishdate"]').attr("content", doJson.display_date);
+						$('meta[name="catalogs"]').attr("content", 'w_' + doJson.channel.origin_node_id);
+						$('meta[name="contentid"]').attr("content", doJson.content_id);
+
+					},
+					error: function(arg1) {
+						$('html').html('404');
+						console.log(arg1.status)
+					}
+				})
+			});
+
+			function getUrlParam(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+				var r = window.location.search.substr(1).match(reg); //匹配目标参数
+				if (r != null) return unescape(r[2]);
+				return null; //返回参数值
+			}
+			//转化时间戳
+			function getLocalTime(nS) {
+				return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+			}
+		</script>
+		<script type="text/template" id="baseTemplate">
+			< header > <h1 > {
+				{
+					title
+				}
+			} < /h1>
+		<span style="color:#666;font-size:12px;">{{origin}} {{display_time}}</span > </header>
+	<!--视频需要放在页面最顶部, header标签下面, article标签外面-->
+	<div class="video_container">
+		<p align="center" class="video_p"></p > </div>
+	<!--article标签必须有, 内容自己填, 不允许有超出屏幕范围的东西-->
+	<article>{{#content}}</article > <!--广告--><div class = "tt_ad_img" > </div>
+/
+		</script>
+		<div style="display: none">
+			<script type="text/javascript">
+				document.write(unescape("%3Cscript src='//cl2.webterren.com/webdig.js?z=26' type='text/javascript'%3E%3C/script%3E"));
+			</script>
+			<script type="text/javascript">
+				wd_paramtracker("_wdxid=000000000000000000000000000000000000000000");
+			</script>
+		</div>
+		<script src="https://dup.baidustatic.com/js/os.js">
+		</script>
+		<script src="https://s0.pstatp.com/inapp/TTDefaultJS.js">
+		</script>
+		<div id="show">
+		</div>
+	</body>
+
+</html>
