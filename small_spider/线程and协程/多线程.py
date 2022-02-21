@@ -31,7 +31,7 @@ class myThread(threading.Thread):
     def run(self):
         print("开启线程： " + self.name)
         '''
-        称为'线程同步'：
+        称为'线程同步之 Lock (互斥锁)'：
             对于那些需要每次只允许一个线程操作的数据，可以将其操作放到 acquire 和 release 方法之间
             因为如果多个线程共同对某个数据修改，则可能出现不可预料的结果
         '''
@@ -40,6 +40,10 @@ class myThread(threading.Thread):
         print_time(self.name, self.counter, 3)
         # 释放锁，开启下一个线程
         threadLock.release()
+
+        # 也可以使用 with语句
+        # with threadLock:
+        #     print_time(self.name, self.counter, 3)
 
 
 def print_time(threadName, delay, counter):
