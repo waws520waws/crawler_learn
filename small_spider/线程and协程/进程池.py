@@ -16,8 +16,9 @@ if __name__ == '__main__':
     p = Pool(3)
     for i in range(1, 5):
         p.apply_async(func, (i,))
-    p.close()
-    p.join()
+    p.close()  # 关闭Pool，使其不再接受新的任务；
+    # p.terminate()  # 不管任务是否完成，立即终止
+    p.join()  # 主进程阻塞，等待子进程的退出， 必须在close或terminate之后使用
     print('main process')
 
 
@@ -33,7 +34,7 @@ def work(x):
 
 
 # Parallel implementation
-with ProcessPoolExecutor() as pool:
+with ProcessPoolExecutor(3) as pool:
     results = pool.map(work, (50, 100, 150, 200))
     for result in results:
         # 查看future代表的任务返回的结果

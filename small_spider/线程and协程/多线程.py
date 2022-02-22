@@ -15,6 +15,10 @@
     isAlive(): 返回线程是否活动的。
     getName(): 返回线程名。
     setName(): 设置线程名。
+    setDaemon(): 设置某线程为守护线程【与 join() 方法对立】
+        - 守护进程的两个特点
+            守护进程会在主进程结束后就会终止（不管守护进程的任务是否执行完毕）；
+            守护进程内无法开启子进程，否则抛出异常
 
 '''
 import threading
@@ -33,7 +37,8 @@ class myThread(threading.Thread):
         '''
         称为'线程同步之 Lock (互斥锁)'：
             对于那些需要每次只允许一个线程操作的数据，可以将其操作放到 acquire 和 release 方法之间
-            因为如果多个线程共同对某个数据修改，则可能出现不可预料的结果
+            因为如果多个线程共同对某个数据修改，则可能出现不可预料的结果。
+            可用 队列 代替 互斥锁（主要用于生产者消费者模式，100例）
         '''
         # 获取锁，用于线程同步
         threadLock.acquire()
@@ -60,6 +65,10 @@ threads = []
 thread1 = myThread(1, "Thread-1", 1)
 thread2 = myThread(2, "Thread-2", 2)
 
+# 设置thread1为守护线程
+# thread1.daemon = True
+# thread1.setDaemon(True)
+
 # 开启新线程
 thread1.start()
 thread2.start()
@@ -68,7 +77,7 @@ thread2.start()
 threads.append(thread1)
 threads.append(thread2)
 
-# 等待所有线程完成
+# 等待所有线程完成，才继续运行主进程后面的代码
 for t in threads:
     t.join()
 print("退出主线程")

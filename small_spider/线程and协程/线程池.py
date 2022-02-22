@@ -57,12 +57,16 @@ def action(max):
     return max
 
 
+def get_result(future):
+    print(future.result())
+
+
 # 创建一个包含2条线程的线程池
 pool = ThreadPoolExecutor(max_workers=2)
 # 向线程池提交一个task, 50会作为action()函数的参数
 future1 = pool.submit(action, 50)
-# 查看future1代表的任务返回的结果
-print(future1.result())
+# 为future1添加线程完成的回调函数, 该回调函数会在线程任务结束时获取其返回值
+future1.add_done_callback(get_result)
 # 向线程池再提交一个task, 100会作为action()函数的参数
 future2 = pool.submit(action, 100)
 
