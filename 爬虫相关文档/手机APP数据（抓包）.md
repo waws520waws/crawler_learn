@@ -164,6 +164,17 @@ def response(flow):
                 - 一个技巧：可以使用 xposed 写一个 hook代码 把参数打印出来；或者 使用 frida 来写一段 hook 代码
                     - 【参考】https://www.cnblogs.com/yhoil/articles/14705792.html
                 - 一般先从最大的文件开始依次搜索关键字
+            - 【加密参数定位方法】
+                - 【参考】https://blog.csdn.net/weixin_43582101/article/details/115355563
+                - 静态分析：使用工程搜索检索需要查找的参数名
+                - 动态分析：
+                    - objection定位
+                      - 在通过搜索之后如果有几个不确定的位置，则可以使用Objection
+                    - frida-hook
+                      - 通过frida凭感觉Hook下App中所有操作Base64的位置
+                    - log注入
+                      - 流程是先修改apk的smali代码，既是在某关键函数前加入 android/util/Log 输出，配合LogCat 查看程序执行时的log数据；
+                        一般使用Log.v() 日志输出函数就可以了。
         
     - 反编译资源
         - 作用：还原APK文件中的9-patch图片、布局、字符串等等一系列的资源
