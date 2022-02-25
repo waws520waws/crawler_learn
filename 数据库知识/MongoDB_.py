@@ -22,6 +22,8 @@ mycol = test_db["sites"]
 
 # 【注意】: 在 MongoDB 中，集合只有在内容插入后才会创建! 就是说，创建集合(数据表)后要再插入一个文档(记录)，集合才会真正创建。
 
+## 可设置数据过期时间，见 非关系性数据库.md
+
 # 查看所有的集合
 collist = test_db.list_collection_names()
 

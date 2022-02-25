@@ -96,8 +96,9 @@
 - 其他：排序、分组、like
 - `quit` 退出数据库连接
 
-### 4、其他sql
-![img.png](other_sql1.png)
+### 重点：sql查询语句
+- 1、  
+![img.png](1other_sql1.png)
 ```text
 select * from (select distinct dwd.orig_url from dwd.dwd_feeds_crawl_content_i_d dwd
 where dwd.ds = 20220214 
@@ -113,3 +114,52 @@ group by dwd.orig_url
 on 
 replace(a.orig_url, '.amp?', '') =b.orig_url
 ```
+
+- 2、case when 与 group by 的结合
+    - 成绩Score表：  
+    ![img.png](1score.png)  
+    - 课程Course表：  
+    ![img_1.png](1course.png)
+      
+    - Case when 与 group by的结合使用，一般根据主干进行分组
+    - 例如1：查看每个学生的及格的课程数
+    - 分析：主干是每个学生，则根据每个学生id进行分组；那么case when语句就是统计每个分组内满足条件的，如下：
+        ```text
+        SELECT 
+            s_id,  
+            SUM(CASE WHEN s_score >= 60 THEN 1 ELSE 0 END) AS MALE_PASS
+        FROM 
+            score
+        GROUP BY s_id
+        ```
+      
+    - 例如2：
+        查询各科成绩最高分、最低分和平均分：以如下形式显示：课程ID，课程name，最高分，最低分，平均分，及格率，中等率，优良率，优秀率 （及格为>=60，中等为：70-80，优良为：80-90，优秀为：>=90）
+    - 分析：因为要求显示 课程ID，课程name，此为主干，则按照课程ID，课程name进行分组，那么case when语句就是统计每个分组内满足条件的，如下：
+        ```text
+        select 
+            a.c_id,
+            b.c_name,
+            MAX(s_score),
+            MIN(s_score),
+            ROUND(AVG(s_score),2),
+            ROUND(100*(SUM(case when a.s_score>=60 then 1 else 0 end)/SUM(case when a.s_score then 1 else 0 end)),2) as 及格率,
+            ROUND(100*(SUM(case when a.s_score>=70 and a.s_score<=80 then 1 else 0 end)/SUM(case when a.s_score then 1 else 0 end)),2) as 中等率,
+            ROUND(100*(SUM(case when a.s_score>=80 and a.s_score<=90 then 1 else 0 end)/SUM(case when a.s_score then 1 else 0 end)),2) as 优良率,
+            ROUND(100*(SUM(case when a.s_score>=90 then 1 else 0 end)/SUM(case when a.s_score then 1 else 0 end)),2) as 优秀率
+        from score a 
+        left join course b on a.c_id = b.c_id 
+        GROUP BY a.c_id,b.c_name
+        ```
+      
+- 3、查询每门功成绩最好的前两名（上面的 成绩Score表 ）
+    ```text
+    select a.s_id,a.c_id,a.s_score 
+    from score a
+    where (
+        select COUNT(*) 
+        from score b 
+        where b.c_id=a.c_id and b.s_score>=a.s_score
+    )<=2 
+    ORDER BY a.c_id, a.s_score DESC
+    ```
