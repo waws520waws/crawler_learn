@@ -1,0 +1,43 @@
+### docker基本概念
+- 简介：
+    - 类似于虚拟机，但又有很大的不同
+    - Docker 是一个开源的应用容器引擎，Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到 Linux 和 Windows机器上，也可以实现虚拟化。
+    - Docker 包含三个基本概念，分别是镜像（Image）、容器（Container）和仓库（Repository）；镜像是 Docker 运行容器的前提，仓库是存放镜像的场所，可见镜像更是Docker的核心
+- 优点
+    - Docker很轻量，使用起来特别容易，不仅可以在各大平台上移植，还可以实现虚拟化，还有跟语言也无关
+    - 开发者编写好的东西，放到Docker里面，随便扔，都能运行，不需要进行额外的一大堆的配置
+- 相关概念
+    - 1、docker镜像（Image）
+        - Docker 镜像可以看作是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，
+          还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。  
+        - 镜像提供的是软件运行的基础环境，一个镜像只是一个只读的环境
+        - 有很多镜像：如ubuntu、centos、mysql、python等
+    - 2、docker仓库（Repository）
+        - Docker仓库的概念与Git或GitHub的概念类似
+        - docker仓库是集中存放镜像文件的地方，仓库分为私有仓库（Private）和公共仓库（Public）
+    - 3、容器（Container）
+        - 可以将容器比做飞机，飞机装的人或物质，而容器装的是代码，将各种编程语言编写的代码编译好放在容器中，则就可以在任何平台上运行，做到平台无关性、可移植性。
+        - 容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低
+        - 可以把容器理解为一个精简版的linux操作系统，包括root用户权限，进程空间，用户空间和网络空间等等这些，然后加上再它之上运行的应用程序
+    - 镜像 与 容器的关系
+        - Docker镜像是用来启动容器的，可以将镜像想像成C#语言中的类，而将容器想像成类实例化后的对象
+        - Docker镜像给我们提供应用程序运行的基础，而Docker容器主要是用来真正运行程序员开发的应用程序的
+        - 一个Docker镜像可以实例化出来多个容器，而每一个容器之间是独立运行的，没有任何依赖
+        - Docker镜像是不能运行的，是静态的，而Docker容器是运行的，是动态的，可以将Docker容器想像成一个简化版的操作系统和一些核心基础的应用。每个容器运行一个独立的应用程序。
+- 安装
+    - 【参考】https://www.runoob.com/docker/windows-docker-install.html
+    
+- 使用
+    - 【参考】https://www.runoob.com/docker/windows-docker-install.html
+    - 在 https://hub.docker.com 免费注册一个 Docker 账号
+    - 拉取centos镜像： 
+        - 查看当前本地有哪些镜像：cmd输入 `docker images`  或者 打开 Docker Desktop 查看Images
+        - 查看有哪些有关centos的镜像： `docker search centos` 或者 在https://hub.docker.com/中搜索centos
+            - 为什么会有这么多centos，因为可能是别人修改过再封装成一个新的
+        - 拉取centos镜像： `docker pull centos`
+            - 拉取指定版本的 CentOS 镜像：`docker pull centos:centos7`
+    - 一个Python项目，部署到Docker的完整过程：https://blog.csdn.net/u013282737/article/details/85233408
+- 其他命令
+    - `docker ps -a`    查看所有的容器
+    - `docker rm IMAGE_ID`  删除某个镜像（IMAGE_ID可以从 `docker images` 中查看）
+    

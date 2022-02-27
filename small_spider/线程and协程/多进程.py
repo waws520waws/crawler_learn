@@ -13,7 +13,7 @@ def func(name):
 if __name__ == '__main__':
     plist = []
     for i in range(1, 5):
-        p = Process(target=func, args=(i,))
+        p = Process(target=func, args=(i,))  # args: 函数的参数 , 元组中只包含一个元素时，需要在元素后面添加逗号
         p.start()  # 启动子进程
         plist.append(p)
     for p in plist:

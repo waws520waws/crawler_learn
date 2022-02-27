@@ -34,6 +34,7 @@
           不过我后边会介绍如何将模拟器部署Docker,因为是无界面的，比较轻量级，对显卡也无硬性要求。
   
 - 使用
+    - 一般是与抓包工具（mitmdump）结合使用，mitmdump劫持数据并解析入库
     - 【参考】https://zhuanlan.zhihu.com/p/49428952
     - 【参考】https://blog.csdn.net/hihell/article/details/86233963
     - 1、使用cmd命令连接模拟器
@@ -42,6 +43,8 @@
     - 2、启动appium服务
         - Appium Server GUI 桌面快捷图标
     - 3、启动 Appium Inspector 桌面快捷图标
+        - Appium Inspector运行比较慢，可使用 Android-sdk-tools\tools 下的 uiautomatorviewer.bat
+            - 问题是 uiautomatorviewer.bat 打不开
     - 4、查看app的包名与进程名
         - 0）在终端输入 ：`adb devices`, 检查设备是否还是连接状态
         - 1）模拟器打开app
@@ -66,10 +69,12 @@
 - python脚本的使用
     - 【参考】https://zhuanlan.zhihu.com/p/50515738
     - 安装： `pip install Appium-Python-Client`
-    - 例子：见 appium_douyin.py
+    - 例子：见 appium_toutiao.py
     - 运行脚本：直接在pycharm中右键点击运行（得先连接设备，并打开appium服务端，方法见上一步）
     - 常用方法
         ```python
+        self.driver.page_source
+      
         # 得到设备屏幕分辨率宽高
         self.driver.get_window_size()
         # 截图
@@ -88,7 +93,10 @@
       
         # 通过id查找元素,并点击
         self.driver.find_elements_by_id().click()
-      
+        # 点击坐标
+        self.driver.tap([(435, 234), (567, 324)])
+        self.driver.tap([(1232, 123)])
+        
         # 通过id查找元素,并输入内容
         self.driver.find_elements_by_id().send_keys()
         ```
@@ -109,3 +117,32 @@
     - 1）在Android设备上运行度Shell(命令行)
     - 2）管理模拟器或设备的端口映射
     - 3）在计算机和知设备之间上传/下载文件
+    
+### 多设备并发
+- 夜神模拟器多开，步骤
+    - 1）开启两台模拟器
+    - 2）在系统任务管理器中查看两台模拟器的PID （名称为 NoxVMHandle Frontend）
+    - 3）cmd中查看进程 `netstat -ano | findstr "PID_number"`
+    - 4）夜神模拟器的端口号一般为：第一台62001， 第二台62025，第三台62025+1
+    - 5）连接设备： `adb connect ip:port`
+        - 可以先启动adb `adb devices`，再启动设备，就不用手动连接了
+    - 6）查看是否连接： `adb devices -l`
+    - 7）在手机配置信息处要设置 udid (多态设备时，经过udid区分)
+        ```text
+        {
+            "platformName": "Android",   # 声明是ios还是Android系统
+            "platformVersion":"4.4.2",   # Android内核版本号，可以在夜神模拟器设置中查看   
+            "deviceName": "OPPO R11",  # 这个地方我们可以写 127.0.0.1:62001 (一般写 `adb devices` 后显示的名称)
+            "udid": "127.0.0.1:62001"
+            "appPackage": "com.taobao.taobao",  #  apk的包名 
+            "appActivity": "com.taobao.tao.welcome.Welcome"  # apk的launcherActivity
+        }
+        ```
+    - 8）appium服务端设置Server Port 以及 Bootstrap Port，并保存
+        - 打开 appium server桌面程序
+        - 在开启服务界面选择 ’Advanced‘，设置Server Port 以及 Bootstrap Port， 然后保存
+            - 一般Server Port 以及 Bootstrap Port编号依次增加
+        - 开几个模拟器，就配几套设置
+    - 9）在 ‘Presets’ 中，将保存的多个服务配置分别启动（也就是多台模拟器多个服务端）
+    - 10）python脚本中使用多进程，控制两台设备
+        - 见 appium_toutiao.py
