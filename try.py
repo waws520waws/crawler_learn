@@ -1,10 +1,23 @@
-import sys
-sys.path.append(".")
-# 导入 logging_logger.py 模块
-from logging_logger import logger
-# 使用
-logger.debug('This is a debug')
-logger.info('This is a info')
-logger.warning('This is a warning')
-logger.error('This is a error')
-logger.critical('This is a critical')
+import requests
+from lxml import etree
+
+with open('tt1.html', 'r', encoding='utf-8') as f:
+    req = f.read()
+
+page = etree.HTML(req)
+cnt_div = page.xpath('//div[contains(@class, "entry-content")]/child::*')
+print(cnt_div)
+print('==================')
+for div in cnt_div:
+    print(div.tag)
+
+
+dust_p = page.xpath('//div[contains(@class, "entry-content")]/p')
+print(dust_p)
+print('==================')
+for i in cnt_div:
+    if i in dust_p:
+        print(i)
+'''
+<Element p at 0x7fb720474e10>, <Element p at 0x7fb720474e60>
+'''
