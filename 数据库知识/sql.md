@@ -154,12 +154,12 @@ replace(a.orig_url, '.amp?', '') =b.orig_url
       
 - 3、查询每门功成绩最好的前两名（上面的 成绩Score表 ）
     ```text
-    select a.s_id,a.c_id,a.s_score 
-    from score a
+    select score_a.s_id, score_a.c_id, score_a.s_score 
+    from score score_a
     where (
         select COUNT(*) 
-        from score b 
-        where b.c_id=a.c_id and b.s_score>=a.s_score
+        from score score_b 
+        where score_b.c_id = score_a.c_id and score_b.s_score >= score_a.s_score
     )<=2 
-    ORDER BY a.c_id, a.s_score DESC
+    ORDER BY score_a.c_id, score_a.s_score DESC
     ```
