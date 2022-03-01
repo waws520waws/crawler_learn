@@ -1,23 +1,14 @@
 import requests
 from lxml import etree
 
-with open('tt1.html', 'r', encoding='utf-8') as f:
-    req = f.read()
+headers = {
+    'referer': 'https://www.huxiu.com/',
+    'accept-encoding': 'gzip, deflate, br',
+    'accept-language': 'zh-CN,zh;q=0.9',
+    'cache-control': 'max-age=0',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36',
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+}
 
-page = etree.HTML(req)
-cnt_div = page.xpath('//div[contains(@class, "entry-content")]/child::*')
-print(cnt_div)
-print('==================')
-for div in cnt_div:
-    print(div.tag)
-
-
-dust_p = page.xpath('//div[contains(@class, "entry-content")]/p')
-print(dust_p)
-print('==================')
-for i in cnt_div:
-    if i in dust_p:
-        print(i)
-'''
-<Element p at 0x7fb720474e10>, <Element p at 0x7fb720474e60>
-'''
+req = requests.get('https://www.huxiu.com/event/', headers=headers)
+print(req.text)

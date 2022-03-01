@@ -46,6 +46,8 @@ driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
   """
 })
 ```
+- 问题：有时候设置了webdriver的值，但还是访问不了网站，此时可以换个浏览器试试
+
 
 - 方法2：使用 mitmproxy 进行代理（拦截请求并设置请求参数）
     - 步骤1、带脚本启动mitm代理 `mitmdump -s selenium_proxy.py`
