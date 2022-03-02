@@ -27,6 +27,7 @@ page = requests.get(url, headers=url_headers).text
 # with open('./bilibili.html', 'r', encoding='utf-8') as f:
 #     page = f.read()
 
+# 拿到高清视频地址
 cmp1 = re.compile('"id":64.*?"baseUrl":"(.*?)"', re.S)
 baseUrl = cmp1.search(page).group(1)
 print(baseUrl)
