@@ -1,14 +1,13 @@
-import requests
-from lxml import etree
+import hashlib
+## ====================== bv
+str1 = 'https://dream.blog.csdn.net/article/details/108225659'
 
-headers = {
-    'referer': 'https://www.huxiu.com/',
-    'accept-encoding': 'gzip, deflate, br',
-    'accept-language': 'zh-CN,zh;q=0.9',
-    'cache-control': 'max-age=0',
-    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36',
-    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
-}
+# 1、创建hash对象
+hl = hashlib.md5()
 
-req = requests.get('https://www.huxiu.com/event/', headers=headers)
-print(req.text)
+# 2、向hash对象中添加需要做hash运算的字符串
+hl.update(str1.encode('utf-8'))  # 这个地方传的是bytes类型的数据，否则会报错
+
+# 3、获取字符串的hash值
+bv = hl.hexdigest()
+print(bv)

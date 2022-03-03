@@ -5,6 +5,12 @@ import sys
 sys.path.append('../..')
 from bloomcheck import BloomCheck
 
+'''
+注意点
+    在此案例中： BloomFilter 是通过读写文件的方式进行去重，如果你编写多进程或者多线程爬虫，使用的时候需要添加互斥和同步条件，
+      还有 BloomFilter 涉及文件I/O操作，注意批量写入和批量读取，否则效率会有很大的影响。
+'''
+
 class BfilterSpider(scrapy.Spider):
     name = 'bfilter'
     # allowed_domains = ['www.xx.com']

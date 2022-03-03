@@ -143,6 +143,8 @@ def merge_ts():
         FFmpeg 有非常强大的功能包括视频采集、视频格式转换、视频抓图、给视频加水印，合并等功能。
         也有python API接口：
             pip install ffmpeg-python
+        【注】合并ts文件，好像只能系统安装ffmpeg进行合并，python脚本执行cmd命令；
+            音频与视频合并可以用python脚本合并，参考100例的例70
     '''
 
     file_list = []

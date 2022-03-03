@@ -1,4 +1,5 @@
 ## 一、url去重
+- url去重应该只需要同一网站（同一域名）下的url去重，否则那么多网站，那么多url都存入redis中，占太多内存
 ### 1、使用redis中的集合进行url去重
 - 案例：small_spider/scrapy1/scrapy的基本使用.md 中的 增量式爬虫
 ### 2、可以使用BloomFilter进行url去重
