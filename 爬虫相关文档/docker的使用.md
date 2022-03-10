@@ -37,6 +37,25 @@
         - 拉取centos镜像： `docker pull centos`
             - 拉取指定版本的 CentOS 镜像：`docker pull centos:centos7`
     - 一个Python项目，部署到Docker的完整过程：https://blog.csdn.net/u013282737/article/details/85233408
+- 本地python项目打包并push、pull
+    - 打包
+        - 【参考】https://www.cnblogs.com/think90/articles/12370973.html
+        - 导出项目依赖包到文件： `pip freeze > requirements.txt`
+        - 在项目同级目录下编写Dockerfile，文件内容见上面的链接
+            - 自定义基础镜像：https://blog.csdn.net/bocai_xiaodaidai/article/details/92838984
+        - 制作镜像： `docker build -t imagename Dockerfilepath`
+        - 可在本地查看制作的镜像： `docker images`
+    - 先登录远端镜像仓库
+        - `docker login`
+    - 本地镜像push到远端镜像仓库
+        - 【参考】https://www.cnblogs.com/yoyoketang/p/11923263.html
+    - 从远端镜像仓库pull到本地
+        - `docker pull docker账号/docker仓库:tag`
+    - 后台运行容器
+        - `docker run -d ......`  -d : 让容器后台运行，关闭命令窗口，容器不关闭
+    - 【注意】可以不用docker，也可以在其他机器上快速部署项目
+        - 首先还是导出项目依赖包到文件： `pip freeze > requirements.txt`
+        - 然后在其他机器上： `pip install -r requirements.txt` 一次性安装所需依赖包
 - 其他命令
     - `docker ps -a`    查看所有的容器
     - `docker rm IMAGE_ID`  删除某个镜像（IMAGE_ID可以从 `docker images` 中查看）

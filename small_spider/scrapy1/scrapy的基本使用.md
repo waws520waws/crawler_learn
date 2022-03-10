@@ -2,6 +2,7 @@
 - 目录
     - 1、使用流程
     - scrapy优缺点
+    - scrapy去重原理
     - 2、日志log
     - 3、持久化存储
     - 4、scrapy五大核心组件简介
@@ -47,13 +48,18 @@
     
 - 缺点：
     - 1）无法用它完成分布式爬取
-    - 2）自身去重效果差，消耗内存，且不能持久化【Scrapy中用集合set( )实现这个request去重功能】
-    - 3）对于需要执行js才能获取数据的网页，爱莫能助
+    - 2）自身去重效果差，消耗内存，且不能持久化【Scrapy中用集合set()实现这个request去重功能】
+    - 3）对于需要执行js才能获取数据的网页，爱莫能助 
     - 4）兼容了下载图片与视频，但是可用性比较差
     - 5）自身扩展的log模块，不好用，经常需要自定义
     - 6）基于 twisted 框架，运行中的 exception 是不会干掉 reactor（反应器），并且异步框架出错后是不会停掉其他任务的，
          数据出错后难以察觉，预警系统简单的使用邮件，很不友好
 
+### scrapy去重原理
+- 需要将dont_filter设置为False开启去重，默认是False
+    - `scrapy.Request(url, dont_filter=False)`, 如项目./get_update_data
+- 对于每一个url的请求，调度器都会根据请求的相关信息加密得到一个指纹信息，并且将指纹信息和set()集合中得指纹信息进行比对，
+  如果set()集合中已经存在这个数据，就不在将这个Request放入队列中。如果set()集合中没有，就将这个Request对象放入队列中，等待被调度。
 
 ### 2、日志log
 - 控制输出信息
@@ -152,19 +158,31 @@ class KuanPipeline(object):
           
 ### 4、scrapy五大核心组件简介
 ![img_1.png](img_1.png)
-- 引擎(Scrapy)
+- 1引擎(Scrapy)
     - 用来处理整个系统的数据流处理, 触发事务(框架核心)
-- 调度器(Scheduler)
-    - 用来接受引擎发过来的请求, 将请求地址压入队列（Queue）中, 并在引擎再次请求的时候返回. 可以想像成一个URL（抓取网页的网址或者说是链接）的优先队列, 由它来决定下一个要抓取的网址是什么, 
+- 2调度器(Scheduler)
+    - 用来接受引擎发过来的请求, 将Request对象压入队列（Queue）中, 并在引擎再次请求的时候返回. 可以想像成一个URL（抓取网页的网址或者说是链接）的优先队列, 由它来决定下一个要抓取的网址是什么, 
     - 同时去除重复的网址
     - scrapy中有一个本地爬取队列Queue，这个队列是利用deque模块实现的，如果有新的请求发起之后，就会放到队列里面，然后该请求会被scheduler调度，之后该请求就会交给Downloader执行爬取。
-- 下载器(Downloader)
-    - 用于下载网页内容, 并将网页内容返回给蜘蛛(Scrapy下载器是建立在twisted这个高效的异步模型上的)
-- 爬虫(Spiders)
+    - 调度器的队列中应该存放的是Request对象（包含url，callback函数、headers等信息）
+- 3下载器(Downloader)
+    - 用于下载网页内容, 并将网页内容返回给蜘蛛Spiders (Scrapy下载器是建立在twisted这个高效的异步模型上的)
+- 4爬虫(Spiders)
     - 爬虫是主要干活的, 用于从特定的网页中提取自己需要的信息, 即所谓的实体(Item)。用户也可以从中提取出链接,让Scrapy继续抓取下一个页面
-- 项目管道(Pipeline)
+- 5项目管道(Pipeline)
     - 负责处理爬虫从网页中抽取的实体，主要的功能是持久化实体、验证实体的有效性、清除不需要的信息。当页面被爬虫解析后，将被发送到项目管道，并经过几个特定的次序处理数据。
-    
+- 中间件
+    - 下载器中间件、爬虫中间件、调度器中间件。主要使用下载器中间件，用于拦截请求与响应，设置代理等
+- 流程
+    - 1）引擎打开一个域名，蜘蛛处理这个域名，并让蜘蛛获取第一个爬取的URL。
+    - 2）引擎从蜘蛛那获取第一个需要爬取的URL，然后作为请求在调度中进行调度。
+    - 3）引擎从调度那获取接下来进行爬取的页面。
+    - 4）调度将下一个爬取的URL返回给引擎，引擎将他们通过下载中间件发送到下载器。
+    - 5）当网页被下载器下载完成以后，响应内容通过下载中间件被发送到引擎。
+    - 6）引擎收到下载器的响应并将它通过蜘蛛中间件发送到蜘蛛进行处理。
+    - 7）蜘蛛处理响应并返回爬取到的item，然后将item以及新的请求对象返回给引擎。
+    - 8）引擎将抓取到的item提交给管道，并将新的请求对象发送给调度器。
+    - 9）系统重复第3步操作，直到调度中没有请求，然后断开引擎与域名之间的联系
 
 ### 5、请求传参（在持久化存储时在不同方法中传递item对象）
 - 【all_page_crawl文件中的示例】
@@ -212,6 +230,7 @@ class KuanPipeline(object):
               
     - 【**完整项目01**】爬取网易新闻数据【包含多板块多url、传参item对象、selenium的使用、动态数据、中间件】
         - 此项目有动态数据，这里用到’下载中间件‘拦截响应对象，并使用selenium重新请求动态数据
+        - 遇到动态数据selenium，也可以不使用中间件，可以在spider文件中重写 start_requests() 方法
     - 2、'拦截响应'的使用步骤（crawl_wangyi_news项目文件下）【selenium的使用】
         - 在middlewares.py文件中，配置ScrapyLearnDownloaderMiddleware类
             - 在process_response()方法中设置拦截响应数据后的处理
@@ -353,24 +372,31 @@ class KuanPipeline(object):
 scrapy网络请求是基于Twisted，而Twisted默认支持多线程，而且scrapy默认也是通过多线程请求的，并且支持多核CPU的并发，
 我们通过一些设置提高scrapy的并发数可以提高爬取速度。以下三个参数设置：
 
-CONCURRENT_REQUESTS  # 并发请求数
+CONCURRENT_REQUESTS  # 并发请求数（我的理解：是对于所有来说的，不管是域名还是IP）
 CONCURRENT_REQUESTS_PER_DOMAIN  # 每个域名的并发请求数
 CONCURRENT_REQUESTS_PER_IP  # 每个ip的并发请求数
 
 COOKIES_ENABLED = False   # 禁用cookies可以避免被ban ？
+
+
+例子：
+    CONCURRENT_REQUESTS =2
+    DOWNLOAD_DELAY =5
+    效果：一开始来2个request（A，B），但5秒后只处理了一个request(A)，新来一个request(C),5秒后又处理一个request（B）,排队一个request（D）。如此循环。
+    总结：DOWNLOAD_DELAY 会影响 CONCURRENT_REQUESTS，不能使并发显现出来。
+        - 原因：因为使用的是python的多线程，同一时刻只能执行一个线程？
 '''
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # 中文：并发请求
-CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 4 
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 # 降低下载延迟
 # 将下载延迟设为0，这时需要相应的防ban措施，一般使用user agent轮转，构建user agent池，使用中间件轮流选择其中之一来作为user agent。
-DOWNLOAD_DELAY = 0  # 秒
-
+DOWNLOAD_DELAY = 3  # 秒 
 # The download delay setting will honor only one of:
 CONCURRENT_REQUESTS_PER_DOMAIN = 16
 CONCURRENT_REQUESTS_PER_IP = 16  # 若此项非0，相对于DOMAIN来说，优先此项 ？

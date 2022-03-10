@@ -7,8 +7,9 @@
     - GBK: 中文版本的编码(兼容中文和英文)
     - Unicode: 
         - 支持全球所有语言; 可以跟各种语言的编码自由转换，也就是说，即使你gbk编码的文字 ，想转成unicode很容易
-        - Unicode只是规定了字的代号，比如‘你‘的代号是12345，那么怎么编码这个值，才涉及到占几个字节（如：UTF-8 编码中一般占用 3 个字节）
+        - Unicode只是规定了字的代号，也就是对应的映射关系，比如‘你‘的代号是12345，那么怎么编码这个值，才涉及到占几个字节（如：UTF-8 编码中一般占用 3 个字节）
         - 但有时又会说Unicode编码占几个字节，一般是2个字节
+        - Unicode一般只用于内存中的编码使用
     - UTF-8：
         - 为了解决存储和网络传输的问题，出现了Unicode Transformation Format，学术名UTF，即：对unicode字符进行转换，以便于在存储和网络传输时可以节省空间
         - 使用1、2、3、4个字节表示所有字符；优先使用1个字符、无法满足则使增加一个字节，最多4个字节。英文占1个字节、欧洲语系占2个、东亚占3个，其它及特殊字符占4个
@@ -29,7 +30,46 @@
 - python3.x：
     - 有两种数据类型，str和bytes；str类型存unicode数据，bytes类型存bytes数据
     - 文本总是unicode，由str类型表示，二进制数据则由bytes类型表示
-    
+
+- python中的编码问题
+    - 【参考1】https://www.cnblogs.com/yyds/p/6171340.html
+        【参考2】https://zhuanlan.zhihu.com/p/40834093
+    - 文件存储encoding是怎样的，就要用相同的encoding去解。如果没指定，就用系统默认。所谓的encoding其实也就是字符集的mapping表而已
+    - 磁盘上的文件都是以二进制格式存放的，其中文本文件都是以某种特定编码的**字节**形式存放的
+    - 编码(encode)：将Unicode字符串转换成字节串（指定的编码方式）的过程和规则
+    - 解码(decode)：将字节串（指定的编码方式）转换为对应的Unicode字符串(中的代码点)的过程和规则
+    - python中的编码解码都是 Unicode字符串 与 字节串之间的转换
+        ```python
+        #!/usr/bin/env python
+        '''
+        比如我们使用Pycharm来编写Python程序时会指定工程编码和文件编码为UTF-8，
+        那么Python代码被保存到磁盘时就会被转换为UTF-8编码对应的字节（encode过程）后写入磁盘。
+        当执行Python代码文件中的代码时，Python解释器在读取Python代码文件中的字节串之后，
+        需要将其转换为UNICODE字符串（decode过程）之后才执行后续操作。
+        此句即为decode的格式。
+        '''
+        # -*- coding:utf-8 -*-
+        
+        import chardet
+        
+        a = "小甲"  # unicode字符串
+        # print(chardet.detect(a))  # 这里会报错，因为只能传入字节型数据
+        b = a.encode('utf-8')  # 以utf-8方式编码成字节
+        print(chardet.detect(b))  # {'encoding': 'utf-8', 'confidence': 0.7525, 'language': ''}
+        print(type(b))  # <class 'bytes'>
+        c = b.decode('utf-8')  # 以utf-8方式解码成unicode字符串
+        print(type(c))  # <class 'str'>
+        ```
+        ```python
+        # 假设手动新建此txt文件且其中有中文，是保存在windows上的，则默认是gbk编码
+        # 若open时不声明编码方式，则使用系统默认的编码方式（windows中为gbk，linux中是utf-8）
+        # 问题：open中的encoding是在什么时候起作用（磁盘上的已经是编码后的字节数据了，为啥还要编码）
+        with open('./requirements.txt', 'r', encoding='utf-8') as f:
+            a = f.read()
+            print(a)
+            print(type(a))
+        ```
+
 ## 转码
 - 字符 与 Unicode编码 互转
     - 1、字符 转化为 Unicode编码 方法：`ord("A")`
