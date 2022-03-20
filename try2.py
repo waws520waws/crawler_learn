@@ -1,14 +1,6 @@
-import scrapy
-from baiduindex.items import BaiduindexItem
-
-class IndexSpider(scrapy.Spider):
-    name = 'index'
-    allowed_domains = ['top.baidu.com']
-    start_urls = ['http://top.baidu.com/buzz?b=1&fr=topindex']
-
-    def parse(self, response):
-        title_list = response.xpath("//a[@class='list-title']/text()").extract()
-        for title in title_list:
-            item = BaiduindexItem()
-            item["title"] = title
-            yield item
+list1 = [1,2,3]
+list2 = [3,4,5]
+set1 = set(list1)
+set2 = set(list2)
+print(set1 & set2)
+print(set1 ^ set2)

@@ -249,3 +249,20 @@ import sys
 sys.path.append("..") 
 import xxx
 ```
+
+## Python 直接赋值、浅拷贝和深度拷贝
+- 【参考】https://www.runoob.com/w3cnote/python-understanding-dict-copy-shallow-or-deep.html
+- 直接赋值：其实就是对象的引用（别名）。
+- 浅拷贝(copy)：拷贝父对象，不会拷贝对象的内部的子对象。
+- 深拷贝(deepcopy)： 完全拷贝了父对象及其子对象
+```python
+import copy
+a = {1: [1, 2, 3]}
+d = a
+b = a.copy()
+c = copy.deepcopy(a)
+a[1].append(4)
+print(a, d)  # {1: [1, 2, 3, 4]} {1: [1, 2, 3, 4]}
+print(a, b)  # {1: [1, 2, 3, 4]} {1: [1, 2, 3, 4]}
+print(a, c)  # {1: [1, 2, 3, 4]} {1: [1, 2, 3]}
+```

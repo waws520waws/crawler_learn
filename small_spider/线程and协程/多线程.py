@@ -101,7 +101,7 @@ def run(n):
 
 if __name__ == '__main__':
     for i in range(5):
-        t = threading.Thread(target=run)
+        t = threading.Thread(target=run, args=(5,))
         t.start()
 ##############################################
 

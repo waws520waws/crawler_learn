@@ -10,4 +10,5 @@ html = req.text
 
 ## 2、可以将乱码数据先编码，再解码
 data = '乱码'
+# iso-8859-1：是单字节编码，向下兼容ASCII
 data = data.encode('iso-8859-1').decode('gbk')
