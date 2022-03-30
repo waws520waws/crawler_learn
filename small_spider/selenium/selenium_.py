@@ -35,6 +35,10 @@ webdri.execute_script('window.scrollTo(0,document.body.scrollHeight)')
 
 webdri.get('https://www.baidu.com')
 
+# 获取元素中的文本
+h2 = driver.find_element_by_xpath('//h2')
+cnt = h2.get_attribute('textContent') 
+
 # 获取网页源码数据
 page_text = webdri.page_source
 
