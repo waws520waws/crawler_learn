@@ -117,7 +117,7 @@
 
 ​	`eval()`：可执行js代码（自带一个VM虚拟机），将js代码加密后放入其中，起到混淆作用，如下图：
 
-​	![image-20220329102118614](C:\Users\Administrator\Desktop\JS逆向\md_picture\js逆向2.png)
+​	![image-20220329102118614](./md_picture/js逆向2.png)
 
 #### 2、aa 与 jj 与 FUCK 加密混淆
 
@@ -137,7 +137,7 @@
 
 3、FUCK加密：将 `var a = 1;` 进行 FUCK 加密：
 
-![image-20220329132807218](./md_picture\js逆向6.png)
+![image-20220329132807218](./md_picture/js逆向6.png)
 
 ### 七、伪造浏览器环境
 
@@ -200,7 +200,7 @@
 - 检测栈的层数 `func_name.caller`：可以检测是谁调用的我
 - 利用`tostring` 检测行为，然后将你引向错误的逻辑。如下图，在调试时，将鼠标放到方法上，就调用了tostring
 
-​	![image-20220329162838009](./md_picture\js逆向7.png)
+​	![image-20220329162838009](./md_picture/js逆向7.png)
 
 2、反调试分类
 
@@ -214,7 +214,7 @@
 
       - `Function` 的处理一般是让其等于一个空函数，让其不执行，如下图（具体做法见参考链接 `0:35:00` 左右）【属于hook内容】
 
-        ![image-20220329173341229](./md_picture\js逆向8.png)
+        ![image-20220329173341229](./md_picture/js逆向8.png)
 
         加参数判断语句：
 
@@ -235,7 +235,7 @@
 
       - 此方法可以让某个方法不执行（例如不执行 ‘让你进入debugger’ 的方法），见下图：
 
-        ![image-20220329175636306](./md_picture\js逆向9.png)
+        ![image-20220329175636306](./md_picture/js逆向9.png)
 
       - `eval()` 同理
 
