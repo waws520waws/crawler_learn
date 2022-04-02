@@ -47,7 +47,7 @@
         - `which python3` 查看路径
         - `python3 -V` 查看版本
         - `python3 -m pip install requests` 安装依赖包
-        - `nohup python3 -u jxbfd.py >out.log 2>&1 &` 后台运行脚本
+        - `nohup python3 -u jxbfd.py > out.log 2>&1 &` 后台运行脚本
         -  `cat out.log` 查看日志
     - 此方法是在root下安装环境，不会污染环境吗？
     

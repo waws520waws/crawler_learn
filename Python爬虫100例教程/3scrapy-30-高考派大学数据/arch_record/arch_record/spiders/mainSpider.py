@@ -24,7 +24,7 @@ class MainspiderSpider(scrapy.Spider):
     def start_requests(self):
         for i in range(1, 3):
             form_data = {
-                'type': '1',
+                'type': '1',  ## 注意：这里为字符串类型，不能为int型
                 'limit': '17',
                 'pageNo': str(i)
             }

@@ -72,7 +72,7 @@
 - 5）不可逆加密：
     - md5系列：md5、md2、md4、带密码的md5（hmac）
         - 特点：
-            - md5长度：16位、32位、40位。其中，同一个字串加密后的16位密文包含在32位密文中
+            - md5长度：16位、32位、（40位？）。其中，同一个字串加密后的16位密文包含在32位密文中
             - 由 ‘0-9、a-f’或者字母大写 组成的16进制
         - 需要熟记 123456 的md5值（用作调试看是什么加密）（记开头几位就行）
             - 16位md5：`49ba59abbe56e057`
@@ -105,41 +105,7 @@
     - 为什么要这样做：因为有些闭包，外部无法访问内部的变量（让局部变全局，方便调试）
     ![img_2.png](./md_picture/js逆向1.png)
 
-### 六、js混淆
-
-【参考】https://www.bilibili.com/video/BV1Kh411r7uR?p=14&spm_id_from=pageDriver
-
-#### 1、eval混淆
-
-​	1）混淆常量的名和值
-
-​	2）混淆代码执行流程
-
-​	`eval()`：可执行js代码（自带一个VM虚拟机），将js代码加密后放入其中，起到混淆作用，如下图：
-
-​	![image-20220329102118614](./md_picture/js逆向2.png)
-
-#### 2、aa 与 jj 与 FUCK 加密混淆
-
-一般是对js代码加密。
-
-1）aa加密：JS默认支持Unicode，那么就支持全球所有的语言，那么就可以用其它语言的字符做变量，就会出现看着像 `O` 但不是 `o`，看着像 `0` 但不是 `0`，看着像 `p` 但不是 `p`
-
-【在线js加密工具】https://www.sojson.com/aaencode.html
-
-如下，将 `var a = 1;` 进行 aa 加密：
-
-![image-20220329103552640](./md_picture/js逆向3.png)
-
-2）jj 加密：将 `var a = 1;` 进行 jj 加密：
-
-![image-20220329112431918](./md_picture/js逆向5.png)
-
-3、FUCK加密：将 `var a = 1;` 进行 FUCK 加密：
-
-![image-20220329132807218](./md_picture/js逆向6.png)
-
-### 七、伪造浏览器环境
+### 六、伪造浏览器环境
 
 【参考】https://www.bilibili.com/video/BV1Kh411r7uR?p=16&spm_id_from=pageDriver	
 
@@ -184,7 +150,7 @@
 
 ​	给指定的网站伪造：如何知道网站检测了什么（执行js需要哪些环境模块）？通过调试、异常捕获、本地环境运行看报错。
 
-### 八、浏览器反调试（hook）
+### 七、浏览器反调试（hook）
 
 【参考】https://www.bilibili.com/video/BV1Kh411r7uR?p=17&spm_id_from=pageDriver
 
@@ -206,11 +172,11 @@
 
 - 显性（能感知到的）
 
-  - debugger：按F12后会调用 debugger语句，应对方法：
+  - debugger：原代码会调用 debugger语句，应对方法：
 
     - 虚拟机（debugger在虚拟机文件中）
 
-      - 因为是在虚拟机中，所以源码中会调用`eval()`或者`Function`
+      - 因为是在虚拟机中，所以源码中会调用`eval()`或者`Function`（构造函数constructor）
 
       - `Function` 的处理一般是让其等于一个空函数，让其不执行，如下图（具体做法见参考链接 `0:35:00` 左右）【属于hook内容】
 
@@ -235,9 +201,13 @@
 
       - 此方法可以让某个方法不执行（例如不执行 ‘让你进入debugger’ 的方法），见下图：
 
+        - setInterval()：定时器
+
         ![image-20220329175636306](./md_picture/js逆向9.png)
 
       - `eval()` 同理
+
+      - 上述hook方式的缺点：每次翻页什么的都要在控制台执行hook代码，解决方法是，使用fiddler中的hook
 
     - 非虚拟机：
 
@@ -251,6 +221,26 @@
 
   - 引向错误的逻辑
     - 解决方法：可以hook住堆栈，然后进入浏览器F12查看堆栈，进行对比
+
+3、网站不能进入开发者模式
+
+- 1）使用fiddler，注入hook进行尝试
+
+  - 先用简单的hook进行尝试
+
+    - 可能是用了定时器，定时器hook代码：
+
+    - ```js
+      window.setInterval_ = setInterval;
+      setInterval = function(x, x1){
+          debugger;
+          return window.setInterval_(x, x1);
+      }
+      ```
+
+- 2）分析fiddler抓到的包
+
+
 
 ### 九、调试技巧（一些调试经验）
 
@@ -273,3 +263,12 @@
 4、遇到加密算法，有两个思路：1）扣出加密函数，直接运行；2）找明文、找密钥，再手动实现
 
 5、在某些地方无法设置断点，可以在此处写一句代码 `debugger;` ，程序运行到此处会自动断掉
+
+6、打开浏览器抓包，发现请求的url的源码为空（加 XHR 断点）。解决方法是：打开fiddler代理就可以了（因为 fd 有缓存），此时可以正常下断点操作了。比如这个网站：https://bqcm0.cavip1.com/
+
+![image-20220402102836390](./md_picture/js逆向16.png)
+
+- 上图中，我们需要 login 的一些动作，就设置了 XHR 断点，然后重新登陆，被断住，如下图：
+
+  ![image-20220402103349598](./md_picture/js逆向17.png)
+
