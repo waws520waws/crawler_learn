@@ -88,8 +88,46 @@ hook：改变原方法或原代码的执行流程（结合断点）
 
 - 如果不想用第三方插件，可以在网页第一个请求的js中的第一行插入断点，然后刷新页面，被断住，然后在控制台执行hook代码，一样的效果。为什么是js？因为hook肯定是在js上啊
 
+### 三、ast-hook 内存漫游（跟值）
 
-### 三、hook时的一些问题
+【视频教程】https://www.bilibili.com/video/BV1Kh411r7uR?p=30&spm_id_from=pageDriver
+
+【官网】https://github.com/CC11001100/ast-hook-for-js-RE
+
+作用：之前我们跟加密参数，是搜索key值，而 ast-hook 可以跟（搜索） value 值。这个工具会将浏览器内存中的数据全部保存起来，方便检索，所以使用时在浏览器访问url有点慢。
+
+原理：见官网
+
+安装以及使用：
+
+- 1）down下github上的 ast-hook 文件到本地
+- 2）安装 node.js
+- 3）安装依赖包：
+  - 有两种安装：
+    - 一种是安装到全局：`npm install -g anyproxy` （-g 全局安装）
+    - 二种是安装到 ’D:\ast-hook-for-js-RE-master‘ 下：进入到此目录，执行 `npm install anyproxy`
+  - anyproxy即代理，相当于是用node写的一个fiddler
+  - 问题：
+    - 第一种安装，会在第 `7）启动 proxy-server` 步启动报错：` Cannot find module 'anyproxy'`
+    - 第二种安装，会在下一步 `启动 anyproxy` 时找不到 `anyproxy`  命令
+    - 暂时的解决方法就是两种都安装
+- 4）启动 anyproxy，
+  - 重开cmd，输入：`anyproxy`  或者 `anyproxy ca` （带 ca 证书启动）
+  - 可以看到有两个端口：8001 和 8002
+- 5）浏览器输入 `127.0.0.1:8002` 进入管理UI面板，然后在 RootCA 中下载证书
+  - 上面启动 anyproxy的窗口可以关闭了
+- 6）双击证书，安装，安装到计算机（所有用户），安装到 ’受信任的根证书颁发机构‘
+- 7）启动 proxy-server 
+  - 在 ’D:\ast-hook-for-js-RE-master\src\proxy-server‘ 下，输入 `node proxy-server.js`
+- 8）会在此目录下生成缓存文件 `js-file-cache`
+  - 浏览器请求的js文件都会保存到这个文件中
+  - 如果我们在浏览器中再次访问相同的url，发现不能访问了，可能是此url的作者更新了页面，我们需要清除此文件中的缓存文件
+- 9）浏览器设置代理 127.0.0.1:10086
+- 10）浏览器访问url，在有加密参数的地方，在控制台输入 `hook.search('value')` ，会输出所有涉及到变量改动的地方
+
+​	
+
+### 四、hook时的一些问题
 
 #### 1、上下文
 
@@ -133,3 +171,11 @@ var ww = 2;
 ​	上面代码在 `var bb = 3;` 处打断点时，打不上，此时要用 `debugger;`。
 
 ​	打上断点后，运行，此时已经在 `zz()`上下文中了，但是控制台输出 `aa` ，发现还是报错，此时需要使用 `var aa = function(){}` 来声明函数。
+
+#### 3、hook未起作用（清缓存）
+
+可能需要清一下缓存，特别是cookie。
+
+方法：新开一个无痕窗口；或者 在控制台 Application 一栏中，清除（可只清除某一个参数），如下：
+
+![image-20220402131148937](./md_picture/js逆向18.png)
