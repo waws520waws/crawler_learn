@@ -1,51 +1,31 @@
 import requests
-import json
+import time
+from retrying import retry
+import traceback
 
-HOT_SEARCH_URL = 'https://aweme.snssdk.com/aweme/v1/hot/search/list/'
-user_url = 'https://www.douyin.com/aweme/v1/web/tab/feed/'
+fail_url = []  # 请求失败的url
 
-HEADERS = {
-    'user-agent': 'okhttp3'
-}
-QUERIES = {
-    'device_platform': 'android',
-    'version_name': '13.2.0',
-    'version_code': '130200',
-    'aid': '1128'
-}
-# QUERIES = {
-#     'device_platform': 'PC',
-#     'aid': '6383',
-#     'count': 10,
-#     'refresh_index': 2,
-#     'video_type_select': 0,
-#     'version_code': '170400',
-#     'version_name': '17.4.0',
-#     'cookie_enabled': 'true',
-#     'screen_width': 1920,
-#     'screen_height': 1080,
-#     'browser_language': 'zh-CN',
-#     'browser_platform': 'Win32',
-#     'browser_name': 'Chrome',
-#     'browser_version': '96.0.4664.110',
-#     'browser_online': 'true',
-#     'engine_name': 'Blink',
-#     'engine_version': '96.0.4664.110',
-#     'os_name': 'Windows',
-#     'os_version': 10,
-#     'cpu_core_num': 4,
-#     'device_memory': 8,
-#     'downlink': 10,
-#     'effective_type': '4g',
-#     'round_trip_time': 50,
-#     'webid': '7068283311605581352'
-# }
+def parse_data(res):
+    print('parse_data')
 
-req = requests.get(HOT_SEARCH_URL, params=QUERIES, headers=HEADERS)
-print(req.json())
-# obj = json.loads(req.text)
-# word_list = obj['data']['word_list']
-# items = [item for item in word_list]
-#
-# for item in items:
-#     print(item)
+# wait_fixed: 设置重试间隔时长（ms）
+@retry(stop_max_attempt_number=3, wait_fixed=1000)
+def test_retry(url):
+    try:
+        res = requests.get(url)  # 这里可能会报连接超时等错误
+    except Exception as e:
+        time.sleep(2)
+        # 同：traceback.print_exc(e)
+        raise e
+    else:
+        if res.status_code == 200:
+            fail_url.pop()  # 请求成功, 将此url移除
+            parse_data(res)
+
+def main():
+    urls = ['', '']  # 待爬取url
+    for url in urls:
+        fail_url.append(url)  # 先默认请求失败，在请求成功时再将其移除
+        test_retry(url)
+
+main()
