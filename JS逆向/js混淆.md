@@ -10,7 +10,7 @@
 
 ​	`eval()`：可执行js代码（自带一个VM虚拟机），将js代码加密后放入其中，起到混淆作用，如下图：
 
-![image-20220329102118614](./md_picture/js逆向2.png)
+![image-20220329102118614](D:\PycharmProjects\crawler_learn\JS逆向\md_picture\js逆向2.png)
 
 #### 2、aa 与 jj 与 FUCK 加密混淆
 
@@ -22,15 +22,15 @@
 
 如下，将 `var a = 1;` 进行 aa 加密：
 
-![image-20220329103552640](./md_picture/js逆向3.png)
+![image-20220329103552640](D:\PycharmProjects\crawler_learn\JS逆向\md_picture\js逆向3.png)
 
 2）jj 加密：将 `var a = 1;` 进行 jj 加密：
 
-![image-20220329112431918](./md_picture/js逆向5.png)
+![image-20220329112431918](D:\PycharmProjects\crawler_learn\JS逆向\md_picture\js逆向5.png)
 
 3）FUCK加密：将 `var a = 1;` 进行 FUCK 加密：
 
-![image-20220329132807218](./md_picture/js逆向6.png)
+![image-20220329132807218](D:\PycharmProjects\crawler_learn\JS逆向\md_picture\js逆向6.png)
 
 #### 3、ob混淆
 
@@ -75,8 +75,6 @@ ob混淆的常见特性：
 
 【视频教程】https://www.bilibili.com/video/BV1Kh411r7uR?p=31&spm_id_from=pageDriver
 
-作用：对js代码进行混淆
-
 1、AST 抽象语法树
 
 【参考】https://blog.csdn.net/huangpb123/article/details/84799198
@@ -114,9 +112,7 @@ console.log(result.code);
 console.log(result)
 ```
 
-- 第一份实例：
-  - 【视频教程 `26:00` 左右】https://www.bilibili.com/video/BV1Kh411r7uR?p=32
-  - 【参考案例】https://www.bilibili.com/video/BV1Kh411r7uR?p=32
-  - 手动实现见 ‘./AST-babel/firstBabel.js’
+
+
 
 
