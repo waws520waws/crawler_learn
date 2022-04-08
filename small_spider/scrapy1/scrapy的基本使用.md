@@ -14,8 +14,9 @@
     - 10、增量式爬虫 (redis)
     - 11、scrapy提高爬取速度
     - 12、请求返回的数据（response）的解析
-    - 13、scrapy调试（执行）
-    - 14、面试
+    - 13、get请求与post请求
+    - 14、scrapy调试（执行）
+    - 15、面试
 
 
 
@@ -428,8 +429,17 @@ COOKIES_ENABLED = False
 - `response.request.headers`
 - `response.url`
 
+### 13、get请求与post请求
+- 在scrapy中，默认是get请求
+- post请求：重写 start_requests() 方法
+- ```python
+  from scrapy import FormRequest
+  def start_requests(self):
+     # FormRequest默认是post，也可以是get请求
+     yield FormRequest(url=self.url, formdata=params, callback=self.parse, method='post')  
+  ```
 
-### 13、scrapy调试（执行）
+### 14、scrapy调试（执行）
 - 1、在项目的文件夹下增加一个文件main.py（scrapy.cfg同等级中）
 ```python
 from scrapy.cmdline import execute
@@ -448,7 +458,7 @@ if __name__ == '__main__':
 - 相当于是在脚本中执行cmd命令，这样可以使用debug运行
 
 
-### 14、面试
+### 15、面试
 - 【scrapy 中 yield 的作用】
     - 在scrapy中，爬取的数据量往往十分巨大，如果使用 return 和 list 存储之后再一次性返回将带来巨大的内存消耗。
       而 yield 可以在返回一组数据后再处理下一组数据，大大减少了内存的浪费。

@@ -30,6 +30,7 @@
 401 Unauthorized 未认证需要认证后在重新请求。  
 403 Forbidden 表明对请求资源的访问被服务器拒绝了。  
 404 Not Found 表明服务器上无法找到请求的资源。  
+405 可以理解为IS服务器上，html页面只支持get请求，不支持post请求。  
 500 Internal Server Error 表明服务器端在执行请求时发生了错误。  
 503 Service Unavailable 表明服务器暂时处于超负载或正在进行停机维护，现在无法 处理请求。
 
