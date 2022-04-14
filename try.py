@@ -1,31 +1,6 @@
-import requests
-import time
-from retrying import retry
-import traceback
+from PIL import Image
 
-fail_url = []  # 请求失败的url
-
-def parse_data(res):
-    print('parse_data')
-
-# wait_fixed: 设置重试间隔时长（ms）
-@retry(stop_max_attempt_number=3, wait_fixed=1000)
-def test_retry(url):
-    try:
-        res = requests.get(url)  # 这里可能会报连接超时等错误
-    except Exception as e:
-        time.sleep(2)
-        # 同：traceback.print_exc(e)
-        raise e
-    else:
-        if res.status_code == 200:
-            fail_url.pop()  # 请求成功, 将此url移除
-            parse_data(res)
-
-def main():
-    urls = ['', '']  # 待爬取url
-    for url in urls:
-        fail_url.append(url)  # 先默认请求失败，在请求成功时再将其移除
-        test_retry(url)
-
-main()
+a = Image.new('RGB', (300, 300), (255, 0, 0))  # 生成一张300*300的红色图片
+b = Image.new('RGB', (200, 200), (0, 255, 0))  # 200*200的绿色图片
+a.paste(b, (50, 50, 250, 250))  # 将b贴到a的坐标为（100，100）的位置
+a.show()  # 显示a

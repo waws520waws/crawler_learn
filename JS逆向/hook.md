@@ -88,7 +88,7 @@ hook：改变原方法或原代码的执行流程（结合断点）
 
 - 如果不想用第三方插件，可以在网页第一个请求的js中的第一行插入断点，然后刷新页面，被断住，然后在控制台执行hook代码，一样的效果。为什么是js？因为hook肯定是在js上啊
 
-### 三、ast-hook 内存漫游（跟值）
+### 三、ast-hook 内存漫游（搜索值）
 
 【视频教程】https://www.bilibili.com/video/BV1Kh411r7uR?p=30&spm_id_from=pageDriver
 
@@ -99,6 +99,8 @@ hook：改变原方法或原代码的执行流程（结合断点）
 原理：见官网
 
 安装以及使用：
+
+​	另外，在fiddler的编程猫插件中可一键开启内存漫游。
 
 - 1）down下github上的 ast-hook 文件到本地
 - 2）安装 node.js
