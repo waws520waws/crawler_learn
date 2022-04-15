@@ -33,13 +33,22 @@ def get_standard_img(content: bytes):
     standard_img.save('./full_picture/full1.png')
     return standard_img
 
-with open('luanma_picture/d401d55fc.webp', 'rb') as f:
-    im = f.read()
-
-get_standard_img(im)
+# with open('luanma_picture/d401d55fc.webp', 'rb') as f:
+#     im = f.read()
+#
+# get_standard_img(im)
 
 '''
 u = r[$_CAGEe(750)]()
 l = V[$_CAGEe(342)](gt[$_CAGEe(209)](o), r[$_CAGEe(742)]())
 h = m[$_CAGEe(733)](l)
 '''
+
+import execjs
+
+with open('./slide.7.8.6.js', 'r', encoding='utf-8') as f:
+    js = f.read()
+
+docjs = execjs.compile(js)
+result = docjs.call('get_u')
+print(result)
