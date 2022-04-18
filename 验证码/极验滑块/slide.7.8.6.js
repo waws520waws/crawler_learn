@@ -700,6 +700,9 @@ function lTloj() {}
                 }
             }
         }
+
+        window.get_userresponse = H;
+
         function R(t, e, n) {
             var $_DBAER = lTloj.$_DP()[0][4];
             for (; $_DBAER !== lTloj.$_DP()[0][3]; ) {
@@ -2905,6 +2908,9 @@ function lTloj() {}
                 }
             }
         }
+
+        window.get_rp = U;
+
         oe[$_CJET(332)] = $_CJET(363),
         oe[$_CJDQ(332)] = $_CJDQ(313);
         var V = function() {
@@ -3984,7 +3990,7 @@ function lTloj() {}
                 return this[$_BEGEW(361)][$_BEGEW(140)](t),
                 this;
             },
-            "\u0024\u005f\u0047\u0045\u0079": function() {
+            "\u0024\u005f\u0047\u0045\u0079": function(track) {
                 var $_BEGIH = lTloj.$_CX
                   , $_BEGHL = ['$_BEHBT'].concat($_BEGIH)
                   , $_BEGJJ = $_BEGHL[1];
@@ -4024,7 +4030,7 @@ function lTloj() {}
                         o = 0));
                     return 0 !== o && i[$_BEHDi(140)]([e, n, o]),
                     i;
-                }(this[$_BEGJJ(361)])
+                }(track)
                   , r = []
                   , i = []
                   , o = [];
@@ -4080,6 +4086,9 @@ function lTloj() {}
                 return t + (e[1] * n * n + e[3] * n + e[5]) % 50;
             }
         };
+
+        window.get_track = W[$_CJET(261)]["\u0024\u005f\u0047\u0045\u0079"]
+
         ;function et(t) {
             var $_DBEJZ = lTloj.$_DP()[2][4];
             for (; $_DBEJZ !== lTloj.$_DP()[0][3]; ) {
@@ -8254,4 +8263,28 @@ function get_u(){
         return data
     }
     return new window.jieyang()["encrypt"](random_())
+}
+
+function get_l(track, arr_c, s) {
+    var jiami = function(t, e, n) {
+        var r, i = 0, o = t, s = e[0], a = e[2], _ = e[4];
+        while (r = n["substr"](i, 2)) {
+            i += 2;
+            var c = parseInt(r, 16)
+              , u = String["fromCharCode"](c)
+              , l = (s * c * c + a * c + _) % t["length"];
+            o = o["substr"](0, l) + u + o["substr"](l);
+        }
+        return o;
+    }
+
+    return jiami(window.get_track(track), arr_c, s)
+}
+
+function getRp(xxx) {
+    return window.get_rp(xxx)
+}
+
+function getUserresponse(t, e) {
+    return window.get_userresponse(t, e)
 }

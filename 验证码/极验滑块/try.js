@@ -1,6 +1,6 @@
 
-var qqq = 'ss';
 
-qqq = function () {
 
-};
+var qqq = function () {
+    console.log('ssss');
+}();
