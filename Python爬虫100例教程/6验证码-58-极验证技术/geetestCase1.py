@@ -154,7 +154,7 @@ def get_canvas_img(driver):
 def main():
     url = 'https://captcha1.scrape.center/'
     # driver = webdriver.Chrome('/Users/jieyang/Downloads/chromedriver96')
-    driver = webdriver.Chrome('D:/pyEnvsPackage/chromedriver_win32_92/chromedriver.exe')
+    driver = webdriver.Chrome('D:/Downloads/chromedriver_win32/chromedriver.exe')
 
     # driver.maximize_window()
     driver.get(url)

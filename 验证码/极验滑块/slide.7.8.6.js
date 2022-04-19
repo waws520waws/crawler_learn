@@ -1704,7 +1704,8 @@ function lTloj() {}
                 var $_HCFg = $_HCCY[0];
                 return this[$_HCDZ(222)](t);
             }
-        }, l = {
+        },
+        l = {
             "\u0024\u005f\u0044\u0044\u0048": function() {
                 var $_HCIU = lTloj.$_CX
                   , $_HCHI = ['$_HDBj'].concat($_HCIU)
@@ -2750,6 +2751,8 @@ function lTloj() {}
 
 		window.jieyang = X;
 
+        window.get_m = m;
+
 		oe[$_CJDQ(332)] = $_CJET(337);
         function U(t) {
             var $_DBDCp = lTloj.$_DP()[2][4];
@@ -3404,6 +3407,9 @@ function lTloj() {}
             return e[$_BADI_(449)] = g[$_BADI_(425)](M),
             e[$_BADJX(449)];
         }();
+
+        window.get_V = V;
+
         oe[$_CJDQ(332)] = $_CJET(363);
         var G = function(t) {
             var $_BCCDp = lTloj.$_CX
@@ -8254,18 +8260,20 @@ function lTloj() {}
     });
 }();
 
-function get_u(){
-    function random_() {
-        var data = '';
-        for(var i=0; i<4; i++){
-            data += (65536 * (1 + Math["random"]()) | 0)["toString"](16)["substring"](1);
-        }
-        return data
+
+function random_() {
+    var data = '';
+    for(var i=0; i<4; i++){
+        data += (65536 * (1 + Math["random"]()) | 0)["toString"](16)["substring"](1);
     }
+    return data
+}
+
+function get_u(){
     return new window.jieyang()["encrypt"](random_())
 }
 
-function get_l(track, arr_c, s) {
+function get_aa(track, arr_c, s) {
     var jiami = function(t, e, n) {
         var r, i = 0, o = t, s = e[0], a = e[2], _ = e[4];
         while (r = n["substr"](i, 2)) {
@@ -8287,4 +8295,53 @@ function getRp(xxx) {
 
 function getUserresponse(t, e) {
     return window.get_userresponse(t, e)
+}
+
+function get_l(aa, rp, userresponse, passtime) {
+    var o = {
+        aa: aa,
+        ep: {
+            $_BHR: false,
+            me: true,
+            td: -1,
+            tm: {
+                a: 1650333362071,
+                b: 0,
+                c: 0,
+                d: 0,
+                e: 0,
+                f: 1650333362074,
+                g: 1650333362074,
+                h: 1650333362074,
+                i: 1650333362074,
+                j: 1650333362074,
+                k: 0,
+                l: 1650333362075,
+                m: 1650333362320,
+                n: 1650333362321,
+                o: 1650333362323,
+                p: 1650333362436,
+                q: 1650333362436,
+                r: 1650333362438,
+                s: 1650333362438,
+                t: 1650333362438,
+                u: 1650333362438
+            },
+            v: "7.8.6"
+        },
+        imgload: 44,
+        lang: "zh-cn",
+        passtime: passtime,
+        rp: rp,
+        userresponse: userresponse,
+        xp81: "1542421201"
+    }
+
+    var parm1 = JSON.stringify(o);
+    var parm2 = random_();
+    return window.get_V["encrypt"](parm1, parm2)
+}
+
+function get_h(l) {
+    return window.get_m["\u0024\u005f\u0047\u0046\u006d"](l)
 }

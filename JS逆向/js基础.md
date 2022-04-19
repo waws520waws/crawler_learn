@@ -58,6 +58,12 @@ console.log(bb); // 报错
 
 - 类的方法里面，`this` = 类自己
 
+  
+
+在逆向中，如下图，对象的方法里有`this`关键字的，要将对象导出到全局（2），而不是导出对象中的属性（1），因为`this`指向的是对象（这里的this指向的是对象m） 
+
+![image-20220419130614626](./md_picture/js逆向21.png)
+
 ### 6、JSON.stringify()
 
 `JSON.stringify()` 方法用于将 JavaScript 对象或值转换为 JSON 字符串；

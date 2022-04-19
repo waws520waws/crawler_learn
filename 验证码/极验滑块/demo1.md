@@ -1,5 +1,6 @@
 本案例是破解极验官网上的滑块dmeo：https://www.geetest.com/demo/slide-float.html  
 【视频教程】https://www.bilibili.com/video/BV1Kh411r7uR?p=18&spm_id_from=pageDriver
+【github上的实现】https://github.com/nmsdss/JiYan_Geetest
 
 方法一：见100例中例58，使用selenium，修改canvas的属性值，得到原图，然后与空缺图计算像素差值，然后模拟人移动滑块  
 方法二：此案例，js逆向，在源码中找出将乱码图还原的代码，找出轨迹参数
