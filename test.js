@@ -1,12 +1,95 @@
-function t(){
-    return (65536 * (1 + Math["random"]()) | 0)["toString"](16)["substring"](1)
+var r = {
+    "STYLE": 1,
+    "SCRIPT": 5,
+    "A": 1,
+    "DIV": 12,
+    "LABEL": 3,
+    "INPUT": 2,
+    "textLength": 6148,
+    "HTMLLength": 7436,
+    "documentMode": "CSS1Compat",
+    "browserLanguage": "zh-CN",
+    "browserLanguages": "zh-CN",
+    "devicePixelRatio": 1,
+    "colorDepth": 24,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36",
+    "cookieEnabled": 1,
+    "netEnabled": 1,
+    "innerWidth": 212,
+    "innerHeight": 930,
+    "outerWidth": 1737,
+    "outerHeight": 1050,
+    "screenWidth": 2560,
+    "screenHeight": 1080,
+    "screenAvailWidth": 2560,
+    "screenAvailHeight": 1050,
+    "screenLeft": -56,
+    "screenTop": 3,
+    "screenAvailLeft": 0,
+    "screenAvailTop": 0,
+    "localStorageEnabled": 1,
+    "sessionStorageEnabled": 1,
+    "indexedDBEnabled": 1,
+    "platform": "Win32",
+    "doNotTrack": 0,
+    "timezone": -8,
+    "canvas2DFP": "317331b67d4e92fda92ab6f33979e7aa",
+    "canvas3DFP": 0,
+    "plugins": "internal-pdf-viewer,internal-pdf-viewer,internal-pdf-viewer,internal-pdf-viewer,internal-pdf-viewer",
+    "maxTouchPoints": 0,
+    "flashEnabled": -1,
+    "javaEnabled": 0,
+    "hardwareConcurrency": 8,
+    "jsFonts": "Arial,ArialBlack,ArialNarrow,Calibri,Cambria,CambriaMath,ComicSansMS,Consolas,Courier,CourierNew,Georgia,Helvetica,Impact,LucidaConsole,LucidaSansUnicode,MicrosoftSansSerif,MSGothic,MSPGothic,MSSansSerif,MSSerif,PalatinoLinotype,SegoePrint,SegoeScript,SegoeUI,SegoeUILight,SegoeUISemibold,SegoeUISymbol,Tahoma,Times,TimesNewRoman,TrebuchetMS,Verdana,Wingdings",
+    "mediaDevices": -1
 }
 
-function rt(){
-    return t() + t() + t() + t();
+
+var n = {
+    "STYLE": 1,
+    "SCRIPT": 5,
+    "A": 1,
+    "DIV": 12,
+    "LABEL": 3,
+    "INPUT": 2,
+    "textLength": 6148,
+    "HTMLLength": 7436,
+    "documentMode": "CSS1Compat",
+    "browserLanguage": "zh-CN",
+    "browserLanguages": "zh-CN",
+    "devicePixelRatio": 1,
+    "colorDepth": 24,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36",
+    "cookieEnabled": 1,
+    "netEnabled": 1,
+    "innerWidth": 212,
+    "innerHeight": 930,
+    "outerWidth": 1737,
+    "outerHeight": 1050,
+    "screenWidth": 2560,
+    "screenHeight": 1080,
+    "screenAvailWidth": 2560,
+    "screenAvailHeight": 1050,
+    "screenLeft": -56,
+    "screenTop": 3,
+    "screenAvailLeft": 0,
+    "screenAvailTop": 0,
+    "localStorageEnabled": 1,
+    "sessionStorageEnabled": 1,
+    "indexedDBEnabled": 1,
+    "platform": "Win32",
+    "doNotTrack": 0,
+    "timezone": -8,
+    "canvas2DFP": "317331b67d4e92fda92ab6f33979e7aa",
+    "canvas3DFP": 0,
+    "plugins": "internal-pdf-viewer,internal-pdf-viewer,internal-pdf-viewer,internal-pdf-viewer,internal-pdf-viewer",
+    "maxTouchPoints": 0,
+    "flashEnabled": -1,
+    "javaEnabled": 0,
+    "hardwareConcurrency": 8,
+    "jsFonts": "Arial,ArialBlack,ArialNarrow,Calibri,Cambria,CambriaMath,ComicSansMS,Consolas,Courier,CourierNew,Georgia,Helvetica,Impact,LucidaConsole,LucidaSansUnicode,MicrosoftSansSerif,MSGothic,MSPGothic,MSSansSerif,MSSerif,PalatinoLinotype,SegoePrint,SegoeScript,SegoeUI,SegoeUILight,SegoeUISemibold,SegoeUISymbol,Tahoma,Times,TimesNewRoman,TrebuchetMS,Verdana,Wingdings",
+    "mediaDevices": -1
 }
 
-var data = '';
-for(var i=0; i<4; i++){
-    data += (65536 * (1 + Math["random"]()) | 0)["toString"](16)["substring"](1);
-}
+for (var i)
+console.log(r == n)

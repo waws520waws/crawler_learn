@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@babel/core": "^7.17.8",
+    "express": "^4.17.3",
     "jsdom": "^19.0.0"
   }
 }

@@ -1,0 +1,77 @@
+2022-04-20 09:41:58.677 | ERROR    | __main__:main:424 - Traceback (most recent call last):
+  File "D:\anaconda3\envs\crawler\lib\site-packages\urllib3\connection.py", line 175, in _new_conn
+    (self._dns_host, self.port), self.timeout, **extra_kw
+  File "D:\anaconda3\envs\crawler\lib\site-packages\urllib3\util\connection.py", line 95, in create_connection
+    raise err
+  File "D:\anaconda3\envs\crawler\lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\anaconda3\envs\crawler\lib\site-packages\urllib3\connectionpool.py", line 710, in urlopen
+    chunked=chunked,
+  File "D:\anaconda3\envs\crawler\lib\site-packages\urllib3\connectionpool.py", line 398, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "D:\anaconda3\envs\crawler\lib\site-packages\urllib3\connection.py", line 239, in request
+    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
+  File "D:\anaconda3\envs\crawler\lib\http\client.py", line 1281, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "D:\anaconda3\envs\crawler\lib\http\client.py", line 1327, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "D:\anaconda3\envs\crawler\lib\http\client.py", line 1276, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "D:\anaconda3\envs\crawler\lib\http\client.py", line 1036, in _send_output
+    self.send(msg)
+  File "D:\anaconda3\envs\crawler\lib\http\client.py", line 976, in send
+    self.connect()
+  File "D:\anaconda3\envs\crawler\lib\site-packages\urllib3\connection.py", line 205, in connect
+    conn = self._new_conn()
+  File "D:\anaconda3\envs\crawler\lib\site-packages\urllib3\connection.py", line 187, in _new_conn
+    self, "Failed to establish a new connection: %s" % e
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x0000016D8EC27D48>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\anaconda3\envs\crawler\lib\site-packages\requests\adapters.py", line 450, in send
+    timeout=timeout
+  File "D:\anaconda3\envs\crawler\lib\site-packages\urllib3\connectionpool.py", line 786, in urlopen
+    method, url, error=e, _pool=self, _stacktrace=sys.exc_info()[2]
+  File "D:\anaconda3\envs\crawler\lib\site-packages\urllib3\util\retry.py", line 592, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api_fullpage/get_w (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000016D8EC27D48>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:/PycharmProjects/crawler_learn/验证码/极验滑块/JiYan_github/JiYan_Geetest-main/geetest_slide.py", line 257, in get_s_c
+    res_api = self.session.post(url=self.api_fullpage_1, data=api_payload).json()
+  File "D:\anaconda3\envs\crawler\lib\site-packages\requests\sessions.py", line 577, in post
+    return self.request('POST', url, data=data, json=json, **kwargs)
+  File "D:\anaconda3\envs\crawler\lib\site-packages\requests\sessions.py", line 529, in request
+    resp = self.send(prep, **send_kwargs)
+  File "D:\anaconda3\envs\crawler\lib\site-packages\requests\sessions.py", line 645, in send
+    r = adapter.send(request, **kwargs)
+  File "D:\anaconda3\envs\crawler\lib\site-packages\requests\adapters.py", line 519, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api_fullpage/get_w (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000016D8EC27D48>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:/PycharmProjects/crawler_learn/验证码/极验滑块/JiYan_github/JiYan_Geetest-main/geetest_slide.py", line 418, in main
+    s = self.get_s_c(e_e, gt, challenge)
+  File "D:/PycharmProjects/crawler_learn/验证码/极验滑块/JiYan_github/JiYan_Geetest-main/geetest_slide.py", line 277, in get_s_c
+    logger.error(f"参数解析失败 -> {response.text}")
+UnboundLocalError: local variable 'response' referenced before assignment
+
+2022-04-20 09:44:42.040 | WARNING  | __main__:get_validate:385 - 距离: 97px,耗时: 1683ms, w: WKcFknRDs1Oxd4aoNR5Iri7irqKeMTzMfEV7Tj53CC4eeWp2LjEf8SlP6c)i1Qmu9BWLopSAmDTy4YN2G3btDqr2caUU9ZmXkCIxrSIg7k(Ek1LOJGE7rlaFMAAYQLPx1etOhy2O9nnQIwzr3Fl4(Eg2tSv4HM(hgOLp8nAYdJm2SclsiE77AhdjO4rsUHVIsliF0CNdeFQT5k2o6LyLkoHtHl2Tezo8VGWc0kPypt4aFsYMwClEb(npA5yloH)8mjF5qYrUqw42sEHYgL8Elp2RW090G70d4AQ)ZYgVCVtguOpcwwaccQNUhqJKYrt)mWg9GgnyZBFT1hrwcxaAg6E9EkfeneUy0qvmzP15bMxPLJqYrFYTGo)(8t(2ZO(Uvek2UgQNfksSJR7ur7LrtojEej6A14Ger)K5(EHch8XL8T5381Aswl7n)jgczDE9fXdymoFkedhW4MMT5FAbEcSjcev7X8lmbVTxd0MJvnQafxaCwJRlc6wNAR0BLBiwZtsfpZusUZHL0mGehNXZbzDFcew1kE4Jv8)2QSHaSNlz(ohdMpLchu5RzcconQaAggPmobozyoLzr0oZxAebWnyHutSvi8ZCxdBBlwY5bpB2wUcBPKxQk5gEM8xmS4MzMjYt1Iqmb85ODnz7vDB(O3(SbHCngxD7M7kdlWCb2ZInGE3ZYiNP(aoA(L9GBG9R(m39cTRfyk7xdPf0I96VNwrcxFPH)vXS7)iuRXIMdayPvPog4kzUlGFm4MJK0XEnitZ23AUyGoZ5vFhVkEajoY6rvcMvYpzXALqxdztjb3McuQbx(vv1HcUWG1ukucZOvQFW8sB4exBeewj8bR1iiHTkFKZuyrfmeXNkVh6CsBQnuqifC0oi0p8JMNrpVlS6jgrxARzO8aq9b9C)QQc0vyMTxeUvb2ZEKfBSOo)Tm0Q.730c12811fc27d321f2dec0a1a85db188bbc4a5d393a2b161152b98b8af2458d7ec20448637617272dee31b755c6c3413f45342db2e15a4aa8d1b54c599e17e154d3a45206b3eaaa55d133db83f5a3d57c0455b9bb823f2552dd67d5b237b14b813b6d89ed970a7f3f43999a55fdb73bc1d7439c8f311e1994a2b467bb7923d8
+2022-04-20 09:44:42.143 | WARNING  | __main__:get_validate:401 - 验证不通过,未能正确拼合图像 -> (200, {'success': 0, 'message': 'fail'})
+2022-04-20 09:44:57.340 | WARNING  | __main__:get_validate:385 - 距离: 177px,耗时: 1430ms, w: uroNW6GUQQPsAa97hNqjy91YLTZ)22ShzwdwBPglwUFGKzGzAJ7CTpH2as)OY6i4Ya5OHUv(Nr9lpUZtjHZ7Gj2HEWcPgyTUthn5ysHjbQajAzokBaDodHu1XR6Wf5rhYSEF9OZNX3G)izgPD1M1rfQvTz3tvt4UYC1AOrGnHS5J5CUktMkJ07Oa1siU(Xz2dfqs7BgRE)wPephsUivwNqZPrD(qUjtt1F6wWAEpoY4YOi8luli5(LCxiRbA2HQ)AxujSh4WZW3VJFi7kC0PPsC4EZ99ZxDquGCQmXvy4sCPojhdD(yotcH6vofJy1kCmcQ3h7JclWysny)Aw788iQ2wo7j07QnXN9)CMyexrNq7A)7nSYBFnAyb8HclRi6RicWKd3s2tonidn)lCSxoe87AYPit0jgz6m9sUaBy1vOKUFfR8YAqNFKHAVIhNTvqEoKC8UfHsErzHB9lzU9urydjp0nVojBM(rR16nO)3sl1kj4K3muQoce7x06oulqLramoXhF1dn4mhqInGe9smyBVD4x9ut2ruO4tbf9g13MD3xwrdHeSOhQhswgVl0sR8mfCtWTVYguF)M9PZzLs((Yb)U2lnMQ6zEHFo16Al3bOYYdQQtN4Nluv2v0s(OWZmlVAxC)5E0RmpnMd8XePSTTu4K)S1geZ6Vx9ywvDpjHK9DQaAvI8TkL(6ypWVQlqHquz2nT41bvGmOxBVGL8mvMfW7Y7bkp2hrAZkOoL9s8xPxg8FKPIzBBDfkim6X9YKuWp9SB6P4XNBqWFg9BrRdU4Iz7tW3OOBUQP)KetauPgGt8IzH)9mLtMHu2FPx(tUvG)TvoGIKpp(AGmw)sEqwI65cwzy(FKHdf8wpHJ5TrzwItm543xOgvqCSpngMtM5uNYCbWv)0bUhXzgFHz6Hv(LebTkiKlpdafkNOHc62xv1M7Wd78LQuKkC2nq41lF771d76dda3782be597c9d90a80dd546b04d88697cb6eea24ab37927c9908e903492f086b5f0caccb471b490ba1f7961cd270ae975dd0f3070a36bbf7647333ec0d38311bb696387624734d21cf31114db4635b2239361784e5a18b4c856d5b635b780431ecbaf69c4be425f24f877fe166ba1483d267384d8c0b8f96bf57ff5c
+2022-04-20 09:44:57.439 | WARNING  | __main__:get_validate:398 - 验证通过 -> (200, {'success': 1, 'message': 'success', 'validate': 'c5815ac4a4328d70695e8da3950973a6', 'score': '2'})
+2022-04-20 09:45:07.278 | WARNING  | __main__:get_validate:385 - 距离: 179px,耗时: 5454ms, w: jy)HoU(nD2R3YaOZsNzaIxZEbZpsjim574L4lUQM3HhE3Hcrp5kJed04vdyNwUsd9ZG2MHB1wtF6xFQ7f(hxnsb3hrJJ33K1jFUGs89FN1bXTGWip72ZTbgnjYAuJVGglF93vXETUF4XAAz6ckgZ4eYh26dyjmjx9tmuBIVYpNm2ZddQozQ(C(ZvWhBSmPYO6(jCKZeQg0O70zwanxcKOGYzdaBEKi1RtmNQ87q4ZVnZus0x8rycIqhU85RsDNt4TMrCv1rAX(IoWIh(N9527xtDixiCox9km7zm9332dWDAuUQeNZbA9RTQ4Kb(qENedLYzp1DqA(j3rYeaukl6MJfYqBpgG9E)u(J5g4Ou5WRR9xpk1r2(OFUsKABqC6CJ)QA1Anujg6TzoT4cCL11klzQh3H2asO9UyJliqrnAj(FYQ5q4dO7BnYOpRNmwYyjnjMN1py1Q6dNxV69r76vXz1GBhmREDhq4WcRU1NKA8FnA2B86DAPAMPj76CIrEejM(IafG3yaTPdpWq(V4dBx2sWPYTqEMCjy(JSIFBsW7ikbQymdUxXiktm(6hGEvtnht0Vh6dVEzA(OC8IJ1mflPmVNWaqin2wvX)(mrptuD8wJhLixczM6Exb4ZCRTGdB9O1DQU1i(fcyRJXZICe4Xa8RVJXLymzOaeFHusF98P13XD(gRIwIfDYLg)CGUksF8FIxSP)tRv6nUuuuJ5UPydPQuPxqcr6AAb(L5b21zOxwOJkKOLw))bbQGNqAzZJ3pEKsBnJAiWL0ub)ZuK7aE0MK4F4yc3yjaY8nEqRA8ezOVkvutaL55vAa7n06VNypNL7a3GJy5)vpO)hIFaHdzarTSn1tRxYENuAP6(Q1HwHFOsGnG8ndPU7a6hRJVDXsh62dln2pmwCVjPywLzJ96SoPq3Sb7DbIO2uNZhWFdHR9O271Liwg9SbKk5NDLGgHtLdETrX7VYEmyk7KIB(xIhYtEZc1f3nKDtVVP1nsixY.ac6db6b04f7ef6359d925d564aebfef434d7c61bc306cc07389efdbaea78fa1a3956c9f4efb722f950ac7a15ef953796b05eb04f4409d39efcb343ae6151b8172e2d905e100e040abec8d31c6a201474365c44c5872aa067b65768ee703be99c72897bc9ac45125334cc0a2d85911ec68b344289f3a008092df7535f35be5324
+2022-04-20 09:45:07.384 | WARNING  | __main__:get_validate:398 - 验证通过 -> (200, {'success': 1, 'message': 'success', 'validate': 'd8bff0c10da7c1bc43b54041ef8c2110', 'score': '72'})
+2022-04-20 09:45:12.137 | WARNING  | __main__:get_validate:385 - 距离: 118px,耗时: 1755ms, w: jdIxSGTv9iq1xKxzKau0r)y35gIoR3Fy)CCU2v3bix)mSSMv8ygBxpSvUXmZuc31y0lbBSrB2PgYfS4SZ7V13xlfDJPC(l2UFvqWWwWlrAl2yKNEEoL2hLv1FSbFR1GPFOe5RbY0bHI2hPryd4Y2fEu0RaexF4DLRBrwTE1Wj0o6IRzDxXIrEXFCeMgzAa1FZZMDWscEPHNxVxe2vd)wXr6nr5X(Un70a3bOq2lK2DqHEzkOs))v3nsU(RATxmnqScat9qQLMxVxalwlsyPEx6bf)yDdp)wze(cEr48t5(4VRGYx9p0k(cr4EM)ipdO9Bozv8qYJMjnWoCLpcZlACYz)gmADsJ1SHqV2dAhtT1X6jfcWKK6KFsxU60cKy2dtmyS6jRQ1urxzoaNHo0bn1G8Ktiv3TstzAmhVyCdM5MI2NOKvtYrZgyxYWPOTm9aAAXLN8Js)nF4GN1G(P2stDjNYU6q2VgUw9GbCRON6PNamH4BFekeXaIk9YFEMoGeX))t0rf)NSfzB8BqIQlZce)aykAmVTaKh45FKgFSqpWVAaPVK6dLNw851VoADwbKyYYQn1U74pCv23G0sz1E4JYX4sNkHx3Wn3n6x0gRzug2bluzryrD51XodC(644tqRfbgSNnISFKPq66GzafFK73MVBLIwuepnn7OCkdufWd4rRUrtUNj85voUorjk59yzhC8KyZvN2IGPPBnh)S4c4us4T)vvjOX18JIYqCYCZXRLjyd6SwjKVTpk16KdHbQ9f9UGaWPxVYjcPV3z3XNrqc)EKm9ZFSjHg98oT1)w9ia59gToczkY)IPvl1MLSC19bwvovtokaGUJJhCci4J1ZO2bWGSF3MvHu4do2ZvuHkyq(1iYKUoDrn1G3GWgYX5plgx2LoW8FtC25gaya1Q6b0UPN2s(b1sfiLFrf9zVM)K1mA31Wm0e2iwzH7WEMToac06a41ce5854394316ac04c6a4f042a0c3c6b421d55a4b78a7b73f4557e37c456784aa1ca7be14f7259a32ed8343201e67745f839fdb0e60f484d4b6c6413bcb324ccc515dc4974dbdb5d923291692187c6aae66119983be64cafaa82025c7836f7d9d5f5126a65fc728dda96026ebcaf1ee617cd1167d9d6af8fb58a7cef568
+2022-04-20 09:45:12.219 | WARNING  | __main__:get_validate:398 - 验证通过 -> (200, {'success': 1, 'message': 'success', 'validate': '13b32228a7d7b45147e56edcc0da434e', 'score': '3'})

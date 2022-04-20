@@ -715,6 +715,9 @@ function FAwFx() {}
                 }
             }
         }
+
+        window.$_BDg = $_BDg;
+
         function $_BCU(e, o) {
             var $_DDFHK = FAwFx.$_Dv()[6][10];
             for (; $_DDFHK !== FAwFx.$_Dv()[0][9]; ) {
@@ -3836,6 +3839,8 @@ function FAwFx() {}
         }();
 
         window.jieyang = X;
+
+        window.get_p = p;
 
         function z(e, t) {
             var $_DEBEC = FAwFx.$_Dv()[2][10];
@@ -7328,7 +7333,51 @@ function FAwFx() {}
                 $_CEEJJ.shift();
                 var $_CEFCe = $_CEEJJ[0];
                 var n = this
-                  , r = n[$_CEFBq(81)];
+                  , r = {
+					"STYLE": 1,
+					"SCRIPT": 5,
+					"A": 1,
+					"DIV": 12,
+					"LABEL": 3,
+					"INPUT": 2,
+					"textLength": 6148,
+					"HTMLLength": 7436,
+					"documentMode": "CSS1Compat",
+					"browserLanguage": "zh-CN",
+					"browserLanguages": "zh-CN",
+					"devicePixelRatio": 1,
+					"colorDepth": 24,
+					"userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36",
+					"cookieEnabled": 1,
+					"netEnabled": 1,
+					"innerWidth": 212,
+					"innerHeight": 930,
+					"outerWidth": 1737,
+					"outerHeight": 1050,
+					"screenWidth": 2560,
+					"screenHeight": 1080,
+					"screenAvailWidth": 2560,
+					"screenAvailHeight": 1050,
+					"screenLeft": -56,
+					"screenTop": 3,
+					"screenAvailLeft": 0,
+					"screenAvailTop": 0,
+					"localStorageEnabled": 1,
+					"sessionStorageEnabled": 1,
+					"indexedDBEnabled": 1,
+					"platform": "Win32",
+					"doNotTrack": 0,
+					"timezone": -8,
+					"canvas2DFP": "317331b67d4e92fda92ab6f33979e7aa",
+					"canvas3DFP": 0,
+					"plugins": "internal-pdf-viewer,internal-pdf-viewer,internal-pdf-viewer,internal-pdf-viewer,internal-pdf-viewer",
+					"maxTouchPoints": 0,
+					"flashEnabled": -1,
+					"javaEnabled": 0,
+					"hardwareConcurrency": 8,
+					"jsFonts": "Arial,ArialBlack,ArialNarrow,Calibri,Cambria,CambriaMath,ComicSansMS,Consolas,Courier,CourierNew,Georgia,Helvetica,Impact,LucidaConsole,LucidaSansUnicode,MicrosoftSansSerif,MSGothic,MSPGothic,MSSansSerif,MSSerif,PalatinoLinotype,SegoePrint,SegoeScript,SegoeUI,SegoeUILight,SegoeUISemibold,SegoeUISymbol,Tahoma,Times,TimesNewRoman,TrebuchetMS,Verdana,Wingdings",
+					"mediaDevices": -1
+				};
                 r[$_CEFBq(840)] = new Date()[$_CEFAI(136)](),
                 r[$_CEFAI(732)] = n[$_CEFAI(1049)],
                 r[$_CEFAI(706)] = n[$_CEFBq(1049)],
@@ -7348,7 +7397,7 @@ function FAwFx() {}
             }
         };
 
-        window.Ree = Re[$_DAGh(2)]["\u0024\u005f\u0042\u0048\u0044\u0074"],
+        window.Re = Re,
 
         I = $_DAGh(1165),
         F = $_DAFB(203);
@@ -10034,10 +10083,48 @@ function random_() {
     return data
 }
 
-// function get_r(){
-//     return new window.jieyang()["encrypt"](random_())
-// }
+function get_r(){
+    return new window.jieyang()["encrypt"](random_())
+}
 
-function get_Re() {
-    return window.Ree()
+function get_o_i() {
+    // attention: There are multiple arguments in the method called here (eg: userAgent)
+    return window.Re['prototype']["\u0024\u005f\u0042\u0048\u0044\u0074"]()
+}
+
+function get_o(gt, challenge) {
+    var config = {
+        "gt": gt,
+        "challenge": challenge,
+        "offline": false,
+        "new_captcha": true,
+        "product": "float",
+        "width": "300px",
+        "https": true,
+        "api_server": "apiv6.geetest.com",
+        "protocol": "https://",
+        "type": "fullpage",
+        "static_servers": ["static.geetest.com/", "dn-staticdown.qbox.me/"],
+        "voice": "/static/js/voice.1.2.0.js",
+        "click": "/static/js/click.3.0.4.js",
+        "beeline": "/static/js/beeline.1.0.1.js",
+        "pencil": "/static/js/pencil.1.0.3.js",
+        "fullpage": "/static/js/fullpage.9.0.9.js",
+        "slide": "/static/js/slide.7.8.6.js",
+        "geetest": "/static/js/geetest.6.0.9.js",
+        "aspect_radio": {"slide": 103, "click": 128, "voice": 128, "pencil": 128, "beeline": 50},
+        "cc": 8,
+        "ww": true,
+        "i": get_o_i()
+    }
+
+    return window.$_BDg()["encrypt1"](JSON.stringify(config), random_())
+}
+
+function get_i(gt, challenge) {
+    return window.get_p["\u0024\u005f\u0048\u0042\u0068"](get_o(gt, challenge))
+}
+
+function get_fullpage_w(gt, challenge) {
+    return get_i(gt, challenge)+get_r()
 }

@@ -1,6 +1,32 @@
 ## 去掉字符串末尾的空格和换行符
 - str.strip()
 
+## json模块
+- json.dumps(dict_json) : 将 Python 对象编码成 JSON 字符串，同js中的`JSON.stringify(dict_json)`
+- json.loads(dict_str) : 将 JSON 字符串解码为 Python 对象，同js中的`JSON.parse(dict_str)`
+```python
+import json
+dict_json = {"a": 1, "b": {"list": [1, 2, 3], "str": "测试"}, "c": 3}
+format_json = json.dumps(dict_json, ensure_ascii=False)  # (ensure_ascii=False 解决中文乱码)
+print(format_json)  # 字符串
+
+dict_str = '{"a": 123, "b": 456, "c": "测试"}'
+print(json.loads(dict_str))  # 字典
+```
+
+- json.dump(json_dict, file_object, ensure_ascii=False) : 将字典写进文件 
+- json.load(file_object)  ： 读取文件中的数据并转为字典
+```python
+import json
+json_dict = {"a": 123, "b": 456, "c": "测试"}
+file_object = open('why.json', 'w', encoding="utf8")
+json.dump(json_dict, file_object, ensure_ascii=False)  # (ensure_ascii=False 解决中文乱码)
+
+file_object = open('why.json', 'r', encoding="utf8")
+info = json.load(file_object)
+print(info)  # 字典
+```
+
 ## 字节、编码
 - 汉字在 GBK/GB2312 编码中占用 2 个字节，而在 UTF-8 编码中一般占用 3 个字节，英文数字占 1 个字节
 - 编码方式：
