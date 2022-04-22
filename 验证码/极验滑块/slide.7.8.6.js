@@ -4094,6 +4094,7 @@ function lTloj() {}
         };
 
         window.get_track = W[$_CJET(261)]["\u0024\u005f\u0047\u0045\u0079"]
+        window.jiami = W[$_CJET(261)]["\u0024\u005f\u0042\u0042\u0043\u0041"];
 
         ;function et(t) {
             var $_DBEJZ = lTloj.$_DP()[2][4];
@@ -6124,6 +6125,9 @@ function lTloj() {}
                 };
             }
         },
+
+        window.get_ep = ee,
+
         ne[$_CJDQ(261)] = {
             "\u0024\u005f\u0043\u0042\u004a\u0051": function(t, e) {
                 var $_CBFDn = lTloj.$_CX
@@ -8274,19 +8278,7 @@ function get_u(){
 }
 
 function get_aa(track, arr_c, s) {
-    var jiami = function(t, e, n) {
-        var r, i = 0, o = t, s = e[0], a = e[2], _ = e[4];
-        while (r = n["substr"](i, 2)) {
-            i += 2;
-            var c = parseInt(r, 16)
-              , u = String["fromCharCode"](c)
-              , l = (s * c * c + a * c + _) % t["length"];
-            o = o["substr"](0, l) + u + o["substr"](l);
-        }
-        return o;
-    }
-
-    return jiami(window.get_track(track), arr_c, s)
+    return window.jiami(window.get_track(track), arr_c, s)
 }
 
 function getRp(xxx) {
@@ -8297,44 +8289,21 @@ function getUserresponse(t, e) {
     return window.get_userresponse(t, e)
 }
 
+function getEp() {
+    return window.get_ep['prototype']["\u0024\u005f\u0043\u0042\u0044\u005f"]()
+}
+
 function get_l(aa, rp, userresponse, passtime) {
+    // There are problems generating parameter 'npbe', I do not know how to generate 'npbe'
     var o = {
         aa: aa,
-        ep: {
-            $_BHR: false,
-            me: true,
-            td: -1,
-            tm: {
-                a: 1650333362071,
-                b: 0,
-                c: 0,
-                d: 0,
-                e: 0,
-                f: 1650333362074,
-                g: 1650333362074,
-                h: 1650333362074,
-                i: 1650333362074,
-                j: 1650333362074,
-                k: 0,
-                l: 1650333362075,
-                m: 1650333362320,
-                n: 1650333362321,
-                o: 1650333362323,
-                p: 1650333362436,
-                q: 1650333362436,
-                r: 1650333362438,
-                s: 1650333362438,
-                t: 1650333362438,
-                u: 1650333362438
-            },
-            v: "7.8.6"
-        },
+        ep: getEp(),
         imgload: 44,
         lang: "zh-cn",
         passtime: passtime,
         rp: rp,
         userresponse: userresponse,
-        xp81: "1542421201"
+        npbe: "1203325879"
     }
 
     var parm1 = JSON.stringify(o);

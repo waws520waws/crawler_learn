@@ -1,38 +1,32 @@
-import requests
-import json
-
-gt = '019924a82c70bb123aae90d483087f94'
-challenge = '06eb4d22d470e2481cc7070146cf966ekh'
-w = '5cee17268bc71ede8d087dcb26e06cd7d7211cf1a3e827f952c54a745a3dbefe8bb3079fcca201c45193f397f60e6296bdbd894a8ce4f13c438be4f3fbd06416f36e85ec260fc29e1bbdb4900aa482f82a0546d4adf6c685ca37e8ac5cb8470003cbddb2635af115c73eb9e12bc82118dac90119b989e65f4c14bee1a6c89914'
-
-headers = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36'
-    }
-try:
-    print('ajax w: ', w)
-    params = {
-        "gt": gt,
-        "challenge": challenge,
-        "lang": "zh-cn",
-        "$_BBF": 0,
-        "client_type": "web",
-        "w": w,
-    }
-    url_ajax = 'https://api.geetest.com/ajax.php'
-    response = requests.get(url_ajax, headers=headers, params=params)
-    print('validate: ', response.text)
-    response_dict = response.text[1:-1]
-    response_dict = json.loads(response_dict)
-
-    if response_dict["message"] == "success":
-        print(f"验证通过 -> {response.status_code, response_dict}")
-
-    elif response_dict["message"] == "fail":
-        print(f"验证不通过,未能正确拼合图像 -> {response.status_code, response_dict}")
-
-    elif response_dict["message"] == "forbidden":
-        print(f"轨迹验证不通过 -> {response.status_code, response_dict}")
+from Crypto.Cipher import AES,DES3
+import time
+from Crypto.Util.Padding import pad
+from base64 import b64encode
 
 
-except Exception as e:
-    raise e
+t = "1650535353515"
+
+'''
+PKCS7：(1) 数据如果长度刚好合适，就填充数据长度的字节，填充数据为ASCII码编号为数据长度的字符
+      （2）数据长度如果没对齐，则差n长度，就补充n长度的ASCII码编号为n的字符
+'''
+pad_text = pad(t.encode('utf-8'), DES3.block_size, style='pkcs7')  # 选择pkcs7补全
+
+key = "bFRHIi8WFj!b1as9mM^WU7Go"
+des = DES3.new(key.encode('utf-8'), DES3.MODE_ECB)
+data_byte = des.encrypt(pad_text)
+print(data_byte)
+# 加密后的数据无法用decode，解码不出来，因为是加密
+
+aa = str(b64encode(data_byte), 'utf-8')
+print(aa)
+
+str1 = str(data_byte)
+
+import hashlib
+## ====================== bv
+
+
+### 或者只需要一句代码
+str1_md5 = hashlib.md5(str1.encode(encoding='utf-8')).hexdigest()
+print(str1_md5)
