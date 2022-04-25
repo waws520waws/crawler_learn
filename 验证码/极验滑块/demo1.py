@@ -340,7 +340,8 @@ def main():
 
 if __name__ == '__main__':
     '''
-    本项目未完成，卡在 get_ajax_w() 中的 get_l() 中的参数 o，我不知道是如何生成 o 中的参数 npbe，
+    本项目未完成，卡在 get_ajax_w() 中的 get_l() 中的参数 o 中的参数 ep 中的参数 tm，
+    因为生成tm的语句为 window.performance ，是前端页面性能参数，涉及到各种时间，只能搭建环境？
     导致运行时报错 "error": "param decrypt error"
     '''
 
