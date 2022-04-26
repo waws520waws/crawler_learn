@@ -55,6 +55,8 @@ def discern_distance():
     4、经测，发现差值大于30左右的可以既去掉 灰色阴影的干扰块 又能识别出缺口位置
         - 怎么测：可以将像素值不同的全打印出来观察 或者 打印差值
     :return:
+
+    另一种计算距离的方法：用cv2.matchTemplate()模板匹配（缺口部分颜色非单一值）
     '''
     fullImg = Image.open('fullImg.png')
     img_obj = Image.open('img2.png')

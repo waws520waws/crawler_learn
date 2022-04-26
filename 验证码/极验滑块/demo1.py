@@ -11,7 +11,7 @@ import json
 import re
 
 session = requests.session()
-
+timing = round(time.time() * 1000, 1)
 
 def get_standard_img(content: bytes):
     '''
@@ -150,7 +150,7 @@ def get_challenge_gt():
             't': int(time.time() * 1000)
         }
         url_register = 'https://www.geetest.com/demo/gt/register-slide'
-        res = session.get(url_register, params=params, headers=headers)
+        res = session.get(url_register, params=params, headers=headers, timeout=5)
         challenge = res.json()['challenge']
         gt = res.json()['gt']
         return gt, challenge
@@ -188,7 +188,7 @@ def get_c_s(gt, challenge):
             # 'callback': 'geetest_' + str(int(time.time() * 1000))  # 加这个参数也要出错
         }
         url_get = 'https://apiv6.geetest.com/get.php'
-        res = session.get(url_get, headers=headers, params=params)
+        res = session.get(url_get, headers=headers, params=params, timeout=5)
         print('get_c_s: ', res.text)
         response_dict = res.text[1:-1]
         response_dict = json.loads(response_dict)
@@ -209,7 +209,8 @@ def get_ajax_w(gt, challenge, gap_bg_url, full_bg_url, c, s):
     userresponse = get_userresponse(docjs, gt, challenge)
     # passtime = 319  # 通过时间，为轨迹中的最后时间
     result_u = docjs.call('get_u')
-    result_l = docjs.call('get_l', aa, rp, userresponse, passtime)
+
+    result_l = docjs.call('get_l', aa, rp, userresponse, passtime, timing)
     result_h = docjs.call('get_h', result_l)
     ajax_w = result_h + result_u
     return ajax_w
@@ -242,7 +243,7 @@ def get_material(gt, challenge):
             "width": "100%",
         }
         url_slide_get = 'https://api.geetest.com/get.php'
-        response = session.get(url_slide_get, params=params)
+        response = session.get(url_slide_get, params=params, timeout=5)
         print('get_material: ', response.text)
         data = re.search(r"new Geetest\((.*?),true\)", response.text).group(1)
         data_dict = eval(data.replace("true", "'true'").replace("false", "'false'"))
@@ -278,7 +279,7 @@ def first_ajax_req(gt, challenge):
             "w": "",  # w值可置空, 留作扩展
         }
         url_ajax = 'https://api.geetest.com/ajax.php'
-        response = session.get(url_ajax, params=params)
+        response = session.get(url_ajax, params=params, timeout=5)
         response_dict = response.text[1:-1]
         response_dict = json.loads(response_dict)
         print(f"获取验证方式成功 -> {response.status_code, response_dict}")
@@ -309,7 +310,7 @@ def validate(gt, challenge, w):
             "w": w,
         }
         url_ajax = 'https://api.geetest.com/ajax.php'
-        response = session.get(url_ajax, headers=headers, params=params)
+        response = session.get(url_ajax, headers=headers, params=params, timeout=5)
         print('validate: ', response.text)
         response_dict = response.text[1:-1]
         response_dict = json.loads(response_dict)
@@ -340,9 +341,9 @@ def main():
 
 if __name__ == '__main__':
     '''
-    本项目未完成，卡在 get_ajax_w() 中的 get_l() 中的参数 o 中的参数 ep 中的参数 tm，
-    因为生成tm的语句为 window.performance ，是前端页面性能参数，涉及到各种时间，只能搭建环境？
-    导致运行时报错 "error": "param decrypt error"
+    本项目未完成，自己生成的w值，运行时报错 "error": "param decrypt error"；
+    使用网站的w值，又不会报这种错误，哪里出错了呢？
     '''
 
+    print('start......')
     main()

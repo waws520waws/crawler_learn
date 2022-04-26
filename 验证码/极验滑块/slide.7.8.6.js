@@ -9574,29 +9574,86 @@ function getUserresponse(t, e) {
 }
 
  // There are problems generating parameter 'tm', it refers to 'window.performance'
-function getEp() {
-    return window.get_ep['prototype']["\u0024\u005f\u0043\u0042\u0044\u005f"]()
-}
-
-function get_ss() {
-    var s = {
-        lang: "zh-cn",
-        ep: getEp()
+function getEp(time) {
+    var t = Math.trunc(time)
+    var timing = {
+        "connectStart": t+3,
+        "navigationStart": t,
+        "loadEventEnd": t+773,
+        "domLoading": t+372,
+        "secureConnectionStart": t+31,
+        "fetchStart": t+1,
+        "domContentLoadedEventStart": t+749,
+        "responseStart": t+366,
+        "responseEnd": t+367,
+        "domInteractive": t+749,
+        "domainLookupEnd": t+1,
+        "redirectStart": 0,
+        "requestStart": t+47,
+        "unloadEventEnd": t+371,
+        "unloadEventStart": t+371,
+        "domComplete": t+773,
+        "domainLookupStart": t+1,
+        "loadEventStart": t+773,
+        "domContentLoadedEventEnd": t+750,
+        "redirectEnd": 0,
+        "connectEnd": t+46
     }
-    window.get_s(s);
-    return s;
+
+    var tm = {
+        "a": timing.navigationStart,
+        "b": timing.unloadEventStart,
+        "c": timing.unloadEventEnd,
+        "d": timing.redirectStart,
+        "e": timing.redirectEnd,
+        "f": timing.fetchStart,
+        "g": timing.domainLookupStart,
+        "h": timing.domainLookupEnd,
+        "i": timing.connectStart,
+        "j": timing.connectEnd,
+        "k": timing.secureConnectionStart,
+        "l": timing.requestStart,
+        "m": timing.responseStart,
+        "n": timing.responseEnd,
+        "o": timing.domLoading,
+        "p": timing.domInteractive,
+        "q": timing.domContentLoadedEventStart,
+        "r": timing.domContentLoadedEventEnd,
+        "s": timing.domComplete,
+        "t": timing.loadEventStart,
+        "u": timing.loadEventEnd
+    }
+
+    var ep = {
+        "v": "7.8.6",
+        "$_BHR": false,
+        "me": true,
+        "tm": tm,
+        "td": -1
+    }
+
+    return ep;
 }
 
-function get_l(aa, rp, userresponse, passtime) {
+// function get_ss() {
+//     var s = {
+//         lang: "zh-cn",
+//         ep: getEp()
+//     }
+//     window.get_s(s);
+//     return s;
+// }
+
+function get_l(aa, rp, userresponse, passtime, time) {
     var o = {
         aa: aa,
-        ep: getEp(),
+        ep: getEp(time),
         imgload: 44,
         lang: "zh-cn",
         passtime: passtime,
         rp: rp,
         userresponse: userresponse,
-        npbe: "1203325879"
+        fhpo: "9521125604"
     }
 
     var parm1 = JSON.stringify(o);
@@ -9607,3 +9664,5 @@ function get_l(aa, rp, userresponse, passtime) {
 function get_h(l) {
     return window.get_m["\u0024\u005f\u0047\u0046\u006d"](l)
 }
+
+// console.log(random_())

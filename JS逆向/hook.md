@@ -6,7 +6,7 @@ js执行流程：初始化（自执行）——页面逻辑——等待用户输
 
 hook就是在上面流程任意的环节，插入自己的代码，让浏览器先执行自己的代码，再执行原本的网站代码；hook只影响hook之后的操作。
 
-### 二、如何hook
+### 二、如何hook（hook可以干啥？）
 
 hook：改变原方法或原代码的执行流程（结合断点）
 
@@ -24,29 +24,31 @@ hook：改变原方法或原代码的执行流程（结合断点）
 
   - 给对象重新定义属性
   - 监听属性的设置值和获取值
-
+  - 【见视频教程】阿里云盘：爬虫 > 志远JS > 01一期 > 6.4 js调试_hook定位参数
+  
   ```js
   // hook全局的cookie设置点
   !(function(){
       // 严谨模式，检查所有错误
       'use strict';
       var cookieTemp = "";
-      // document是要hook的对象；这里hook的是cookie
+      // 这里hook的是cookie（cookie是document下面的属性：document.cookie）
       Object.defineProperty(document, 'cookie', {
-          // hook set方法，赋值的方法
+          // 在对cookie赋值时，会执行此方法
           set: function(val){
               console.log('Hook捕获到cookie设置->', val);
               cookieTemp = val;
               return val;
           },
-          // hook get方法，取值的方法
+          // 在获取cookie的值时，会执行此方法
           get: function(){
               return cookieTemp;
           }       
       });
   })();
   ```
-
+  
+  - 若想hook局部变量，首先需要在所属的方法打上断点
 
 #### 3、js中的Proxy
 
