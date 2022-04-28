@@ -1,22 +1,4 @@
-
-- 目录
-    - 1、使用流程
-    - scrapy优缺点
-    - scrapy去重原理
-    - 2、日志log
-    - 3、持久化存储
-    - 4、scrapy五大核心组件简介
-    - 5、请求传参（在持久化存储时在爬虫文件中的不同方法中传递item对象）
-    - 6、图片数据爬取之ImagesPipeline
-    - 7、scrapy中间件（设置请求代理）（selenium）
-    - 8、基于CrawlSpider的全站数据爬取
-    - 9、分布式爬虫 (redis)
-    - 10、增量式爬虫 (redis)
-    - 11、scrapy提高爬取速度
-    - 12、请求返回的数据（response）的解析
-    - 13、get请求与post请求
-    - 14、scrapy调试（执行）
-    - 15、面试
+[TOC]
 
 
 
@@ -77,7 +59,7 @@
         WARNING - 警告信息(warning messages)  
         INFO - 一般信息(informational messages)  
         DEBUG - 调试信息(debugging messages)
-      
+    
 ### 3、持久化存储
 - 【代码在 learn_scrapy 中】
 - 3.1 基于终端指令的持久化存储
@@ -96,14 +78,14 @@
                 ```
                 author = scrapy.Field()
                 content = scrapy.Field()
-                ```  
+                ```
             - 爬虫文件first.py中封装：  
                 ```
                 from learn_scrapy.items import LearnScrapyItem
                 item = LearnScrapyItem()
                 item['author'] = author
                 item['content'] = content
-                ```  
+                ```
         - 2、使用yield关键字将items对象提交给pipelines管道进行持久化操作。  
             - 爬虫文件中：`yield item`  
         - 3、在管道文件中的 process_item() 方法中接收爬虫文件提交过来的item对象，然后编写持久化存储的代码将item对象中存储的数据进行持久化存储  
@@ -122,7 +104,7 @@
               def process_item(self, item, spider):
                   #持久化操作代码 （方式1：写入数据库）
                   return item
-            ```  
+            ```
           在settings.py开启管道操作代码为；  
             ```python
             ITEM_PIPELINES = {
@@ -131,7 +113,7 @@
             }
             上面字典中的键值表示的是即将被启用执行的管道文件和其执行的优先级(值越小越先执行)
             ```
-          
+        
     - 【问题】有多个管道类，那么 yield item 先提交给哪个管道类呢？后续的管道类怎么接收这个item呢？
         - 【答】会先提交给优先级最高的管道类
             ```python
@@ -161,7 +143,7 @@ class KuanPipeline(object):
 ```
 
 
-          
+​          
 ### 4、scrapy五大核心组件简介
 ![img_1.png](img_1.png)
 - 1引擎(Scrapy)
@@ -219,8 +201,8 @@ class KuanPipeline(object):
               return file_name
           def item_completed(self, results, item, info):
               return item  #该返回值会传递给下一个即将被执行的管道类
-        ```         
-      
+        ```
+    
 ### 7、scrapy中间件
 - 下载中间件（Downloader Middlewares）【selenium的使用】
     - 位置：位于scrapy引擎和下载器之间的一层组件。
@@ -235,7 +217,7 @@ class KuanPipeline(object):
             - DOWNLOADER_MIDDLEWARES = {
                    'scrapy_learn.middlewares.ScrapyLearnDownloaderMiddleware': 543,
                 }
-              
+        
     - 【**完整项目01**】爬取网易新闻数据【包含多板块多url、传参item对象、selenium的使用、动态数据、中间件】
         - 此项目有动态数据，这里用到’下载中间件‘拦截响应对象，并使用selenium重新请求动态数据
         - 遇到动态数据selenium，也可以不使用中间件，可以在spider文件中重写 start_requests() 方法
@@ -245,7 +227,7 @@ class KuanPipeline(object):
             - 在配置文件中开启下载中间件、开启管道
         - 在spider777爬虫文件下编写爬虫程序
 - 当然，也可以在中间件中自定一个 中间件类，在此类中实现相应的方法就行，然后在配置文件中开启此管道【例如100例中的'3scrapy-32-B站博人传评论数据'】
-    
+  
 ### 8、基于CrawlSpider的全站数据爬取
 - 【代码在 crawlSpider_learn 文件中】
 - CrawlSpider类：Spider的一个子类
@@ -265,13 +247,13 @@ class KuanPipeline(object):
         - 【答】  if item.__class__.__name__ == 'DetailItem':
                     print('DetailItem类中的item')
     - 开启管道 
- 
+
 - 另外，在100例教程中也有全站数据爬取【3scrapy-34-掘金网全站用户】
     - 不同类型的网页结构
     - 不同的操作方法
 
-   
-### 9、分布式爬虫
+
+### 9、分布式爬虫（redis）
 - 【代码在 distributed_crawl 文件中】
 - 如何实现？
     - 安装scrapy_redis包
@@ -345,7 +327,7 @@ class KuanPipeline(object):
             - `lpush 调度器名称(爬虫文件中添加的redis_key) 起始url`
     - 爬取的数据存储在redis的 spiderName:items 中（在上面的redis客户端中输入命令可查看）
     
-### 10、增量式爬虫
+### 10、增量式爬虫（redis）
 - 【代码在 get_update_data 文件中】
 - 概念：检测网站数据更新的情况，只会爬取网站最新更新出来的数据
 - 增量爬虫的核心是 去重
@@ -413,7 +395,7 @@ CONCURRENT_REQUESTS_PER_IP = 16  # 若此项非0，相对于DOMAIN来说，优�
 COOKIES_ENABLED = False
 
 ```
- 
+
 ### 12、请求返回的数据（response）的解析
 - 返回 json 类型 ：
     - 使用 `data = json.loads(response.text)`
@@ -462,4 +444,3 @@ if __name__ == '__main__':
 - 【scrapy 中 yield 的作用】
     - 在scrapy中，爬取的数据量往往十分巨大，如果使用 return 和 list 存储之后再一次性返回将带来巨大的内存消耗。
       而 yield 可以在返回一组数据后再处理下一组数据，大大减少了内存的浪费。
-    

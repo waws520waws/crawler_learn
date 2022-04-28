@@ -1,7 +1,6 @@
-import requests
+import base64
 
-url = 'https://static.geetest.com' + "/static/js/gct.861a4938461c8226f84ed59a1e2d0214.js"
+s = b'01234567890qweqweweqeeqeqqeweqewqeqeqewqeqweqewqewqewqeqweqeqewqeqwewqewqeqeqweq'
 
-res = requests.get(url)
-
-print(res.text)
+a = base64.b64encode(s)
+print(a)

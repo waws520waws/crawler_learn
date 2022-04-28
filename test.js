@@ -1,5 +1,10 @@
-var a = 123;
-var b = a.toString();
-var c = String(a);
-var d = a + ""
-console.log(a,b,c,d)
+var aa = function (t){
+    // console.log(this)
+    t()
+}
+
+var xx = function (){
+    console.log('xxx')
+}
+
+aa(xx);
