@@ -1,26 +1,8 @@
-from Crypto.Util.Padding import pad
-from Crypto.Cipher import AES
-import base64
+from datetime import date, timedelta
+date_time = 'a'
+amount = 'd'
 
-def aes_cipher(key, aes_str):
-    # 使用key,选择加密方式
-    aes = AES.new(key.encode('utf-8'), AES.MODE_ECB)
-    pad_pkcs7 = pad(aes_str.encode('utf-8'), AES.block_size, style='pkcs7')  # 选择pkcs7补全
-    encrypt_aes = aes.encrypt(pad_pkcs7)
-    print(encrypt_aes)
-    # 加密结果
-    encrypted_text = str(base64.encodebytes(encrypt_aes), encoding='utf-8')  # 解码
-    encrypted_text_str = encrypted_text.replace("\n", "")
-    # 此处我的输出结果老有换行符，所以用了临时方法将它剔除
+aa = '"2022-04-28 14:58,0.00,231.13,231.13,231.13,32,739636.00,232.652"'
 
-    return encrypted_text_str
-
-
-if __name__ == '__main__':
-    # key的长度需要补长(16倍数),补全方式根据情况而定,此处我就手动以‘0’的方式补全的32位key
-    # key字符长度决定加密结果,长度16：加密结果AES(128),长度32：结果就是AES(256)
-    key = "ABCDEFGHIJKLMN000000000000000000"
-    # 加密字符串长同样需要16倍数：需注意,不过代码中pad()方法里，帮助实现了补全（补全方式就是pkcs7）
-    aes_str = "abc"
-    encryption_result = aes_cipher(key, aes_str)
-    print(encryption_result)
+bb = (100-0) / 0
+print(bb)

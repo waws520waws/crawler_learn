@@ -223,61 +223,65 @@
 
   ![image-20220329162838009](./md_picture/js逆向7.png)
 
-#### 2、反调试分类
+#### 2、反调试手段
 
-- 显性（能感知到的）
+- ##### 1）debugger
 
-  - 1）debugger：原代码会调用 debugger语句，应对方法：
+  - 原代码会调用 debugger语句，应对方法：
 
-    - 虚拟机（debugger在虚拟机文件中）
+  - 虚拟机（debugger在虚拟机文件中）
 
-      - 因为是在虚拟机中，所以源码中会调用`eval()`或者`Function`（构造函数constructor）
+    - 因为是在虚拟机中，所以源码中会调用`eval()`或者`Function`（构造函数constructor）
 
-      - `Function` 的处理一般是让其等于一个空函数，让其不执行，如下图（具体做法见参考链接 `0:35:00` 左右）【属于hook内容】
+    - `Function` 的处理一般是让其等于一个空函数，让其不执行，如下图（具体做法见参考链接 `0:35:00` 左右）【属于hook内容】
 
-        ![image-20220329173341229](./md_picture/js逆向8.png)
+      ![image-20220329173341229](./md_picture/js逆向8.png)
 
-        加参数判断语句：
+      加参数判断语句：
 
-        ```js
-        var aaa = Function.prototype.constructor;
-        Function.prototype.constructor = function(x){
-            if(x!='debugger'){
-               	//为什么要这样返回
-                //因为源码一般为 Function.prototype.constructor('debugger')
-                //所以要根据源码来写
-                return aaa(x);
-            }
-            return function(){}; //要返回一个函数
-        }
-        ```
+      ```js
+      var aaa = Function.prototype.constructor;
+      Function.prototype.constructor = function(x){
+          if(x!='debugger'){
+             	//为什么要这样返回
+              //因为源码一般为 Function.prototype.constructor('debugger')
+              //所以要根据源码来写
+              return aaa(x);
+          }
+          return function(){}; //要返回一个函数
+      }
+      ```
 
-        
+      
 
-      - 此方法可以让某个方法不执行（例如不执行 ‘让你进入debugger’ 的方法），见下图：
+    - 此方法可以让某个方法不执行（例如不执行 ‘让你进入debugger’ 的方法），见下图：
 
-        - setInterval()：定时器
+      - setInterval()：定时器
 
-        ![image-20220329175636306](./md_picture/js逆向9.png)
+      ![image-20220329175636306](./md_picture/js逆向9.png)
 
-      - `eval()` 同理
+    - `eval()` 同理
 
-      - 上述hook方式的缺点：每次翻页什么的都要在控制台执行hook代码，解决方法是，使用fiddler中的hook
+    - 上述hook方式的缺点：每次翻页什么的都要在控制台执行hook代码，解决方法是，使用fiddler中的hook
 
-    - 非虚拟机：
+  - 非虚拟机：
 
-      - 将 `debugger` 那句代码加断点，然后编辑其值为`false`（参考第二点 ‘浏览器断点’ ），不执行此句代码。
-      - 直接替换代码：
-        - 使用fiddler代理替换代码，具体做法见参考链接 `0:30:00` 左右
+    - 将 `debugger` 那句代码加断点，然后编辑其值为`false`（参考第二点 ‘浏览器断点’ ），不执行此句代码。
+    - 直接替换代码：
+      - 使用fiddler代理替换代码，具体做法见参考链接 `0:30:00` 左右
 
-  - 2）死循环（卡死）：按F12后调用死循环。如循环语句、无限递归、两个方法互调、定时器、打开新页面、写你的历史记录
+- ##### 2）死循环（卡死）
 
-- 隐形（暗桩）
+  - 按F12后调用死循环。如循环语句、无限递归、两个方法互调、定时器、打开新页面、写你的历史记录
 
-  - 1）引向错误的逻辑
-    - 解决方法：可以hook住堆栈，然后进入浏览器F12查看堆栈，进行对比
-  - 2）检测代码是否经过了格式化（如：使用正则检测）
-    - 解决方法：打断点，单步调试，找到检测的位置，并修改代码
+- ##### 3）引向错误的逻辑
+  
+  - 解决方法：可以hook住堆栈，然后进入浏览器F12查看堆栈，进行对比
+  
+- ##### 4）检测代码是否经过了格式化
+
+  - 如：使用正则检测
+  - 解决方法：打断点，单步调试，找到检测的位置，并修改代码（代码较短，就可以不格式化） 
 
 #### 3、网站不能进入开发者模式
 
@@ -477,4 +481,34 @@ function(){}  // 一个挨着一个的
 执行抠出的代码会报错缺少某某东西，有以下的解决方法：
 
 - 1）缺啥补啥（要看什么类型）
+
+  - 示例：【参考视频教程 `00:55:00`】阿里云盘：志远 > 一期 > 8.2.1 不带k值5秒防护
+
+    ```js
+    // 缺啥补啥
+    // 主要是注意类型
+    var document = {
+        createElement: function (x) {
+            if(x == 'div'){
+                return {
+                    innerText: "",  // 因为原码中有赋值，所以这里可以置为空
+                    firstChild: {
+                        href: "xxx" // 下面的代码中浏览器控制台执行，查看结果xxx
+                    }
+                }
+            }
+            return {};
+        }
+    }
+    
+    // 原码
+    !function(){
+        var t = document.createElement('div')  // createElement：是一个方法；t：可打印查看，是一个对象
+        t.innerText = "<a href='/'>x</a>"   // innerText:对象的属性
+        t = t.firstChild.href  // 浏览器控制台执行，查看结果
+    }()
+    ```
+
+    
+
 - 2）若报错的地方是一些环境判断等无关紧要的，可以直接删除掉

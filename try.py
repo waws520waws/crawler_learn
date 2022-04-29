@@ -1,6 +1,16 @@
-import base64
+import pandas as pd
+import numpy as np
 
-s = b'01234567890qweqweweqeeqeqqeweqewqeqeqewqeqweqewqewqewqeqweqeqewqeqwewqewqeqeqweq'
+df = pd.read_csv('./stock_data.csv', encoding='gbk')
+# print(df)
 
-a = base64.b64encode(s)
-print(a)
+df['成交量增减值'] = [i for i in df['成交数量']-df['成交数量'].shift(1)]
+print(df)
+
+pos_count = len(df[df['成交量增减值'] > 0])
+neg_count = len(df[df['成交量增减值'] < 0])
+print('正增长数量：', pos_count)
+print('负增长数量：', neg_count)
+
+df['成交量增幅>2%'] = [1 if i > 0.02 else 0 for i in (df['成交数量']-df['成交数量'].shift(1)) / df['成交数量'].shift(1)]
+print(df)
