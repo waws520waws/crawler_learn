@@ -235,8 +235,8 @@ print(os.path.join(os.path.abspath('.'),'hello.jpg'))  # 当前路径下
 print (os.getcwd())
 
 # 获取文件名或目录名
-filename = ' /Users/jieyang/PycharmProjects/crawler_learn/try.py'
-print(os.path.basename(filename))  # try.py
+filename = ' /Users/jieyang/PycharmProjects/crawler_learn/spider_spa2.py'
+print(os.path.basename(filename))  # spider_spa2.py
 print(os.path.dirname(filename))  # /Users/jieyang/PycharmProjects/crawler_learn
 
 # 返回目录下的所有文件和目录名
