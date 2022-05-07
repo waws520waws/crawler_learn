@@ -1,5 +1,7 @@
 '''
 爬虫练习网站：https://cuiqingcai.com/9522.html
+
+此案例解决 token 加密
 '''
 
 # 解决 execjs模块报错的问题（这三句话，在导入 execjs之前写进去）
