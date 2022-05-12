@@ -2,7 +2,7 @@
 
 ```python
 import logging
-logging.basicConfig(level=logging.WARNING,  # 日志级别
+logging.basicConfig(level=logging.WARNING,  # 日志级别（只打印此级别或更高级别的日志信息）
                     filename='new.log',  # 指定了文件，则会输出到文件，否则输出到控制台
                     filemode='a',  # 模式，有w和a，默认是追加模式
                     format='%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s'  # 日志格式

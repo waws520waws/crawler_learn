@@ -1,6 +1,17 @@
 ## 去掉字符串末尾的空格和换行符
 - str.strip()
 
+## 同时遍历两个列表
+```python
+shoes = ["huili","lining","anta","tebu"]
+price = [20,10,50,40]
+ 
+for (i1, i2) in zip(shoes,price):
+    i3 = i1+str(i2)
+    print(i3)  # huili20  lining10  anta50  tebu40
+```
+
+
 ## json模块
 - json.dumps(dict_json) : 将 Python 对象编码成 JSON 字符串，同js中的`JSON.stringify(dict_json)`
 - json.loads(dict_str) : 将 JSON 字符串解码为 Python 对象，同js中的`JSON.parse(dict_str)`
@@ -24,6 +35,7 @@ json.dump(json_dict, file_object, ensure_ascii=False)  # (ensure_ascii=False 解
 
 file_object = open('why.json', 'r', encoding="utf8")
 info = json.load(file_object)
+file_object.close()
 print(info)  # 字典
 ```
 
@@ -150,8 +162,15 @@ yesterday = date.today() + timedelta(days = -1)    # 昨天日期
 print(yesterday)  # datetime.date(2018-7-16)
 
 # 可以选择格式化输出：
+# strftime: 将时间类型转为字符串类型
 yesterday = (date.today() + timedelta(days = -1)).strftime("%Y-%m-%d")    # 昨天日期
 print(yesterday)  # '2018-07-16'
+
+# strptime： 将字符串类型转为时间类型
+string = '2020-09-23 16:47:8'
+date1 = datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
+print(date1)  # 2020-09-23 16:47:08
+print(type(date1))  # <class 'datetime.datetime'>
 
 import time
 t = time.time()  # 当前时间的毫秒数

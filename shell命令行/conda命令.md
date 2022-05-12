@@ -6,3 +6,15 @@
 - `source deactivate`		                    退出当前环境
 - `conda env list`	                            有哪些环境
 - `conda remove -n my_py_env --all`             删除环境
+- `pip list` 查看当前环境下已安装的包
+
+## 一次性安装所有包
+- `pip3 install -r requirements.txt`
+- requirements.txt 文件的内容：
+    ```text
+    telethon
+    requests
+    pillow
+    aiohttp
+    hachoir
+    ```
