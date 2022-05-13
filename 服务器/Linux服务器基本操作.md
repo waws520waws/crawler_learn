@@ -61,7 +61,7 @@
         - `chkconfig –level 35 crond on` 或 `chkconfig crond on`  加入开机自动启动
     - 定时crontab
         - `*/1 * * * * sh /home/jieyangali/test.sh > /home/jieyangali/crontab_shell.log 2>&1 &`
-            - 解释：每分钟执行一次后面的命令
+            - 解释：每分钟执行一次后面的命令（分 时 日 月 周）
             - `>` 将输出重定向到log文件（通常是输出到终端，这里是输出到文件）（以覆盖的方式）
             - `>>` （以追加的方式）【参考：https://www.runoob.com/linux/linux-shell-io-redirections.html】
             - `2>&1` 将错误重定向到标准输出（而输出使用了 `>` 重定向到了log文件），所以log文件中会记录错误信息

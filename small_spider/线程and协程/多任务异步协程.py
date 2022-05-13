@@ -44,6 +44,9 @@ loop = asyncio.get_event_loop()
 # 需要将多任务列表封装到wait中，循环执行任务
 loop.run_until_complete(asyncio.wait(tasks))
 
+# gather的作用和wait类似，不同：可以按照传入参数的顺序，顺序输出
+# loop.run_until_complete(asyncio.gather(*tasks))
+
 # # 上面两句等价于下面的执行语句（但是要注意括号里的对象）
 # asyncio.run( asyncio.wait(tasks) )  # python3.7
 
