@@ -13,7 +13,7 @@
 - 3）为用户授权
 - 4）切换用户
     - `su 用户名` 或 `su - 用户名` ：前者只是切换了用户(不需要密码)，要想连shell环境一起切换就用后边的(需要用户密码)。
-  
+
 ### 3、项目部署到服务器
 - Mac
   - 【参考】https://blog.csdn.net/lulusGirl/article/details/106690671
@@ -66,13 +66,22 @@
             - `>>` （以追加的方式）【参考：https://www.runoob.com/linux/linux-shell-io-redirections.html】
             - `2>&1` 将错误重定向到标准输出（而输出使用了 `>` 重定向到了log文件），所以log文件中会记录错误信息
             - 最后的 `&` 表示把该命令以 后台方式 执行
+            - .sh脚本：要加 `#!/bin/bash` 头:
+              ```shell
+              #!/bin/bash
+              cd /root/6telegram_msg
+              /root/miniconda3/envs/py37/bin/python /root/6telegram_msg/group_info.py
+              
+              date_time=$(date "+%Y-%m-%d %H:%M:%S")
+              echo "$date_time executed!!!"
+              ```
             
         - crontab定时任务中使用python相关命令要 **写全命令安装路径**
             - 例如：使用python执行py文件 `~/anaconda3/bin/python /home/jieyangali/project111/myfirst.py`
             - `which python` or `whereis python` 查看路径
-      
-- 3））scrapydweb中也可以定时
     
+- 3））scrapydweb中也可以定时
+  
 
 ### 5、服务器上安装mongodb（centos）
 - 【参考】https://www.cnblogs.com/zhenling/p/14415116.html
