@@ -11,6 +11,17 @@ for (i1, i2) in zip(shoes,price):
     print(i3)  # huili20  lining10  anta50  tebu40
 ```
 
+## 取多个集合的差集
+```python
+req_url = []
+reqed_url = []
+have_fail_url = []
+have_error_url = []
+
+# set1.difference(set2)  : set1必须是集合，set2可以是可迭代对象
+urls = list(set(req_url).difference(reqed_url, have_fail_url, have_error_url))  # 取差集，效率高
+```
+
 
 ## json模块
 - json.dumps(dict_json) : 将 Python 对象编码成 JSON 字符串，同js中的`JSON.stringify(dict_json)`

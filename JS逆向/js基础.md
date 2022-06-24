@@ -84,3 +84,26 @@ var cc = JSON.parse(bb);
 typeof(cc); //对象 'object'
 ```
 
+### 7、exports
+
+作用：向外部暴露变量或方法
+
+使用方法：只需要将需要暴露给外部的变量或方法设置为exports的属性即可
+
+```js
+var x = 10;  // 未暴露
+var y = 20;  // 未暴露
+
+exports.a = 'i am a';  			// 暴露
+module.exports.b = 'i am b';  	// 暴露 `exports.b` 与 `module.exports.b`等同
+exports.fn1 = function () {}  	// 暴露
+
+// 一次性全部导出
+module.exports = {
+    aa: 'i am aa',
+    bb: 'i am bb',
+    fn2: function () {}
+}
+```
+
+参考demo：`./exports`

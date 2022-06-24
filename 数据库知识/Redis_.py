@@ -3,7 +3,7 @@ import redis
 ## 1、连接数据库
 
 # redis 取出的结果默认是字节, 可以设定 decode_responses=True 改成字符串
-r = redis.StrictRedis('127.0.0.1', port=6379, db=0, decode_responses=True)  # 连接本地编号为0的数据库
+r = redis.StrictRedis(host='192.168.224.72', port=6379, password='123456', db=3, decode_responses=True)  # 连接本地编号为0的数据库
 
 ## 【注】：不同的值的类型有不同的操作方法，
 # 可参考终端命令 https://www.runoob.com/redis/redis-keys.html， 大部分适用python中对redis的操作

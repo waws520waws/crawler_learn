@@ -3,7 +3,13 @@
     - series只是一个一维数据结构，它由index和value组成; dataframe是一个二维结构，除了拥有index和value之外，还拥有column
     - Series相当于数组numpy.array类似；DataFrame相当于有表格，有行表头和列表头
     - series的索引名具有唯一性，索引可以是数字和字符；dataframe的索引不具有唯一性，列名也不具有唯一性
+    
 - 联系：dataframe由多个series组成，无论是行还是列，单独拆分出来都是一个series
+
+    ```python
+    print(type(df[['column_name']]))  # DataFrame
+    print(type(df['column_name']))  # Series
+    ```
 
 ## 2、分组 groupby()
 ```python
@@ -32,24 +38,24 @@ print(aa)
 ```
 
 ## 3、行列操作
-## 3.1、 选取行
+### 3.1  选取行
 - 根据某列的值选取行
 	
-	```
+	```python
 	data1 = df[df['column_name'] == value]
 	
 	data1 = data[(data.column_name >= t1) & (data.column_name <= t2)]
 	```
- 
+
 - 按索引选择行
-	```
+	```python
 	# 选择idx这一行
 	data.loc[[idx]]  # 或者：data.loc[idx:idx] 
 	```
 
 - 根据某列的值修改另一列的值
 	
-	```
+	```python
 	# 示例数据
 	data1 = pd.DataFrame([[1, 200011, 33333],
                      [1, 300011, 43333],
@@ -57,12 +63,12 @@ print(aa)
                      columns=['c2', 'time', 'c3'])
 	```
 	
-	```
+	```python
 	data1.loc[:, 'time'] = data1[['time', 'c2']].apply(lambda x: round(x.time/100, 1) if x.c2==1 else x.time, axis=1)
 	```
 
 - 按某列最大值选取行
-	```
+	```python
 	# 最大值所在行的索引
 	idx = data['c3'].idxmax()
 	# 某列的最大值
@@ -72,7 +78,7 @@ print(aa)
 	data = data.loc[:idx]  
 	```
 
-## 3.2、 选取列
+### 3.2  选取列
 ```python
 # 按照指定列名选取(data为series类型)
 data = df['column_name']
@@ -82,16 +88,16 @@ data = df[['column_name1', 'column_name2']]
 data = df.iloc[:, 0:5] 
 ```
 
-## 3.3、取指定某行某列的元素
+### 3.3 取指定某行某列的元素
 ```python
 # 取指定第2行第3列的元素
 data = df.loc[2][3]
 ```
 
-### 【注】使用loc、iloc选取数据后的数据类型均保持不变
+**【注】使用loc、iloc选取数据后的数据类型均保持不变**
 
-## 3.4、去重
-```
+### 3.4 去重
+```python
 # 去重，并保留第一次重复的值（默认为'first'）
 df = df.drop_duplicates(keep='first')
 
@@ -102,9 +108,9 @@ df = df.drop_duplicates(keep=False)
 df = df.drop_duplicates(['col1', 'col3'])
 ```
 
-## 3.5、某列相邻两个值相减
+### 3.5 某列相邻两个值相减
 可以使用shift方法
-```
+```python
 # xx字段向下移动一行的结果，并产生一个新列xx_1，和之前相比向下移动一行，你可以设置为任意行
 # 第一行自动用空值填补
 df['xx_1'] = df["xx"].shift(1)
@@ -113,9 +119,59 @@ df['xx_1'] = df["xx"].shift(1)
 df['differ'] = df['xx'] - df["xx_1"]
 ```
 
-## 3.6、遍历行
-```
+### 3.6 遍历行
+```python
 # 返回索引和每一行
 for index, row in df.iterrows():
 	print(index, row)
 ```
+
+### 3.7  处理列并添加为新列（apply）
+
+```python
+def handle(website):
+    if website.startswith('http'):
+        return website.split('/')[2]
+    else:
+        return website
+df['handled_website'] = df[['official_website']].apply(lambda x: handle(x.official_website), axis=1)
+df['sex_not_male'] = df[['sex']].apply(lambda x: 1 if x.sex != '女' else 0, axis=1)
+
+```
+```python
+def extract_info(content):
+	# 一系列操作
+	payee = ''
+	payment_account = ''
+	payment_bank = ''
+	
+	return payee, payment_account, payment_bank
+
+# 使用 result_type="expand" 返回多列，并赋值
+df[['收款人', '收款账号', '收款银行']] = df[['content']].apply(lambda x: extract_info(x.content), axis=1, result_type="expand")
+```
+
+
+## 4、读取/存入数据库
+
+```python
+import pandas as pd
+from sqlalchemy import create_engine
+import pymysql
+pymysql.install_as_MySQLdb()  # 必须
+
+# 简易写法
+# df = pd.read_sql_table('table_name', "mysql://root:12345678@192.168.224.49:33060/database_name")
+
+engine = create_engine("mysql://root:12345678@192.168.224.49:33060/database_name", echo=True)
+conn = engine.connect()
+
+# 读
+df = pd.read_sql_table('table_name', conn)
+
+# 存
+# 若数据库中没有这个表，会自动创建；若存在，则根据if_exists来操作，同时也会改变表结构
+# if_exists: 当数据库中已经存在数据表时对数据表的操作，有replace替换、append追加、fail当表存在时提示ValueError
+df.to_sql('table_name', con=conn, if_exists='replace', index=False)
+```
+
