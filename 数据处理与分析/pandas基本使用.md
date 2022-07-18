@@ -44,9 +44,15 @@ print(aa)
 	```python
 	data1 = df[df['column_name'] == value]
 	
+	data1 = df[df['业务一级分类'].str.contains("金融科技")]
+	
 	data1 = data[(data.column_name >= t1) & (data.column_name <= t2)]
+	
+	df.loc[df['column_name'].isin(some_values)]  # some_values是可迭代对象
+	
+	df.loc[~df['column_name'].isin('some_values')]  # 不等于， ~ 取反
 	```
-
+	
 - 按索引选择行
 	```python
 	# 选择idx这一行
@@ -78,7 +84,31 @@ print(aa)
 	data = data.loc[:idx]  
 	```
 
-### 3.2  选取列
+### 3.2 删除行
+- 删除空值行
+	```python
+	df.dropna(subset=['钱包地址', '银行卡号', '银行卡号归属地', 'image_url'],  # 指定列
+			  axis=0,
+			  how='all', # how='all'表示若指定列的值都为空，就删掉该行
+			  inplace=True)
+	```
+
+- 删除某列指定值所在的行
+
+  ```python
+  # 使用drop函数以及index参数删除所在的行
+  data = df.drop(index=df[(df['卡号'] == '错误') & (df['地址'] == '')].index.tolist())
+  
+  # 将索引重新排序
+  data = data.reset_index(drop=True)
+  ```
+  
+  
+
+### 3.2 列操作
+
+- 选取列
+
 ```python
 # 按照指定列名选取(data为series类型)
 data = df['column_name']
@@ -88,7 +118,21 @@ data = df[['column_name1', 'column_name2']]
 data = df.iloc[:, 0:5] 
 ```
 
+- 调整列的位置（或顺序）
+
+```python
+df = pd.DataFrame({'a': [1, 2, 3],
+                   'b': [4, 5, 6],
+                   'c': [7, 8, 9]})
+
+new_columns = ['c', 'b', 'a']
+df = df.reindex(columns=new_columns)
+```
+
+
+
 ### 3.3 取指定某行某列的元素
+
 ```python
 # 取指定第2行第3列的元素
 data = df.loc[2][3]
@@ -156,7 +200,7 @@ df[['收款人', '收款账号', '收款银行']] = df[['content']].apply(lambda
 
 ```python
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, types
 import pymysql
 pymysql.install_as_MySQLdb()  # 必须
 
@@ -166,12 +210,49 @@ pymysql.install_as_MySQLdb()  # 必须
 engine = create_engine("mysql://root:12345678@192.168.224.49:33060/database_name", echo=True)
 conn = engine.connect()
 
-# 读
+## 读
 df = pd.read_sql_table('table_name', conn)
 
-# 存
+## 存
 # 若数据库中没有这个表，会自动创建；若存在，则根据if_exists来操作，同时也会改变表结构
 # if_exists: 当数据库中已经存在数据表时对数据表的操作，有replace替换、append追加、fail当表存在时提示ValueError
-df.to_sql('table_name', con=conn, if_exists='replace', index=False)
+# dtype: 其中可以指定某列的数据类型，设置主键等操作
+df.to_sql('table_name', con=conn, if_exists='replace', index=False, dtype={'col_name': types.VARCHAR(20)})
+conn.close()
+
+# 也可以执行sql语句
+with engine.connect() as con:
+    con.execute("""ALTER TABLE `{}`.`{}` \
+            ADD COLUMN `id` INT NOT NULL AUTO_INCREMENT FIRST, \
+            ADD PRIMARY KEY (`id`);"""
+                .format(db_name, table_name))
+
+sql = "select `消息内容` from `ok钱包2_历史对话_224377` where `消息内容` regexp '^http.*?(jpg|png)$'"
+results = conn.execute(sql)
+for result in results:
+	print(result)
 ```
 
+## 5、excel操作
+
+```python
+import pandas as pd
+
+## 读
+df = pd.read_excel('./icon2_data/token_detail1.xlsx', sheet_name='sheet1')
+
+## 写
+# 防止将 url 存储为超链接（若为超链接，打开xlsx会报错）
+writer = pd.ExcelWriter('xxxx.xlsx', engine='xlsxwriter', engine_kwargs={'options': {'strings_to_urls': False}})
+df.to_excel(writer, index=False)
+writer.close()
+```
+
+## 5、pycharm中显示 df 所有列/行
+```python
+import pandas as pd 
+#显示所有列
+pd.set_option('display.max_columns', None)
+#显示所有行
+pd.set_option('display.max_rows', None)
+```

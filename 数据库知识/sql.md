@@ -191,3 +191,8 @@ replace(a.orig_url, '.amp?', '') =b.orig_url
     )<=2 
     ORDER BY score_a.c_id, score_a.s_score DESC
     ```
+
+- 4、查询第n行记录
+  ```text
+  select * from table1 limit n-1,1;  (返回第n行开始，1条记录)
+  ```

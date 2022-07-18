@@ -1,6 +1,10 @@
 ## APP逆向
 - 【安卓逆向的一些工具】https://zhuanlan.zhihu.com/p/313886157
 - 关于逆向的文章：去看雪论坛或者吾爱破解论坛吧，哪里有太多的文章
+- 逆向的作用：找到参数加密规则
+  - 如何使用加密规则？
+    - 用python重现
+    - 或者 对源码进行修改后与原始的APK打包在一起，这样就获得了一个实现自己特定目的的APP
 
 ### 3.1 绕过证书验证类
 - 简介：打开 fiddler 先来抓个包，fiddler 开启之后 app提示连接不到服务器，发现这个 app 做了证书验证
@@ -23,11 +27,12 @@
         - 可以先将APK文件的后缀改为ZIP，再解压
         - 将APK文件中的代码反编译出来，需要用到两款工具：
             - dex2jar: 这个工具用于将dex文件转换成jar文件
-                - dex文件是存放所有java代码的地方
                 - 要先安装java
                 - 最新2.1版本下载地址：https://github.com/pxb1988/dex2jar/releases
                     - 用之前的版本在转换时会报错：`Detail Error Information in File .\classes-error.zip`
                 - 一次转换多个文件：`d2j-dex2jar.bat classes2.dex classes3.dex classes4.dex`
+                  - `d2j-dex2jar.bat`是 dex2jar 工具下的文件，`classes2.dex`等 是APK解压后中的文件
+                  - dex文件 是存放所有java代码的地方
             - jd-gui: 这个工具用于查看源码（此工具将jar文件转换成java代码）
           
         - 根据请求或响应的参数去源码中搜索需要的东西（如：加密方式）
@@ -58,6 +63,7 @@
     - 重新打包
         - 将反编译后的文件重新打包成APK
         - 1）apktool工具将程序文件打包成APK
+          - 下载：https://bitbucket.org/iBotPeaches/apktool/downloads/
         - 2）进行签名
             - 作用：若APK没有进行过签名，APK不能安装
             - 没有办法拿到它原来的签名文件，只能拿自己的签名文件来对这个APK文件重新进行签名，但同时也表明我们重新打包出来的软件就是个十足的盗版软件；
