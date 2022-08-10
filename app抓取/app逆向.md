@@ -1,4 +1,4 @@
-## APP逆向
+### APP逆向
 - 【安卓逆向的一些工具】https://zhuanlan.zhihu.com/p/313886157
 - 关于逆向的文章：去看雪论坛或者吾爱破解论坛吧，哪里有太多的文章
 - 逆向的作用：找到参数加密规则
@@ -6,7 +6,7 @@
     - 用python重现
     - 或者 对源码进行修改后与原始的APK打包在一起，这样就获得了一个实现自己特定目的的APP
 
-### 3.1 绕过证书验证类
+### 一、 绕过证书验证类
 - 简介：打开 fiddler 先来抓个包，fiddler 开启之后 app提示连接不到服务器，发现这个 app 做了证书验证
 - 解决这种问题一般都是安装 xposed 框架，里面有一个 JustTrustme 模块，它的原理就是hook，直接绕过证书验证类
     - 注意事项：
@@ -14,7 +14,7 @@
         - 安装xposed框架有手机变成砖块的危险（因为会改变系统文件）
             - 手机可以直接刷带有Xposed框架的系统（如：刷机精灵）
 
-### 3.2 反编译与混淆技术
+### 二、 反编译与混淆技术
 - 1、反编译
     - 【参考】https://blog.csdn.net/guolin_blog/article/details/49738023
     - 简介：Android程序打完包之后得到的是一个APK文件，这个文件是可以直接安装到任何Android手机上的，我们反编译其实也就是对这个APK文件进行反编译。
@@ -80,7 +80,7 @@
     - 【参考】https://blog.csdn.net/guolin_blog/article/details/50451259
     - 简介：对代码进行混淆，将代码中的类、方法、变量等信息进行重命名，把它们改成一些毫无意义的名字
         - 在Android Studio当中混淆APK实在是太简单了，借助SDK中自带的Proguard工具，只需要修改 build.gradle 中的一行配置即可；
-        build.gradle 中 minifyEnabled 的值是false，这里我们只需要把值改成true，打出来的APK包就会是混淆过的了。
+          build.gradle 中 minifyEnabled 的值是false，这里我们只需要把值改成true，打出来的APK包就会是混淆过的了。
             ```text
             release {
                 minifyEnabled true
@@ -96,7 +96,7 @@
         - 修改其中的混淆规则
         - 然后反编译
     
-### 3.3 APP脱壳
+### 三、 APP脱壳
 - 加壳（加固）的原理
     - 壳dex 读取 源dex文件，加密后，写进一个新的dex文件
     - 给dex文件加层壳，反编译后的代码就是加壳的代码，看不到原dex代码，在一定程度上来说，还是可以起到防破解的，也可以防止二次打包
@@ -135,3 +135,14 @@
         - 通用脱壳  dumpDex：https://github.com/WrBug/dumpDex
 - 反编译
 
+### 四、Frida
+
+Frida rpc ：不还原token算法抓取APP最简单的Hook方法。参考https://www.yuanrenxue.com/crawler/crawl-app-frida-rpc.html
+
+### 五、抓TCP包
+
+【参考】https://www.yuanrenxue.com/crawler/frida-call-so-directly.html
+
+APP抓包比较繁琐，尤其是对方优先走socket，发TCP包，而不是走应用层发http/https协议。这种抓包更烦躁，绝大部分利用中间人攻击原理这种代理抓包软件都抓不到tcp请求，代理抓包软件大都只能抓应用层协议。
+
+抓TCP包常用的工具是 wireshark 和 tcpdump。tcpdump 可以运行在手机上抓包，但没有界面，wireshark 有界面，过滤数据包较方便，就用这两个工具来打配合抓TCP包吧。

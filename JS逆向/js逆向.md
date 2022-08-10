@@ -531,3 +531,52 @@ function(){}  // 一个挨着一个的
     
 
 - 2）若报错的地方是一些环境判断等无关紧要的，可以直接删除掉
+
+### 十四、字符串编码
+
+【参考】https://www.yuanrenxue.com/crawler/five-html-encode-method.html
+
+#### 1、URL编码
+
+```python
+import urllib.parse
+
+s = 'http://可爱的'
+enc_s = urllib.parse.quote(s)
+print(enc_s)  # http%3A//%E5%8F%AF%E7%88%B1%E7%9A%84
+
+ss = urllib.parse.unquote(enc_s)
+print(ss)  # http://可爱的
+```
+
+#### 2、Unicode转义
+
+特征都是以 &# 开头，以 ; 结尾的。这是HTML中一种Unicode转义，在网页中做Unicode编码就是这样子的
+
+```python
+import html
+
+s = '''&#20170;&#22825;&#20599;&#20010;&#25042;&#20889;&#31687;&#24635;&#32467;&#24615;&#30340;&#25991;&#31456;&#65292;&#25105;&#20204;&#22312;'''
+print(html.unescape(s))  # 今天偷个懒写篇总结性的文章，我们在
+```
+
+#### 3、16进制Unicode转义
+
+上面是以 &# 开头，以 ; 结尾的，&# 后面是的数字是10进制的，还有一种 &# 后面是16进制的
+
+```python
+import html
+
+s = '''&#x4ECA;&#x5929;&#x5077;&#x4E2A;&#x61D2;&#x5199;&#x7BC7;&#x603B;&#x7ED3;&#x6027;&#x7684;&#x6587;&#x7AE0;&#xFF0C;&#x6211;&#x4EEC;&#x5728;'''
+print(html.unescape(s))  # 今天偷个懒写篇总结性的文章，我们在
+```
+
+#### 4、UTF-8编码
+
+ \u 后面加四个字符的是UTF-8编码，Python内部会转换。
+
+```python
+s = '\u4eca\u5929\u5077\u4e2a\u61d2\u5199\u7bc7\u603b\u7ed3\u6027\u7684\u6587\u7ae0\uff0c\u6211\u4eec\u5728'
+print(s)  # 今天偷个懒写篇总结性的文章，我们在
+```
+

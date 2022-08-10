@@ -105,7 +105,7 @@ print(aa)
   
   
 
-### 3.2 列操作
+### 3.3 列操作
 
 - 选取列
 
@@ -129,9 +129,28 @@ new_columns = ['c', 'b', 'a']
 df = df.reindex(columns=new_columns)
 ```
 
+- 更改某列的类型
+
+```python
+df['phone'] = df['phone'].astype('string')  # 改变后需赋给原df
+
+#### 其它类型
+df.dtypes 			#获取所有列的类型
+df.astype(dtype={'工资':'float','时间':'string'},errors='ignore') # 多列转换，dict 映射
+df['dept 1'].astype('int',errors='ignore') # 转换为失败，默认报错，也可以忽略 转换失败的错误并保持原样
+df.工资.astype(str)				   # 转换为 object (object 是 pandas 中的字符串)
+df.工资.astype(pd.StringDtype())   # 转换为 string
+df.工资.astype('string') 		   # 转换为 string
+df.时间.astype('datetime64[ns]')   # 转换为 datetime，注意unit
+df.奖金.astype('float32') 			# 转换为 float32 
+df.奖金.astype('float') 			# 转换为 float
+df.dept.astype('category') 			# 转换成分类数据
+
+```
 
 
-### 3.3 取指定某行某列的元素
+
+### 3.4 取指定某行某列的元素
 
 ```python
 # 取指定第2行第3列的元素
@@ -140,7 +159,25 @@ data = df.loc[2][3]
 
 **【注】使用loc、iloc选取数据后的数据类型均保持不变**
 
-### 3.4 去重
+
+
+### 3.5 loc 与 iloc 的区别
+
+​	df.loc[行标签,列标签]  ： loc函数是基于行标签和列标签进行索引的
+
+```python
+df.loc[2:3]  # 选取df的第2、3行
+```
+
+​	df.iloc[行位置,列位置]  ： iloc函数是基于行和列的位置进行索引的，索引值从0开始，并且得到的结果不包括最后一个位置的值
+
+```python
+df.iloc[2:4,1:3]  # 选取df的第2、3行和第1、2列
+```
+
+
+
+### 3.6 去重
 ```python
 # 去重，并保留第一次重复的值（默认为'first'）
 df = df.drop_duplicates(keep='first')
@@ -152,7 +189,7 @@ df = df.drop_duplicates(keep=False)
 df = df.drop_duplicates(['col1', 'col3'])
 ```
 
-### 3.5 某列相邻两个值相减
+### 3.7 某列相邻两个值相减
 可以使用shift方法
 ```python
 # xx字段向下移动一行的结果，并产生一个新列xx_1，和之前相比向下移动一行，你可以设置为任意行
@@ -163,14 +200,14 @@ df['xx_1'] = df["xx"].shift(1)
 df['differ'] = df['xx'] - df["xx_1"]
 ```
 
-### 3.6 遍历行
+### 3.8遍历行
 ```python
 # 返回索引和每一行
 for index, row in df.iterrows():
 	print(index, row)
 ```
 
-### 3.7  处理列并添加为新列（apply）
+### 3.9处理列并添加为新列（apply）
 
 ```python
 def handle(website):
@@ -211,7 +248,11 @@ engine = create_engine("mysql://root:12345678@192.168.224.49:33060/database_name
 conn = engine.connect()
 
 ## 读
+# 方法1
 df = pd.read_sql_table('table_name', conn)
+# 方法2
+sql = f"select * from `table_name`"  # 使用sql语句来读，可以解决表名不规范的问题（比如大小写、短线-）
+df = pd.read_sql(sql, conn)
 
 ## 存
 # 若数据库中没有这个表，会自动创建；若存在，则根据if_exists来操作，同时也会改变表结构
@@ -240,6 +281,8 @@ import pandas as pd
 
 ## 读
 df = pd.read_excel('./icon2_data/token_detail1.xlsx', sheet_name='sheet1')
+# 解决读出来的数字自动转成科学计数的问题
+df = pd.read_excel(r'D:\Downloads\《交易通》玩家-银行卡充值信息.xlsx', converters={"银行卡号": str})
 
 ## 写
 # 防止将 url 存储为超链接（若为超链接，打开xlsx会报错）

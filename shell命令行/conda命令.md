@@ -18,3 +18,24 @@
     aiohttp
     hachoir
     ```
+
+## 生成 requirements.txt 文件
+- 方法1
+  
+  - 只生成当前目录下用到的包
+  
+    ```python
+    # 安装pipreqs
+    pip install pipreqs
+    # 在当前目录生成requirement依赖
+    # --force 为强制执行，如果当前生成目录下的requirements.txt存在时，则直接覆盖
+    pipreqs . --encoding=utf8 --force
+    ```
+  
+- 方法2
+
+  - pycharm工具栏 —— `Tools` —— `Sync Python requirements`
+  - 注意：此方法会生成当前pycharm打开的文件所用到的包
+
+- 方法3
+  - `pip freeze > requirements.txt` 当前python环境下的所有已安装包
